@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://dc3emty8i4q1s"]
+
+[ext_resource type="Script" uid="uid://cmrknqlmkcbqr" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bqb3bgg15yaof" path="res://forest.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bbjg73ban85s1" path="res://grow_spot.tscn" id="3_h2yge"]
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+tonemap_mode = 2
+tonemap_exposure = 0.68
+tonemap_white = 0.84
+fog_enabled = true
+fog_light_color = Color(0.602749, 0.552363, 0.324082, 1)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_0xm2m")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 5, 0)
+shadow_enabled = true
+directional_shadow_split_1 = 0.015
+directional_shadow_split_2 = 0.171
+directional_shadow_split_3 = 0.548
+directional_shadow_blend_splits = true
+directional_shadow_fade_start = 1.0
+
+[node name="Forest" parent="." instance=ExtResource("2_h2yge")]
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, -3, 3, 3)
+projection = 1
+size = 7.0
+
+[node name="GrowSpot" parent="." instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="GrowSpot2" parent="." instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="GrowSpot3" parent="." instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)

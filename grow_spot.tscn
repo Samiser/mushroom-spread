@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbjg73ban85s1"]
+
+[ext_resource type="Script" uid="uid://dtukjymalb8ga" path="res://grow_spot.gd" id="1_r8ei0"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fmm3i"]
+
+[node name="GrowSpot" type="Node3D"]
+script = ExtResource("1_r8ei0")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_fmm3i")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+light_color = Color(0.705785, 0.555715, 0.360372, 1)
+light_energy = 0.5
+light_size = 0.03
