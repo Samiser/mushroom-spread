@@ -40,8 +40,6 @@ func _process(delta: float) -> void:
 
 func _grow(delta: float) -> void:
 	if growth >= generational_max:
-		if !grown and generation < mushroom_data.max_family - 1:
-			_spawn_baby_mushroom()
 		return
 	
 	growth = move_toward(growth, generational_max, delta * mushroom_data.grow_speed)
@@ -50,7 +48,18 @@ func _grow(delta: float) -> void:
 func _on_area_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			pass # unused for now
+			if growth >= generational_max:
+				var spawns := randi_range(1, mushroom_data.spawn_max)
+				if generation == 0 and spawns == 1:
+					spawns = 2
+				
+				if !grown and parent.family.size() < mushroom_data.max_family:
+					if (parent.family.size() + spawns) > mushroom_data.max_family:
+						spawns -= (parent.family.size() + spawns) - mushroom_data.max_family
+					var index := 0
+					while index < spawns:
+						_spawn_baby_mushroom()
+						index += 1
 
 func is_spawn_safe(pos: Vector3) -> bool:
 	var tile: Tile = grid.get_at_world(pos)
@@ -75,10 +84,12 @@ func is_spawn_safe(pos: Vector3) -> bool:
 func _spawn_baby_mushroom() -> void:
 	grown = true
 	var spawn_offset := Vector3(randf_range(-1, 1), 0.0, randf_range(-1, 1)).normalized() * mushroom_data.spawn_range
+	if generation > 0:
+		spawn_offset += (global_position - parent.family.get(generation - 1).global_position).normalized() * mushroom_data.spawn_range
 	var spawn_point := global_position + spawn_offset
 	
-	if !is_spawn_safe(spawn_point):
-		return
+	#if !is_spawn_safe(spawn_point):
+	#	return
 	
 	var new_mushroom: Node3D = mushroom_baby.instantiate()
 	get_tree().root.add_child(new_mushroom)

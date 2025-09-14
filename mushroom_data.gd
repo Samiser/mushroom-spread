@@ -7,7 +7,8 @@ class_name MushroomData
 @export var max_growth := 1.0
 
 @export var spawn_range := 0.3
-@export var max_family := 4
+@export var max_family := 12
+@export var spawn_max := 4
 
 @export_range (0.0, 0.5) var generational_loss := 0.2 # shrinkage per generation
 
