@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://dr1fnlbwkkrug" path="res://mushroom_sprite.png" id="2_ke5i0"]
 [ext_resource type="PackedScene" uid="uid://bl50hmlq6qjt2" path="res://Meshes/kenney_nature/mushroom_red.glb" id="2_pl5ep"]
 
-[sub_resource type="Resource" id="Resource_4gvq0"]
+[sub_resource type="Resource" id="Resource_jg55k"]
 script = ExtResource("2_jg55k")
-mushroom_name = "Default Mushroom"
+mushroom_name = "unnamed mushroom"
 grow_speed = 0.2
 max_growth = 1.0
 spawn_range = 0.3
@@ -20,7 +20,7 @@ height = 0.222382
 
 [node name="Mushroom" type="Node3D"]
 script = ExtResource("1_ke5i0")
-mushroom_data = SubResource("Resource_4gvq0")
+mushroom_data = SubResource("Resource_jg55k")
 
 [node name="mushroom_mesh" parent="." instance=ExtResource("2_pl5ep")]
 visible = false

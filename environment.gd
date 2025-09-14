@@ -19,7 +19,7 @@ var _env: Environment
 func _ready() -> void:
 	_env = world_environment.environment
 	if not Engine.is_editor_hint():
-		time_of_day = 0.
+		time_of_day = 0.15
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -38,7 +38,7 @@ func set_time(v: float) -> void:
 
 func _apply_time() -> void:
 	_update_fog_and_ambient()
-	if sun_elevation_curve and sun_intensity and sun_color_gradient:
+	if sun and sun_elevation_curve and sun_intensity and sun_color_gradient:
 		_update_sun()
 
 func _update_sun() -> void:

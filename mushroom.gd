@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 	if highlighted:
 		var growth_percent := roundf((growth / generational_max) * 100)
 		var growth_colour : Color = lerp(Color.RED, Color.GREEN, growth_percent / 100.0)
-		var desc : String = mushroom_data.mushroom_name + " (" + parent.family_name + ") Gen " + str(generation) +  "\nFamily size: " + str(parent.family.size()) + "/" + str(mushroom_data.max_family) + "\nGrowth: [color=#" + growth_colour.to_html() + "]" + str(growth_percent) + "%[/color]\nTile: " + grid.get_at_world(global_position).type 
+		var desc: String = mushroom_data.mushroom_name + " (" + parent.family_name + ") Gen " + str(generation) +  "\nFamily size: " + str(parent.family.size()) + "/" + str(mushroom_data.max_family) + "\nGrowth: [color=#" + growth_colour.to_html() + "]" + str(growth_percent) + "%[/color]\nTile: " + grid.get_at_world(global_position).type_string() 
 		parent.set_description.emit(desc)
 
 func _grow(delta: float) -> void:

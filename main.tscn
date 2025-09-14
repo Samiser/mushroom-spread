@@ -12,6 +12,7 @@ script = ExtResource("1_0xm2m")
 [node name="Hud" parent="." instance=ExtResource("2_lquwl")]
 
 [node name="Environment" parent="." instance=ExtResource("2_1bvp3")]
+time_of_day = 0.158
 
 [node name="CameraPivot" type="Node3D" parent="."]
 script = ExtResource("3_1bvp3")
