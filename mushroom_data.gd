@@ -9,6 +9,11 @@ class_name MushroomData
 @export var spawn_range := 0.3
 @export var max_family := 4
 
-var generational_loss := 0.2 # shrinkage per generation
+@export_range (0.0, 0.5) var generational_loss := 0.2 # shrinkage per generation
+
+@export_range (0.0, 1.0) var insect_resistance := 0.0
+@export_range (0.0, 1.0) var animal_resistance := 0.0
+
+@export var starting_tile : String
 
 var family_names : Array[String] = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguaz", "Simpsons"]
