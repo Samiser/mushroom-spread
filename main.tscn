@@ -1,15 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://dc3emty8i4q1s"]
+[gd_scene load_steps=4 format=3 uid="uid://dc3emty8i4q1s"]
 
 [ext_resource type="Script" uid="uid://cmrknqlmkcbqr" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://b0h23m6qtmef6" path="res://forest_grid.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://bbjg73ban85s1" path="res://grow_spot.tscn" id="3_h2yge"]
 
 [sub_resource type="Environment" id="Environment_0xm2m"]
 tonemap_mode = 2
-tonemap_exposure = 0.68
+tonemap_exposure = 0.48
 tonemap_white = 0.84
 fog_enabled = true
 fog_light_color = Color(0.602749, 0.552363, 0.324082, 1)
+adjustment_enabled = true
+adjustment_contrast = 1.3
+adjustment_saturation = 1.1
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_0xm2m")
@@ -20,6 +22,7 @@ environment = SubResource("Environment_0xm2m")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.965926, 0.183013, -0.183013, -2.98023e-08, 0.707107, 0.707107, 0.258819, -0.683013, 0.683013, 0, 5, 0)
 shadow_enabled = true
+shadow_opacity = 0.8
 directional_shadow_split_1 = 0.015
 directional_shadow_split_2 = 0.171
 directional_shadow_split_3 = 0.548
@@ -33,18 +36,10 @@ transform = Transform3D(0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.70710
 projection = 1
 size = 7.0
 
-[node name="GrowSpot" parent="." instance=ExtResource("3_h2yge")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
-
-[node name="GrowSpot2" parent="." instance=ExtResource("3_h2yge")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
-
-[node name="GrowSpot3" parent="." instance=ExtResource("3_h2yge")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
-
 [node name="ForestGrid" parent="." instance=ExtResource("2_h2yge")]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.5, 5, 2.5)
+light_color = Color(0.777423, 0.559073, 0.164422, 1)
 spot_attenuation = -1.2
 spot_angle = 6.65943

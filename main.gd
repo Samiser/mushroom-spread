@@ -1,5 +1,7 @@
 extends Node3D
 
+var mushroom_scene: PackedScene = load("res://mushroom.tscn")
+
 func _process(delta: float) -> void:
 	$CameraPivot.rotation_degrees.y += 5 * delta
 	#$DirectionalLight3D.rotation_degrees.x -= 3 * delta
@@ -14,10 +16,14 @@ func _unhandled_input(e: InputEvent) -> void:
 		)
 		if hit.has("position"):
 			hit.position.y = 0.5
-			var info: Dictionary = $ForestGrid.get_at_world(hit.position)
+			var info: Tile = $ForestGrid.get_at_world(hit.position)
 			$SpotLight3D.position = $ForestGrid.cell_to_world($ForestGrid.world_to_cell(hit.position))
 			$SpotLight3D.position.y = 5
-			if info.thing.get("name", "") != "":
-				print(info.thing.get("name",""))
-			else:
-				print("no thing here!")
+			if not info.occupied:
+				print("here")
+				var mushroom := mushroom_scene.instantiate()
+				mushroom.position = info.center
+				add_child(mushroom)
+				info.occupied = true
+			if info:
+				print(info)
