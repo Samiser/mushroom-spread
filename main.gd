@@ -18,9 +18,13 @@ func _unhandled_input(e: InputEvent) -> void:
 			$SpotLight3D.position = $ForestGrid.cell_to_world($ForestGrid.world_to_cell(hit.position))
 			$SpotLight3D.position.y = 5
 			if not tile.occupied and not tile.is_fully_occupied():
-				var mushroom := mushroom_scene.instantiate()
+				var mushroom : Mushroom = mushroom_scene.instantiate()
 				mushroom.position = tile.center
 				mushroom.grid = forest_grid
+
+				if !mushroom.is_spawn_safe(mushroom.position):
+					return
+					
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
 				tile.occupied = true

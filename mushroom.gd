@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 func _grow(delta: float) -> void:
 	if growth >= generational_max:
 		if !grown and generation < mushroom_data.max_family - 1:
-			_spawn_mushroom()
+			_spawn_baby_mushroom()
 		return
 	
 	growth = move_toward(growth, generational_max, delta * mushroom_data.grow_speed)
@@ -52,26 +52,32 @@ func _on_area_input_event(camera: Node, event: InputEvent, event_position: Vecto
 		if event.is_pressed():
 			pass # unused for now
 
-func _spawn_mushroom() -> void:
+func is_spawn_safe(pos: Vector3) -> bool:
+	var tile: Tile = grid.get_at_world(pos)
+	
+	if !tile or tile.type != mushroom_data.starting_tile:
+		return false
+	
+	if tile.is_fully_occupied():
+		return false
+	
+	if tile.has_animal and mushroom_data.animal_resistance > randf_range(0.0, 1.0):
+		return false
+	
+	if tile.has_insects and mushroom_data.insect_resistance > randf_range(0.0, 1.0):
+		return false
+	
+	if randf_range(0.0, 1.0) > tile.fertility:
+		return false
+	
+	return true
+
+func _spawn_baby_mushroom() -> void:
 	grown = true
 	var spawn_offset := Vector3(randf_range(-1, 1), 0.0, randf_range(-1, 1)).normalized() * mushroom_data.spawn_range
 	var spawn_point := global_position + spawn_offset
 	
-	var tile: Tile = grid.get_at_world(spawn_point)
-	
-	if !tile:
-		return
-	
-	if tile.is_fully_occupied():
-		return
-	
-	if tile.has_animal and mushroom_data.animal_resistance > randf_range(0.0, 1.0):
-		return
-	
-	if tile.has_insects and mushroom_data.insect_resistance > randf_range(0.0, 1.0):
-		return
-	
-	if randf_range(0.0, 1.0) > tile.fertility:
+	if !is_spawn_safe(spawn_point):
 		return
 	
 	var new_mushroom: Node3D = mushroom_baby.instantiate()
@@ -79,6 +85,7 @@ func _spawn_mushroom() -> void:
 	
 	new_mushroom.grid = grid
 	
+	var tile: Tile = grid.get_at_world(spawn_point)
 	var new_growth : float = generational_max - mushroom_data.generational_loss
 	new_growth *= tile.fertility
 	new_mushroom.scale = Vector3.ONE * new_growth
