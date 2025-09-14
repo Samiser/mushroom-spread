@@ -2,6 +2,8 @@ extends Node3D
 
 var mushroom_scene: PackedScene = load("res://mushroom.tscn")
 
+@onready var forest_grid := $ForestGrid
+
 func _process(delta: float) -> void:
 	$CameraPivot.rotation_degrees.y += 5 * delta
 	#$DirectionalLight3D.rotation_degrees.x -= 3 * delta
@@ -23,6 +25,7 @@ func _unhandled_input(e: InputEvent) -> void:
 				print("here")
 				var mushroom := mushroom_scene.instantiate()
 				mushroom.position = info.center
+				mushroom.grid = forest_grid
 				add_child(mushroom)
 				info.occupied = true
 			if info:

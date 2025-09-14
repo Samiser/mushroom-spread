@@ -37,7 +37,7 @@ func _build_index() -> void:
 		
 		var thing: Dictionary = {}
 		for map: GridMap in _things:
-			var map_cell := world_to_cell_on_map(map, data.center)
+			var map_cell := world_to_cell_on_map(data.center, map)
 			var id := map.get_cell_item(map_cell)
 			if id != GridMap.INVALID_CELL_ITEM:
 				thing = {
@@ -88,6 +88,6 @@ func cell_to_world(cell: Vector3i) -> Vector3:
 	var local_center := _ground.map_to_local(cell)
 	return _ground.to_global(local_center)
 
-func world_to_cell_on_map(gm: GridMap, world_pos: Vector3) -> Vector3i:
-	var local := gm.to_local(world_pos)
-	return gm.local_to_map(local)
+func world_to_cell_on_map(world_pos: Vector3, grid: GridMap = _ground) -> Vector3i:
+	var local := _ground.to_local(world_pos)
+	return _ground.local_to_map(local)
