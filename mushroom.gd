@@ -65,12 +65,11 @@ func _spawn_mushroom() -> void:
 	if tile.is_fully_occupied():
 		return
 	
-	if tile.has_animal:
+	if tile.has_animal and mushroom_data.animal_resistance > randf_range(0.0, 1.0):
 		return
 	
-	if tile.has_insects:
-		if randf_range(0, 4) == 1:
-			return
+	if tile.has_insects and mushroom_data.insect_resistance > randf_range(0.0, 1.0):
+		return
 	
 	if randf_range(0.0, 1.0) > tile.fertility:
 		return

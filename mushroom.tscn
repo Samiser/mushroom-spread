@@ -12,6 +12,10 @@ grow_speed = 0.2
 max_growth = 1.0
 spawn_range = 0.3
 max_family = 4
+generational_loss = 0.2
+insect_resistance = 0.8
+animal_resistance = 0.2
+starting_tile = ""
 metadata/_custom_type_script = "uid://b8pfmuhloq52q"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pl5ep"]
