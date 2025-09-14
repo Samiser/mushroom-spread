@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://ceu7c77rpa85w"]
+
+[ext_resource type="Script" uid="uid://cu68i3hf4bri" path="res://environment.gd" id="1_0dwx2"]
+
+[sub_resource type="Gradient" id="Gradient_h2yge"]
+offsets = PackedFloat32Array(0, 0.224756, 0.504886, 0.791531, 1)
+colors = PackedColorArray(0.113838, 0.16973, 0.263496, 1, 0.892583, 0.521761, 0.431232, 1, 0.979253, 0.881843, 0.759006, 1, 0.894118, 0.521569, 0.431373, 1, 0.113725, 0.168627, 0.262745, 1)
+
+[sub_resource type="Curve" id="Curve_h2yge"]
+_limits = [-10.0, 55.0, 0.0, 1.0]
+_data = [Vector2(0, -10), 0.0, 0.0, 0, 0, Vector2(0.25, 15), 132.776, 132.776, 0, 0, Vector2(0.5, 55), 0.0, 0.0, 0, 0, Vector2(0.75, 15), -204.171, -204.171, 0, 0, Vector2(1, -10), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_1bvp3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.246246, 0.596659), 2.58294, 2.58294, 0, 0, Vector2(0.501501, 1), 0.0, 0.0, 0, 0, Vector2(0.750751, 0.596659), -2.48359, -2.48359, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Gradient" id="Gradient_1bvp3"]
+offsets = PackedFloat32Array(0, 0, 0.5, 1, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.9, 0.6, 0.4, 1, 1, 0.98, 0.9, 1, 1, 1, 1, 1, 0.9, 0.6, 0.4, 1)
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+ambient_light_source = 3
+tonemap_mode = 2
+tonemap_exposure = 0.48
+tonemap_white = 0.84
+fog_enabled = true
+fog_light_color = Color(0.971497, 0.849021, 0.729158, 1)
+fog_density = 0.0758
+adjustment_enabled = true
+adjustment_contrast = 1.3
+adjustment_saturation = 1.1
+
+[node name="Environment" type="Node3D"]
+script = ExtResource("1_0dwx2")
+time_of_day = 0.531
+fog_color_gradient = SubResource("Gradient_h2yge")
+sun_elevation_curve = SubResource("Curve_h2yge")
+sun_intensity = SubResource("Curve_1bvp3")
+sun_color_gradient = SubResource("Gradient_1bvp3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.19355, -0.793433, 0.577065, 0, 0.588187, 0.808725, -0.981091, 0.156528, -0.113843, 0, 5, 0)
+light_color = Color(1, 0.98124, 0.9062, 1)
+light_energy = 0.991822
+shadow_enabled = true
+shadow_opacity = 0.8
+directional_shadow_split_1 = 0.015
+directional_shadow_split_2 = 0.171
+directional_shadow_split_3 = 0.548
+directional_shadow_blend_splits = true
+directional_shadow_fade_start = 1.0
