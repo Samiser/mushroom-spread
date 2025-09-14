@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://b0h23m6qtmef6"]
+
+[ext_resource type="MeshLibrary" uid="uid://cqmrgdtxkoikq" path="res://Meshes/libraries/ground_meshlib.tres" id="1_33puw"]
+[ext_resource type="Script" uid="uid://biff4oxh2fonk" path="res://forest_grid.gd" id="1_gs8jw"]
+[ext_resource type="MeshLibrary" uid="uid://d11ctfppkq60e" path="res://Meshes/libraries/tree_meshlib.tres" id="2_cgnif"]
+[ext_resource type="MeshLibrary" uid="uid://qb65yo3vr8xg" path="res://Meshes/libraries/plant_meshlib.tres" id="3_cgnif"]
+[ext_resource type="MeshLibrary" uid="uid://rqx17ym0fd68" path="res://Meshes/libraries/rock_meshlib.tres" id="4_m3g5o"]
+[ext_resource type="MeshLibrary" uid="uid://bqv6cty446ven" path="res://Meshes/libraries/flower_meshlib.tres" id="5_h8st5"]
+[ext_resource type="MeshLibrary" uid="uid://bsbwnhvesik5o" path="res://Meshes/libraries/stump_meshlib.tres" id="6_a1ok8"]
+[ext_resource type="MeshLibrary" uid="uid://deaqi4i0nde6c" path="res://Meshes/libraries/grass_meshlib.tres" id="7_gs8jw"]
+[ext_resource type="MeshLibrary" uid="uid://bgbxb8gh63yue" path="res://Meshes/libraries/cliff_meshlib.tres" id="8_a1ok8"]
+
+[node name="ForestGrid" type="Node3D"]
+script = ExtResource("1_gs8jw")
+ground_map_path = NodePath("Ground")
+thing_map_paths = Array[NodePath]([NodePath("Trees"), NodePath("Plants"), NodePath("Rocks"), NodePath("Flowers"), NodePath("Stumps"), NodePath("Grass")])
+
+[node name="Ground" type="GridMap" parent="."]
+mesh_library = ExtResource("1_33puw")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(0, 65535, 655366, 0, 0, 2, 0, 65534, 2, 0, 1, 655374, 0, 65533, 9, 0, 2, 655375, 65535, 65533, 655375, 65535, 65534, 655375, 65535, 65535, 655375, 65535, 0, 655375, 65535, 1, 1441794, 65535, 2, 655375, 1, 65533, 655375, 1, 65534, 655375, 1, 65535, 655375, 1, 0, 655375, 1, 1, 655375, 1, 2, 655375, 65534, 65533, 655375, 65534, 65534, 655375, 65534, 65535, 655375, 65534, 0, 655375, 65534, 1, 1048585, 65534, 2, 655375)
+}
+
+[node name="Trees" type="GridMap" parent="."]
+mesh_library = ExtResource("2_cgnif")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65534, 65533, 655418, 1, 65534, 655412, 65535, 65535, 655409, 65534, 0, 655406, 1, 2, 655403, 65535, 2, 655392, 1, 0, 655363)
+}
+
+[node name="Plants" type="GridMap" parent="."]
+mesh_library = ExtResource("3_cgnif")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65534, 65534, 655367, 1, 1, 655366, 65534, 2, 655365)
+}
+
+[node name="Rocks" type="GridMap" parent="."]
+mesh_library = ExtResource("4_m3g5o")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(1, 65533, 655365, 0, 2, 655387)
+}
+
+[node name="Flowers" type="GridMap" parent="."]
+mesh_library = ExtResource("5_h8st5")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65535, 65533, 655367, 65534, 65535, 655362, 1, 65535, 655365)
+}
+
+[node name="Stumps" type="GridMap" parent="."]
+mesh_library = ExtResource("6_a1ok8")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65535, 0, 655365)
+}
+
+[node name="Grass" type="GridMap" parent="."]
+mesh_library = ExtResource("7_gs8jw")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65535, 65534, 655362)
+}
+
+[node name="Cliffs" type="GridMap" parent="."]
+visible = false
+mesh_library = ExtResource("8_a1ok8")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(-3, 65533, 1048598, -3, 65534, 1048598, -3, 65535, 1048598, -3, 0, 1048598, -3, 1, 1048598, -3, 2, 1048598, -65535, 65532, 22, -65536, 65532, 22, -1, 65532, 22, -2, 65532, 22, -65534, 2, 1441814, -65534, 1, 1441814, -65534, 0, 1441814, -65534, 65535, 1441814, -65534, 65534, 1441814, -65534, 65533, 1441814, -2, 3, 655382, -1, 3, 655382, -65536, 3, 655382, -65535, 3, 655382, -3, 3, 655414, -3, 65532, 1048630, -65534, 65532, 54, -65534, 3, 1441846)
+}
+metadata/_editor_floor_ = Vector3(0, -1, 0)

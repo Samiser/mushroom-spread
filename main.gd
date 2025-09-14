@@ -3,3 +3,21 @@ extends Node3D
 func _process(delta: float) -> void:
 	$CameraPivot.rotation_degrees.y += 5 * delta
 	#$DirectionalLight3D.rotation_degrees.x -= 3 * delta
+
+func _unhandled_input(e: InputEvent) -> void:
+	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+		var cam := get_viewport().get_camera_3d()
+		var from := cam.project_ray_origin(e.position)
+		var to := from + cam.project_ray_normal(e.position) * 2000.0
+		var hit := get_world_3d().direct_space_state.intersect_ray(
+			PhysicsRayQueryParameters3D.create(from, to)
+		)
+		if hit.has("position"):
+			hit.position.y = 0.5
+			var info: Dictionary = $ForestGrid.get_at_world(hit.position)
+			$SpotLight3D.position = $ForestGrid.cell_to_world($ForestGrid.world_to_cell(hit.position))
+			$SpotLight3D.position.y = 5
+			if info.thing.get("name", "") != "":
+				print(info.thing.get("name",""))
+			else:
+				print("no thing here!")
