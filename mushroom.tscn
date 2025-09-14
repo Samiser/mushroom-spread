@@ -1,8 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpy2cuhnqod0d"]
+[gd_scene load_steps=7 format=3 uid="uid://dpy2cuhnqod0d"]
 
 [ext_resource type="Script" uid="uid://d1axjhpegdbve" path="res://mushroom.gd" id="1_ke5i0"]
+[ext_resource type="Script" uid="uid://b8pfmuhloq52q" path="res://mushroom_data.gd" id="2_jg55k"]
 [ext_resource type="Texture2D" uid="uid://dr1fnlbwkkrug" path="res://mushroom_sprite.png" id="2_ke5i0"]
 [ext_resource type="PackedScene" uid="uid://bl50hmlq6qjt2" path="res://Meshes/kenney_nature/mushroom_red.glb" id="2_pl5ep"]
+
+[sub_resource type="Resource" id="Resource_4gvq0"]
+script = ExtResource("2_jg55k")
+mushroom_name = "Default Mushroom"
+grow_speed = 0.2
+max_growth = 1.0
+spawn_range = 0.3
+max_family = 4
+metadata/_custom_type_script = "uid://b8pfmuhloq52q"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pl5ep"]
 radius = 0.0550554
@@ -10,6 +20,7 @@ height = 0.222382
 
 [node name="Mushroom" type="Node3D"]
 script = ExtResource("1_ke5i0")
+mushroom_data = SubResource("Resource_4gvq0")
 
 [node name="mushroom_mesh" parent="." instance=ExtResource("2_pl5ep")]
 visible = false
