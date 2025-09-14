@@ -17,7 +17,14 @@ var fertility: float = 1.0
 var has_animal: bool = false
 var has_insects: bool = false
 
+var mushroom_count_max = 5
+
+# mutable
 var occupied: bool = false
+var mushroom_count: int = 0
+
+func is_fully_occupied() -> bool:
+	return mushroom_count >= mushroom_count_max 
 
 func _to_string() -> String:
 	var g_id := ground_id if ground_id != GridMap.INVALID_CELL_ITEM else -1

@@ -61,6 +61,9 @@ func _spawn_mushroom() -> void:
 	if !tile:
 		return
 	
+	if tile.is_fully_occupied():
+		return
+	
 	if tile.has_animal:
 		return
 	
@@ -86,6 +89,8 @@ func _spawn_mushroom() -> void:
 	parent.family.append(new_mushroom)
 
 	new_mushroom.global_position = global_position + spawn_offset
+	tile.mushroom_count += 1
+	print(tile.mushroom_count)
 
 func _on_area_3d_mouse_entered() -> void:
 	for mushroom in parent.family:
