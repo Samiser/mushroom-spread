@@ -4,10 +4,6 @@ var mushroom_scene: PackedScene = load("res://mushroom.tscn")
 
 @onready var forest_grid := $ForestGrid
 
-func _process(delta: float) -> void:
-	$CameraPivot.rotation_degrees.y += 5 * delta
-	#$DirectionalLight3D.rotation_degrees.x -= 3 * delta
-
 func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 		var cam := get_viewport().get_camera_3d()
