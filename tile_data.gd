@@ -61,3 +61,42 @@ func _to_string() -> String:
 		has_animal, has_insects,
 		occupied
 	]
+
+func to_bbcode() -> String:
+	var g_id := ground_id if ground_id != GridMap.INVALID_CELL_ITEM else -1
+	var t_id := thing_id if thing_id != GridMap.INVALID_CELL_ITEM else -1
+	var t_col := _type_color(type_to_string(type))
+
+	var parts := []
+	parts.append("[b]Tile info:[/b]\n[color=#888]cell[/color]=%s\n[color=#888]world[/color]=%s" % [cell, center])
+
+	parts.append("\n[b]Ground:[/b] %s" % ground_name)
+
+	if thing_id != GridMap.INVALID_CELL_ITEM:
+		parts.append("\n[b]Thing:[/b] [color=%s]%s[/color]\n[b]type:[/b] [color=%s]%s[/color]" % [
+			t_col, thing_name, t_col, type_to_string(type)
+		])
+	else:
+		parts.append("\n[b]Thing:[/b] [color=#aaa]-[/color]")
+
+	parts.append("\n[b]Fertility:[/b] %.2f" % fertility)
+
+	parts.append("\n" + _bool_rich("Animal", has_animal) + "\n" + _bool_rich("Insects", has_insects) + "\n" + _bool_rich("Occupied", occupied))
+
+	return "".join(parts)
+
+func _bool_rich(label: String, on: bool) -> String:
+	var c := "#67c23a" if on else "#9aa3ad"
+	var sym := "true" if on else "false"
+	return "[color=%s][b]%s[/b][/color]: [color=%s]%s[/color]" % ["#888", label, c, sym]
+
+func _type_color(t: String) -> String:
+	var lut := {
+		"tree": "#69a34b",
+		"flower": "#c94b7a",
+		"plant": "#7fbf6b",
+		"stump": "#9c6b3a",
+		"log": "#8b6f4a",
+		"": "#cccccc"
+	}
+	return String(lut.get(t.to_lower(), "#cccccc"))

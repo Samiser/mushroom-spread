@@ -15,6 +15,7 @@ func _unhandled_input(e: InputEvent) -> void:
 		if hit.has("position"):
 			hit.position.y = 0.5
 			var tile: Tile = $ForestGrid.get_at_world(hit.position)
+			$Hud.set_tile_info(tile.to_bbcode())
 			$SpotLight3D.position = $ForestGrid.cell_to_world($ForestGrid.world_to_cell(hit.position))
 			$SpotLight3D.position.y = 5
 			if not tile.occupied and not tile.is_fully_occupied():

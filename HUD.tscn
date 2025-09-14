@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://ju4jx8sao8wh"]
+[gd_scene load_steps=4 format=3 uid="uid://ju4jx8sao8wh"]
 
+[ext_resource type="FontFile" uid="uid://br5m76r2ao6tp" path="res://Fonts/alagard.ttf" id="1_efote"]
 [ext_resource type="Script" uid="uid://dk20lageb3via" path="res://hud.gd" id="1_k5de2"]
+
+[sub_resource type="Theme" id="Theme_k5de2"]
+default_font = ExtResource("1_efote")
+default_font_size = 16
 
 [node name="Hud" type="Control"]
 layout_mode = 3
@@ -10,6 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = SubResource("Theme_k5de2")
 script = ExtResource("1_k5de2")
 
 [node name="hover_description" type="RichTextLabel" parent="."]
@@ -17,7 +23,18 @@ layout_mode = 0
 offset_left = 6.0
 offset_top = 6.0
 offset_right = 500.0
-offset_bottom = 166.0
+offset_bottom = 250.0
 mouse_filter = 2
 bbcode_enabled = true
 text = "mouse hover info goes here..."
+
+[node name="tile_description" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 77.0
+offset_top = 6.0
+offset_right = 571.0
+offset_bottom = 252.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "tile info"
+horizontal_alignment = 2
