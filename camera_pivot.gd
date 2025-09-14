@@ -4,7 +4,7 @@ class_name CameraPivotController
 @export var camera_path: NodePath
 @export var ground_y: float = 0.0
 @export var rotate_sensitivity: float = 0.3
-@export var min_ortho_size: float = 4.0
+@export var min_ortho_size: float = 2.0
 @export var max_ortho_size: float = 200.0
 @export var zoom_step: float = 0.9
 
