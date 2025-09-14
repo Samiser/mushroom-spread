@@ -27,6 +27,7 @@ func _unhandled_input(e: InputEvent) -> void:
 				mushroom.position = info.center
 				mushroom.grid = forest_grid
 				add_child(mushroom)
+				mushroom.set_description.connect($Hud.set_hover_desc)
 				info.occupied = true
 			if info:
 				print(info)
