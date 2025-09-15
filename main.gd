@@ -3,7 +3,24 @@ extends Node3D
 var mushroom_scene: PackedScene = load("res://mushroom.tscn")
 
 @onready var forest_grid := $ForestGrid
+@onready var environment := $Environment
 
+var day := 0
+
+func _ready() -> void:
+	$Hud.day_ended.connect(end_day)
+	$Hud.day_started.connect(start_day)
+
+func start_day() -> void:
+	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(environment, "time_of_day", 0.35, 2)
+
+func end_day() -> void:
+	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(environment, "time_of_day", 1.0, 2)
+	await tween.finished
+	environment.time_of_day = 0.0
+	
 func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 		var cam := get_viewport().get_camera_3d()
