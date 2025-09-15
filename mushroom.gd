@@ -46,20 +46,20 @@ func _grow(delta: float) -> void:
 	scale = Vector3.ONE * growth
 
 func _on_area_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int):
-	if event is InputEventMouseButton:
-		if event.is_pressed():
-			if growth >= generational_max:
-				var spawns := randi_range(1, mushroom_data.spawn_max)
-				if generation == 0 and spawns == 1:
-					spawns = 2
-				
-				if !grown and parent.family.size() < mushroom_data.max_family:
-					if (parent.family.size() + spawns) > mushroom_data.max_family:
-						spawns -= (parent.family.size() + spawns) - mushroom_data.max_family
-					var index := 0
-					while index < spawns:
-						_spawn_baby_mushroom()
-						index += 1
+	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+		if growth >= generational_max:
+			$CPUParticles3D.emitting = true
+			var spawns := randi_range(1, mushroom_data.spawn_max)
+			if generation == 0 and spawns == 1:
+				spawns = 2
+			
+			if !grown and parent.family.size() < mushroom_data.max_family:
+				if (parent.family.size() + spawns) > mushroom_data.max_family:
+					spawns -= (parent.family.size() + spawns) - mushroom_data.max_family
+				var index := 0
+				while index < spawns:
+					_spawn_baby_mushroom()
+					index += 1
 
 func is_spawn_safe(pos: Vector3) -> bool:
 	var tile: Tile = grid.get_at_world(pos)
