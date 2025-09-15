@@ -12,6 +12,7 @@ grow_speed = 0.2
 max_growth = 1.0
 spawn_range = 0.3
 max_family = 12
+tile_capacity = 3
 spawn_max = 4
 generational_loss = 0.12
 insect_resistance = 0.8

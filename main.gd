@@ -23,6 +23,17 @@ func end_day() -> void:
 	await tween.finished
 	environment.time_of_day = 0.0
 	
+	get_tree().call_group("mushrooms", "grow_to_full", 2.0)
+	
+	var seen := {}
+	for m in get_tree().get_nodes_in_group("mushrooms"):
+		if m is Mushroom and m.generation == 0:
+			var data: MushroomData = m.mushroom_data
+			var key := data.get_instance_id()
+			if not seen.has(key):
+				data.max_family += 8
+				seen[key] = true
+	
 func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 		var cam := get_viewport().get_camera_3d()
@@ -37,7 +48,7 @@ func _unhandled_input(e: InputEvent) -> void:
 			$Hud.set_tile_info(tile.to_bbcode())
 			$SpotLight3D.position = $ForestGrid.cell_to_world($ForestGrid.world_to_cell(hit.position))
 			$SpotLight3D.position.y = 5
-			if not tile.occupied and not tile.is_fully_occupied():
+			if not tile.occupied and not tile.is_fully_occupied(4): # TODO: what happens when starting on a spot with mushrooms already on it? can that happen?
 				var mushroom : Mushroom = mushroom_scene.instantiate()
 				mushroom.position = tile.center
 				mushroom.grid = forest_grid

@@ -15,8 +15,6 @@ var thing_map: GridMap = null
 
 var type: Type = -1
 
-var mushroom_count_max = 5
-
 # mutable
 var fertility: float = 1.0
 var has_animal: bool = false
@@ -45,8 +43,9 @@ static func type_of_string(string: String) -> Type:
 		"flower": return Type.FLOWER
 	return Type.UNKNOWN_TYPE
 
-func is_fully_occupied() -> bool:
-	return mushroom_count >= mushroom_count_max 
+func is_fully_occupied(mushroom_tile_capacity: int) -> bool:
+	print(mushroom_count, "/", mushroom_tile_capacity)
+	return mushroom_count >= mushroom_tile_capacity 
 
 func _to_string() -> String:
 	var g_id := ground_id if ground_id != GridMap.INVALID_CELL_ITEM else -1
