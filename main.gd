@@ -42,7 +42,7 @@ func _unhandled_input(e: InputEvent) -> void:
 				mushroom.position = tile.center
 				mushroom.grid = forest_grid
 
-				if !mushroom.is_spawn_safe(mushroom.position):
+				if !mushroom.is_spawn_safe(mushroom.position) or !mushroom.is_on_starting_tile(mushroom.position):
 					return
 					
 				add_child(mushroom)

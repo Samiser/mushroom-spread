@@ -61,10 +61,14 @@ func _on_area_input_event(camera: Node, event: InputEvent, event_position: Vecto
 					_spawn_baby_mushroom()
 					index += 1
 
+func is_on_starting_tile(pos: Vector3):
+	var tile: Tile = grid.get_at_world(pos)
+	return tile and tile.type == mushroom_data.starting_tile
+
 func is_spawn_safe(pos: Vector3) -> bool:
 	var tile: Tile = grid.get_at_world(pos)
 	
-	if !tile or tile.type != mushroom_data.starting_tile:
+	if !tile:
 		return false
 	
 	if tile.is_fully_occupied():
@@ -88,8 +92,8 @@ func _spawn_baby_mushroom() -> void:
 		spawn_offset += (global_position - parent.family.get(generation - 1).global_position).normalized() * mushroom_data.spawn_range
 	var spawn_point := global_position + spawn_offset
 	
-	#if !is_spawn_safe(spawn_point):
-	#	return
+	if !is_spawn_safe(spawn_point):
+		return
 	
 	var new_mushroom: Node3D = mushroom_baby.instantiate()
 	get_tree().root.add_child(new_mushroom)
