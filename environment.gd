@@ -6,7 +6,7 @@ extends Node3D
 var _env: Environment
 
 @export var auto_run: bool = true
-@export var day_length_seconds: float = 120.0
+@export var day_length_seconds: float = 480.0 * 2
 @export_range(0.0, 1.0, 0.001) var time_of_day: float = 0.0: set = set_time
 @export var fog_color_gradient: Gradient
 @export var time_scale: float = 1.0
@@ -15,6 +15,8 @@ var _env: Environment
 @export var sun_elevation_curve: Curve			# maps t(0..1) -> elevation deg
 @export var sun_intensity: Curve				# maps t -> 0..1 multiplier
 @export var sun_color_gradient: Gradient		# maps t -> Color
+
+var is_day = false
 
 func _ready() -> void:
 	_env = world_environment.environment
@@ -28,9 +30,11 @@ func _process(delta: float) -> void:
 		return
 	if day_length_seconds <= 0.0:
 		return
-	var step := (delta / day_length_seconds) * time_scale
-	time_of_day = fposmod(time_of_day + step, 1.0)
-	_apply_time()
+	
+	if (is_day and time_of_day <= 0.8) or (!is_day and time_of_day <= 0.15):
+		var step := (delta / day_length_seconds) * time_scale
+		time_of_day = fposmod(time_of_day + step, 1.0)
+		_apply_time()
 
 func set_time(v: float) -> void:
 	time_of_day = clamp(v, 0.0, 1.0)

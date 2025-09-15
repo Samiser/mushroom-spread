@@ -12,10 +12,12 @@ func _ready() -> void:
 	$Hud.day_started.connect(start_day)
 
 func start_day() -> void:
+	environment.is_day = true
 	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(environment, "time_of_day", 0.35, 2)
 
 func end_day() -> void:
+	environment.is_day = false
 	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(environment, "time_of_day", 1.0, 2)
 	await tween.finished
