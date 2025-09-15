@@ -13,7 +13,7 @@ script = ExtResource("1_0xm2m")
 
 [node name="Environment" parent="." instance=ExtResource("2_1bvp3")]
 day_length_seconds = 240.0
-time_of_day = 0.158
+time_of_day = 0.0
 
 [node name="CameraPivot" type="Node3D" parent="."]
 script = ExtResource("3_1bvp3")

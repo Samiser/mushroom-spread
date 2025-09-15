@@ -19,7 +19,7 @@ var _env: Environment
 func _ready() -> void:
 	_env = world_environment.environment
 	if not Engine.is_editor_hint():
-		time_of_day = 0.15
+		time_of_day = 0.0
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():

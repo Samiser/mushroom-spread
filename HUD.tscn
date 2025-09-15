@@ -30,7 +30,7 @@ offset_right = 500.0
 offset_bottom = 250.0
 mouse_filter = 2
 bbcode_enabled = true
-text = "mouse hover info goes here..."
+text = "mushroom info"
 
 [node name="TileDescription" type="RichTextLabel" parent="."]
 layout_mode = 0
