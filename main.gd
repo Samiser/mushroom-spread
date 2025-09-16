@@ -25,17 +25,17 @@ func end_day() -> void:
 	await tween.finished
 	environment.time_of_day = 0.0
 	
-	get_tree().call_group("mushrooms", "grow_to_full", 2.0)
+	get_tree().call_group("mushrooms", "grow_to_full")
 	
 	var seen := {}
-	for m in get_tree().get_nodes_in_group("mushrooms"):
+	for m: Mushroom in get_tree().get_nodes_in_group("mushrooms"):
 		if m is Mushroom and m.generation == 0:
 			var data: MushroomData = m.mushroom_data
 			var key := data.get_instance_id()
-			var prev_health :float= m.family_health
+			var prev_health: float= m.family_health
 			m.family_health += m.check_family_tiles()[0] * 4
 			m.family_health -= m.family.size()
-			m.family_health = clampi(m.family_health, 0, 100)
+			m.family_health = clamp(m.family_health, 0, 100)
 			m.is_health_increasing = m.family_health >= prev_health
 			
 			if not seen.has(key):

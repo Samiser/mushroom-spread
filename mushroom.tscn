@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpy2cuhnqod0d"]
+[gd_scene load_steps=13 format=3 uid="uid://dpy2cuhnqod0d"]
 
 [ext_resource type="Script" uid="uid://d1axjhpegdbve" path="res://mushroom.gd" id="1_ke5i0"]
 [ext_resource type="Script" uid="uid://b8pfmuhloq52q" path="res://mushroom_data.gd" id="2_jg55k"]
 [ext_resource type="Texture2D" uid="uid://dr1fnlbwkkrug" path="res://mushroom_sprite.png" id="2_ke5i0"]
 [ext_resource type="PackedScene" uid="uid://bl50hmlq6qjt2" path="res://Meshes/kenney_nature/mushroom_red.glb" id="2_pl5ep"]
+[ext_resource type="Script" uid="uid://dqypjnaeanojx" path="res://mushroom_spawner.gd" id="5_4gvq0"]
+[ext_resource type="Script" uid="uid://dggm2l6ep5rxb" path="res://mushroom_ui.gd" id="6_5rjv2"]
 
 [sub_resource type="Resource" id="Resource_jg55k"]
 script = ExtResource("2_jg55k")
@@ -94,6 +96,13 @@ default_color = Color(0, 0.7490196, 0, 1)
 joint_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[node name="Spawner" type="Node" parent="."]
+script = ExtResource("5_4gvq0")
+
+[node name="UI" type="Node" parent="." node_paths=PackedStringArray("line")]
+script = ExtResource("6_5rjv2")
+line = NodePath("../Line2D")
 
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

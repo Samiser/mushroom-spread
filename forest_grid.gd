@@ -74,12 +74,12 @@ func neighbors4(cell: Vector3i) -> Array[Vector3i]:
 func _item_name(gm: GridMap, item_id: int) -> String:
 	return gm.mesh_library.get_item_name(item_id) if gm and gm.mesh_library else ""
 
-func _infer_type_from_name(name: String) -> Tile.Type:
-	if name == "":
+func _infer_type_from_name(thing_name: String) -> Tile.Type:
+	if thing_name == "":
 		return Tile.Type.UNKNOWN_TYPE
-	var i := name.find("_")
-	var type_string: String = name if i == -1 else name.substr(0, i)
-	return Tile.type_of_string(type_string)
+	var i := thing_name.find("_")
+	var thing_type: String = thing_name if i == -1 else thing_name.substr(0, i)
+	return Tile.type_of_string(thing_type)
 
 func world_to_cell(world_pos: Vector3) -> Vector3i:
 	var local := _ground.to_local(world_pos)
@@ -90,5 +90,5 @@ func cell_to_world(cell: Vector3i) -> Vector3:
 	return _ground.to_global(local_center)
 
 func world_to_cell_on_map(world_pos: Vector3, grid: GridMap = _ground) -> Vector3i:
-	var local := _ground.to_local(world_pos)
-	return _ground.local_to_map(local)
+	var local := grid.to_local(world_pos)
+	return grid.local_to_map(local)

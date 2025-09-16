@@ -13,7 +13,7 @@ var thing_id: int = GridMap.INVALID_CELL_ITEM
 var thing_name: String = ""
 var thing_map: GridMap = null
 
-var type: Type = -1
+var type: Type = Type.UNKNOWN_TYPE
 
 # mutable
 var fertility: float = 1.0
@@ -25,8 +25,8 @@ var mushroom_count: int = 0
 func type_string() -> String:
 	return type_to_string(type)
 
-static func type_to_string(type: Type) -> String:
-	match type:
+static func type_to_string(t: Type) -> String:
+	match t:
 		Type.TREE: return "tree"
 		Type.PLANT: return "plant"
 		Type.GRASS: return "grass"
@@ -61,9 +61,7 @@ func _to_string() -> String:
 	]
 
 func to_bbcode() -> String:
-	var g_id := ground_id if ground_id != GridMap.INVALID_CELL_ITEM else -1
-	var t_id := thing_id if thing_id != GridMap.INVALID_CELL_ITEM else -1
-	var t_col := _type_color(type_to_string(type))
+	var t_col := _type_to_color(type_to_string(type))
 
 	var parts := []
 	parts.append("[b]Tile info:[/b]\n[color=#888]cell[/color]=%s\n[color=#888]world[/color]=%s" % [cell, center])
@@ -90,7 +88,7 @@ func _bool_rich(label: String, on: bool) -> String:
 	var sym := "true" if on else "false"
 	return "[color=%s][b]%s[/b][/color]: [color=%s]%s[/color]" % ["#888", label, c, sym]
 
-static func _type_color(t: String) -> String:
+static func _type_to_color(t: String) -> String:
 	var lut := {
 		"tree": "#69a34b",
 		"flower": "#c94b7a",
@@ -102,4 +100,4 @@ static func _type_color(t: String) -> String:
 	return String(lut.get(t.to_lower(), "#cccccc"))
 
 static func type_to_bbcode(t: Tile.Type):
-	return "[color=%s]%s[/color]" % [_type_color(type_to_string(t)), type_to_string(t)]
+	return "[color=%s]%s[/color]" % [_type_to_color(type_to_string(t)), type_to_string(t)]

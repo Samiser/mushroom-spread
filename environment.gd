@@ -48,16 +48,11 @@ func _apply_time() -> void:
 func _update_sun() -> void:
 	var elev_deg := sun_elevation_curve.sample_baked(time_of_day)
 	var az_deg := fposmod(-90 + 360.0 * time_of_day, 360.0)
-	var dir := _dir_from_az_el(deg_to_rad(az_deg), deg_to_rad(elev_deg))
 
 	sun.rotation_degrees = Vector3(-elev_deg, az_deg, 0.0)
 	
 	sun.light_color = sun_color_gradient.sample(time_of_day)
 	sun.light_energy = sun_intensity.sample_baked(time_of_day)
-
-func _dir_from_az_el(az: float, el: float) -> Vector3:
-	var ce := cos(el)
-	return Vector3(cos(az) * ce, sin(el), sin(az) * ce)
 
 func _update_fog_and_ambient() -> void:
 	if _env:
