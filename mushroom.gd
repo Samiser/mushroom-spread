@@ -89,7 +89,6 @@ func _process(delta: float) -> void:
 			Tile: %s
 			Family Tile Rating: [color=%s]%.f%%[/color]
 			Health: [color=%s]%.f[/color]
-			Health: %.f
 			Max Tile Capacity: %d
 			%s" % [
 				mushroom_data.mushroom_name, parent.family_name, generation, 
