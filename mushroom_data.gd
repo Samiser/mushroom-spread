@@ -18,5 +18,6 @@ class_name MushroomData
 @export_range (0.0, 1.0) var animal_resistance := 0.0
 
 @export var starting_tile : Tile.Type
-
+@export var likes_tiles : Array[Tile.Type]
+@export var dislikes_tiles : Array[Tile.Type]
 var family_names : Array[String] = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguaz", "Simpsons"]
