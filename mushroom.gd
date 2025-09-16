@@ -14,6 +14,7 @@ var generation := 0 # current mushroom gen
 var family : Array[Mushroom] # only the parent tracks this
 var parent : Mushroom
 var family_name : String
+var tile_rating : Array[int] = [0, 0] # rating, total
 
 @onready var sprite :Sprite3D= $Sprite3D
 var highlighted := false
@@ -49,9 +50,13 @@ func _process(delta: float) -> void:
 	
 	if highlighted:
 		var growth_percent := roundf((growth / generational_max) * 100)
-		var growth_colour : Color = lerp(Color.RED, Color.GREEN, growth_percent / 100.0)
-		var desc: String = mushroom_data.mushroom_name + " (" + parent.family_name + ") Gen " + str(generation) +  "\nFamily size: " + str(parent.family.size()) + "/" + str(mushroom_data.max_family) + "\nGrowth: [color=#" + growth_colour.to_html() + "]" + str(growth_percent) + "%[/color]\nTile: " + grid.get_at_world(global_position).type_string() 
+		var tile_rating_percent := roundf((parent.tile_rating[0] as float / parent.tile_rating[1]) * 100.0)
+		var tile_string := grid.get_at_world(global_position).type_string()
+		var desc: String = mushroom_data.mushroom_name + " (" + parent.family_name + ") Gen " + str(generation) +  "\nFamily size: " + str(parent.family.size()) + "/" + str(mushroom_data.max_family) + "\nGrowth: [color=#" + _color_progress_lerp(growth_percent).to_html() + "]" + str(growth_percent) + "%[/color]\nTile: " + tile_string + "\nFamily Tile Rating: [color=#" + _color_progress_lerp(tile_rating_percent).to_html() + "]" + str(tile_rating_percent) + "%[/color]" 
 		parent.set_description.emit(desc)
+
+func _color_progress_lerp(percent: float) -> Color:
+	return lerp(Color.RED, Color.GREEN, percent / 100.0)
 
 func _grow(delta: float) -> void:
 	if growth >= generational_max:
@@ -222,9 +227,31 @@ func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
 
 	parent.family.append(new_mushroom)
 	new_mushroom.global_position = spawn_point
-
+	
+	parent.tile_rating = _check_family_tiles()
+	
 	if tile:
 		tile.mushroom_count += 1
+
+func _check_family_tiles() -> Array[int]:
+	var like_tiles := 0
+	var dislike_tiles := 0
+	var total := 0
+	
+	for mushroom in parent.family:
+		var tile := grid.get_at_world(mushroom.global_position)
+		if !tile:
+			continue
+			
+		if parent.mushroom_data.likes_tiles.has(tile.type):
+			like_tiles += 1
+			total += 1
+		elif parent.mushroom_data.dislikes_tiles.has(tile.type):
+			dislike_tiles += 1
+			total += 1
+	
+	var rating := like_tiles + -dislike_tiles
+	return [rating, total]
 
 func _on_area_3d_mouse_entered() -> void:
 	for mushroom in parent.family:

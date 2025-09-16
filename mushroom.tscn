@@ -12,6 +12,8 @@ generational_loss = 0.12
 insect_resistance = 0.8
 animal_resistance = 0.2
 starting_tile = 2
+likes_tiles = Array[int]([2, 1, 4])
+dislikes_tiles = Array[int]([3, 0])
 metadata/_custom_type_script = "uid://b8pfmuhloq52q"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pl5ep"]

@@ -59,3 +59,4 @@ func _unhandled_input(e: InputEvent) -> void:
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
 				tile.occupied = true
+				mushroom._check_family_tiles()
