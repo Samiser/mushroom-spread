@@ -6,6 +6,8 @@ var mushroom_scene: PackedScene = load("res://mushroom.tscn")
 @onready var environment := $Environment
 
 var day := 0
+var family_count := 0
+
 
 func _ready() -> void:
 	$Hud.day_ended.connect(end_day)
@@ -50,14 +52,15 @@ func _unhandled_input(e: InputEvent) -> void:
 			$Hud.set_tile_info(tile.to_bbcode())
 			$SpotLight3D.position = $ForestGrid.cell_to_world($ForestGrid.world_to_cell(hit.position))
 			$SpotLight3D.position.y = 5
-			if not tile.occupied and not tile.is_fully_occupied(4): # TODO: what happens when starting on a spot with mushrooms already on it? can that happen?
+			if not tile.occupied and not tile.is_fully_occupied(4) and not family_count >= 1: # TODO: what happens when starting on a spot with mushrooms already on it? can that happen?
 				var mushroom : Mushroom = mushroom_scene.instantiate()
 				mushroom.position = tile.center
 				mushroom.grid = forest_grid
 
 				if !mushroom.is_on_starting_tile(mushroom.position):
 					return
-					
+				
+				family_count += 1
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
 				tile.occupied = true

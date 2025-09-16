@@ -3,7 +3,6 @@ class_name Mushroom
 
 enum MUSHROOM_MOOD {Likes, Dislikes, NoComment}
 
-
 @export var mushroom_data : MushroomData
 
 var growth := 0.1
@@ -86,6 +85,7 @@ func _process(delta: float) -> void:
 			Tile: %s
 			Family Tile Rating: [color=%s]%.f%%[/color]
 			Health: %.f
+			Max Tile Capacity: %d
 			%s" % [
 				mushroom_data.mushroom_name, parent.family_name, generation, 
 				parent.family.size(), mushroom_data.max_family, 
@@ -93,6 +93,7 @@ func _process(delta: float) -> void:
 				tile_string, 
 				_color_progress_lerp(tile_rating_percent).to_html(), tile_rating_percent,
 				parent.family_health,
+				mushroom_data.tile_capacity,
 				_preferences_string()
 			]
 		parent.set_description.emit(desc.replace("\t", ""))
@@ -321,7 +322,6 @@ func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
 
 		spawn_point = global_position + try_dir * try_dist
 		print("trying position ", spawn_point)
-		await get_tree().create_timer(1).timeout
 
 	if !is_spawn_safe(spawn_point):
 		print("position ", spawn_point, " not safe, not spawning")

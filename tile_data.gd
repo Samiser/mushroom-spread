@@ -80,6 +80,8 @@ func to_bbcode() -> String:
 	parts.append("\n[b]Fertility:[/b] %.2f" % fertility)
 
 	parts.append("\n" + _bool_rich("Animal", has_animal) + "\n" + _bool_rich("Insects", has_insects) + "\n" + _bool_rich("Occupied", occupied))
+	
+	parts.append("\nMushroom Count: %d" % mushroom_count)
 
 	return "".join(parts)
 
