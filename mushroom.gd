@@ -20,6 +20,7 @@ var last_in_tree : Mushroom
 var family_name : String
 var tile_rating : Array[int] = [0, 0] # rating, total
 var family_health := 50.0
+var is_health_increasing := true
 
 @onready var sprite :Sprite3D= $Sprite3D
 var highlighted := false
@@ -78,12 +79,16 @@ func _process(delta: float) -> void:
 		var growth_percent := roundf((growth / generational_max) * 100)
 		var tile_rating_percent := roundf((parent.tile_rating[0] as float / parent.tile_rating[1]) * 100.0)
 		var tile_string := grid.get_at_world(global_position).type_string()
-
+		var increasing_health_colour := Color.GREEN
+		if !parent.is_health_increasing:
+			increasing_health_colour = Color.RED
+		
 		var desc: String = "%s (%s) Gen %d
 			Family size: %d/%d
 			Growth: [color=%s]%.f%%[/color]
 			Tile: %s
 			Family Tile Rating: [color=%s]%.f%%[/color]
+			Health: [color=%s]%.f[/color]
 			Health: %.f
 			Max Tile Capacity: %d
 			%s" % [
@@ -92,7 +97,7 @@ func _process(delta: float) -> void:
 				_color_progress_lerp(growth_percent).to_html(), growth_percent, 
 				tile_string, 
 				_color_progress_lerp(tile_rating_percent).to_html(), tile_rating_percent,
-				parent.family_health,
+				increasing_health_colour.to_html(), parent.family_health,
 				mushroom_data.tile_capacity,
 				_preferences_string()
 			]
