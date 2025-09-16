@@ -31,12 +31,26 @@ var spawn_burst_interval: float = 0.2
 
 var branch_dir: Vector3 = Vector3.ZERO
 
+@export var spawn_check_radius: float = 0.1
+@export var spawn_check_height: float = 0.05
+@export var spawn_check_y_offset: float = 0.2
+
+@export var debug_visualize_checks: bool = false
+
+var _spawn_shape := CylinderShape3D.new()
+var _spawn_q := PhysicsShapeQueryParameters3D.new()
+
 signal set_description(desc)
 
 func _ready() -> void:
 	add_to_group("mushrooms")
 	
 	$Area3D.input_event.connect(_on_area_input_event)
+	
+	_spawn_shape.radius = spawn_check_radius
+	_spawn_shape.height = spawn_check_height
+	_spawn_q.shape = _spawn_shape
+	_spawn_q.collide_with_bodies = true
 	
 	if generation == 0:
 		parent = self
@@ -69,6 +83,7 @@ func _xz_dir_from_angle(ang: float) -> Vector3:
 func _on_area_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	if not (event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT):
 		return
+	
 	if growth < generational_max:
 		return
 
@@ -86,7 +101,7 @@ func _on_area_input_event(camera: Node, event: InputEvent, event_position: Vecto
 		await _spawn_child_burst(spawns, dir)
 
 func _pick_spawn_count() -> int:
-	return randi_range(3, 4) if generation == 0 else randi_range(1, mushroom_data.spawn_max)
+	return randi_range(3, 4) if generation == 0 else randi_range(mushroom_data.spawn_min, mushroom_data.spawn_max)
 
 func _cap_spawns_to_family(spawns: int) -> int:
 	if grown:
@@ -150,6 +165,59 @@ func is_on_starting_tile(pos: Vector3):
 	var tile: Tile = grid.get_at_world(pos)
 	return tile and tile.type == mushroom_data.starting_tile
 
+func _collides_with_thing_at(world_pos: Vector3) -> bool:
+	_spawn_shape.radius = spawn_check_radius
+	_spawn_shape.height = spawn_check_height
+
+	var xform := Transform3D(Basis.IDENTITY, Vector3(
+		world_pos.x,
+		world_pos.y + spawn_check_y_offset,
+		world_pos.z
+	))
+	_spawn_q.transform = xform
+
+	var hits := get_world_3d().direct_space_state.intersect_shape(_spawn_q, 16)
+	var blocked := false
+	
+	for hit in hits:
+		if hit.collider.name in ["Trees", "Stumps"]:
+			blocked = true
+			break
+
+	if debug_visualize_checks:
+		_visualize_check(world_pos, blocked)
+
+	return blocked
+
+func _visualize_check(world_pos: Vector3, blocked: bool) -> void:
+	var debug_viz_seconds: float = 0.6
+	var debug_ok_color: Color = Color(0.3, 0.9, 0.5, 0.25)
+	var debug_block_color: Color = Color(0.95, 0.35, 0.35, 0.35)
+	
+	if not debug_visualize_checks:
+		return
+	var mi := MeshInstance3D.new()
+	var mesh := CylinderMesh.new()
+	mesh.top_radius = spawn_check_radius
+	mesh.bottom_radius = spawn_check_radius
+	mesh.height = spawn_check_height
+	mesh.radial_segments = 24
+	mi.mesh = mesh
+
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.albedo_color = debug_block_color if blocked else debug_ok_color
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.disable_receive_shadows = true
+	mi.material_override = mat
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+	mi.global_position = Vector3(world_pos.x, world_pos.y + spawn_check_y_offset, world_pos.z)
+	get_tree().current_scene.add_child(mi)
+
+	var t := get_tree().create_timer(debug_viz_seconds)
+	t.timeout.connect(func(): mi.queue_free())
+
 func is_spawn_safe(pos: Vector3) -> bool:
 	var tile: Tile = grid.get_at_world(pos)
 	
@@ -166,6 +234,10 @@ func is_spawn_safe(pos: Vector3) -> bool:
 		return false
 	
 	if randf_range(0.0, 1.0) > tile.fertility:
+		return false
+	
+	if _collides_with_thing_at(pos):
+		print("not safe!")
 		return false
 	
 	return true
@@ -201,9 +273,14 @@ func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
 		try_dist = max(0.1, dist * (1.0 + sign * search_radius_step_pct))
 
 		spawn_point = global_position + try_dir * try_dist
+		print("trying position ", spawn_point)
+		await get_tree().create_timer(1).timeout
 
 	if !is_spawn_safe(spawn_point):
+		print("position ", spawn_point, " not safe, not spawning")
 		return
+	
+	print("position ", spawn_point, " is safe, spawning")
 
 	var new_mushroom: Mushroom = mushroom_baby.instantiate() as Mushroom
 	get_tree().root.add_child(new_mushroom)

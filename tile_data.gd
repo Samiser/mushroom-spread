@@ -44,7 +44,6 @@ static func type_of_string(string: String) -> Type:
 	return Type.UNKNOWN_TYPE
 
 func is_fully_occupied(mushroom_tile_capacity: int) -> bool:
-	print(mushroom_count, "/", mushroom_tile_capacity)
 	return mushroom_count >= mushroom_tile_capacity 
 
 func _to_string() -> String:
