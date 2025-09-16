@@ -15,6 +15,7 @@ var family : Array[Mushroom] # only the parent tracks this
 var parent : Mushroom
 var family_name : String
 var tile_rating : Array[int] = [0, 0] # rating, total
+var family_health := 50.0
 
 @onready var sprite :Sprite3D= $Sprite3D
 var highlighted := false
@@ -66,19 +67,22 @@ func _process(delta: float) -> void:
 		var growth_percent := roundf((growth / generational_max) * 100)
 		var tile_rating_percent := roundf((parent.tile_rating[0] as float / parent.tile_rating[1]) * 100.0)
 		var tile_string := grid.get_at_world(global_position).type_string()
+
 		var desc: String = "%s (%s) Gen %d
 			Family size: %d/%d
 			Growth: [color=%s]%.f%%[/color]
 			Tile: %s
-			Family Tile Rating: [color=%s]%.f%%[/color]" % [
+			Family Tile Rating: [color=%s]%.f%%[/color]
+			Health: %.f" % [
 				mushroom_data.mushroom_name, parent.family_name, generation, 
 				parent.family.size(), mushroom_data.max_family, 
 				_color_progress_lerp(growth_percent).to_html(), growth_percent, 
 				tile_string, 
-				_color_progress_lerp(tile_rating_percent).to_html(), tile_rating_percent
+				_color_progress_lerp(tile_rating_percent).to_html(), tile_rating_percent,
+				parent.family_health
 			]
 		parent.set_description.emit(desc.replace("\t", ""))
-
+		
 func _color_progress_lerp(percent: float) -> Color:
 	return lerp(Color.RED, Color.GREEN, percent / 100.0)
 
@@ -315,12 +319,12 @@ func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
 	parent.family.append(new_mushroom)
 	new_mushroom.global_position = spawn_point
 	
-	parent.tile_rating = _check_family_tiles()
+	parent.tile_rating = check_family_tiles()
 	
 	if tile:
 		tile.mushroom_count += 1
 
-func _check_family_tiles() -> Array[int]:
+func check_family_tiles() -> Array[int]:
 	var like_tiles := 0
 	var dislike_tiles := 0
 	var total := 0

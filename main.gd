@@ -30,6 +30,8 @@ func end_day() -> void:
 		if m is Mushroom and m.generation == 0:
 			var data: MushroomData = m.mushroom_data
 			var key := data.get_instance_id()
+			m.family_health += m.check_family_tiles()[0] * 2
+			m.family_health = clampi(m.family_health, 0, 100)
 			if not seen.has(key):
 				data.max_family += 8
 				seen[key] = true
@@ -59,4 +61,4 @@ func _unhandled_input(e: InputEvent) -> void:
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
 				tile.occupied = true
-				mushroom._check_family_tiles()
+				mushroom.check_family_tiles()
