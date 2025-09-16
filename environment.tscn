@@ -4,7 +4,7 @@
 
 [sub_resource type="Gradient" id="Gradient_h2yge"]
 offsets = PackedFloat32Array(0, 0.224756, 0.504886, 0.791531, 1)
-colors = PackedColorArray(0.113838, 0.16973, 0.263496, 1, 0.892583, 0.521761, 0.431232, 1, 0.979253, 0.881843, 0.759006, 1, 0.894118, 0.521569, 0.431373, 1, 0.113725, 0.168627, 0.262745, 1)
+colors = PackedColorArray(0.113838, 0.16973, 0.263496, 1, 0.892583, 0.521761, 0.431232, 1, 0.9850156, 0.82521725, 0.71232384, 1, 0.894118, 0.521569, 0.431373, 1, 0.113725, 0.168627, 0.262745, 1)
 
 [sub_resource type="Curve" id="Curve_h2yge"]
 _limits = [-10.0, 55.0, 0.0, 1.0]
@@ -12,12 +12,12 @@ _data = [Vector2(0, -10), 0.0, 130.103, 0, 0, Vector2(0.234234, 29.7912), 171.87
 point_count = 5
 
 [sub_resource type="Curve" id="Curve_1bvp3"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.246246, 0.596659), 3.95035, 3.95035, 0, 0, Vector2(0.501501, 1), 0.0, 0.0, 0, 0, Vector2(0.750751, 0.596659), -4.40622, -4.40622, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.19, 0.31395346), 1.9933566, 1.9933566, 0, 0, Vector2(0.5037499, 0.70678866), -0.119100444, -0.119100444, 0, 0, Vector2(0.775, 0.37209302), -2.2325592, -2.2325592, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 5
 
 [sub_resource type="Gradient" id="Gradient_1bvp3"]
-offsets = PackedFloat32Array(0, 0, 0.5, 1, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.9, 0.6, 0.4, 1, 1, 0.98, 0.9, 1, 1, 1, 1, 1, 0.9, 0.6, 0.4, 1)
+offsets = PackedFloat32Array(0, 0, 0.5116279, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.9, 0.6, 0.4, 1, 1, 0.9757084, 0.8790304, 1, 0.9, 0.6, 0.4, 1)
 
 [sub_resource type="Environment" id="Environment_0xm2m"]
 ambient_light_source = 3
