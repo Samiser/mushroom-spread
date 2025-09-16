@@ -92,7 +92,8 @@ func _on_area_input_event(camera: Node, event: InputEvent, event_position: Vecto
 	if growth < generational_max:
 		return
 
-	$CPUParticles3D.emitting = true
+	if grown:
+		return
 
 	var spawns := _pick_spawn_count()
 	spawns = _cap_spawns_to_family(spawns)
@@ -109,8 +110,6 @@ func _pick_spawn_count() -> int:
 	return randi_range(3, 4) if generation == 0 else randi_range(mushroom_data.spawn_min, mushroom_data.spawn_max)
 
 func _cap_spawns_to_family(spawns: int) -> int:
-	if grown:
-		return 0
 	var remaining := mushroom_data.max_family - parent.family.size()
 	return clamp(spawns, 0, max(remaining, 0))
 
@@ -129,6 +128,7 @@ func _post_spawn_pause() -> void:
 		await get_tree().create_timer(spawn_burst_interval).timeout
 
 func _spawn_burst(spawns: int, dir_at: Callable, dist_at: Callable) -> void:
+	$CPUParticles3D.emitting = true
 	for i in spawns:
 		var dir: Vector3 = dir_at.call(i, spawns)
 		var dist: float = dist_at.call(i, spawns)
