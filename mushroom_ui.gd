@@ -32,28 +32,32 @@ func build_description() -> String:
 	if !M.parent.is_health_increasing:
 		increasing_health_colour = Color.RED
 
-	var desc: String = "%s (%s) Gen %d
-		Family size: %d/%d
-		Growth: [color=%s]%.f%%[/color]
-		Tile: %s
-		Family Tile Rating: [color=%s]%.f%%[/color]
-		Health: [color=%s]%.f[/color]
-		Max Tile Capacity: %d
-		%s" % [
-			M.mushroom_data.mushroom_name, M.parent.family_name, M.generation, 
+	var desc: String = "Family:
+		  %s (%s)
+		  Size: %d/%d
+		  Tile Rating: [color=%s]%.f%%[/color]
+		  Max Tile Capacity: %d
+		  Health: [color=%s]%.f[/color]
+		  %s
+		Me:
+		  Generation: %d
+		  Growth: [color=%s]%.f%%[/color]
+		  Tile: %s" % [
+			M.mushroom_data.mushroom_name, M.parent.family_name,
 			M.parent.family.size(), M.mushroom_data.max_family, 
-			_color_progress_lerp(growth_percent).to_html(), growth_percent, 
-			tile_string, 
 			_color_progress_lerp(tile_rating_percent).to_html(), tile_rating_percent,
-			increasing_health_colour.to_html(), M.parent.family_health,
 			M.mushroom_data.tile_capacity,
+			increasing_health_colour.to_html(), M.parent.family_health,
 			_preferences_string(),
+			M.generation, 
+			_color_progress_lerp(growth_percent).to_html(), growth_percent, 
+			tile_string,
 		]
 
 	return desc.replace("\t", "")
 
 func _preferences_string() -> String:
-	return "Likes: %s\nDislikes: %s" % [
+	return "Likes: %s\n  Dislikes: %s" % [
 		", ".join(M.mushroom_data.likes_tiles.map(Tile.type_to_bbcode)),
 		", ".join(M.mushroom_data.dislikes_tiles.map(Tile.type_to_bbcode))
 	]
