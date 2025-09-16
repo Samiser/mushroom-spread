@@ -66,8 +66,18 @@ func _process(delta: float) -> void:
 		var growth_percent := roundf((growth / generational_max) * 100)
 		var tile_rating_percent := roundf((parent.tile_rating[0] as float / parent.tile_rating[1]) * 100.0)
 		var tile_string := grid.get_at_world(global_position).type_string()
-		var desc: String = mushroom_data.mushroom_name + " (" + parent.family_name + ") Gen " + str(generation) +  "\nFamily size: " + str(parent.family.size()) + "/" + str(mushroom_data.max_family) + "\nGrowth: [color=#" + _color_progress_lerp(growth_percent).to_html() + "]" + str(growth_percent) + "%[/color]\nTile: " + tile_string + "\nFamily Tile Rating: [color=#" + _color_progress_lerp(tile_rating_percent).to_html() + "]" + str(tile_rating_percent) + "%[/color]" 
-		parent.set_description.emit(desc)
+		var desc: String = "%s (%s) Gen %d
+			Family size: %d/%d
+			Growth: [color=%s]%.f%%[/color]
+			Tile: %s
+			Family Tile Rating: [color=%s]%.f%%[/color]" % [
+				mushroom_data.mushroom_name, parent.family_name, generation, 
+				parent.family.size(), mushroom_data.max_family, 
+				_color_progress_lerp(growth_percent).to_html(), growth_percent, 
+				tile_string, 
+				_color_progress_lerp(tile_rating_percent).to_html(), tile_rating_percent
+			]
+		parent.set_description.emit(desc.replace("\t", ""))
 
 func _color_progress_lerp(percent: float) -> Color:
 	return lerp(Color.RED, Color.GREEN, percent / 100.0)
