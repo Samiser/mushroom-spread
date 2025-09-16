@@ -1,6 +1,9 @@
 extends Node3D
 class_name Mushroom
 
+enum MUSHROOM_MOOD {Likes, Dislikes, NoComment}
+
+
 @export var mushroom_data : MushroomData
 
 var growth := 0.1
@@ -8,11 +11,13 @@ var generational_max := 1.0
 var grown := false
 
 var grid: ForestGrid
+var tile_happiness : MUSHROOM_MOOD
 
 @onready var mushroom_baby := load("res://mushroom.tscn")
 var generation := 0 # current mushroom gen
 var family : Array[Mushroom] # only the parent tracks this
 var parent : Mushroom
+var last_in_tree : Mushroom
 var family_name : String
 var tile_rating : Array[int] = [0, 0] # rating, total
 var family_health := 50.0
@@ -68,6 +73,7 @@ func _preferences_string() -> String:
 
 func _process(delta: float) -> void:
 	_grow(delta)
+	_draw_mood_lines()
 	
 	if highlighted:
 		var growth_percent := roundf((growth / generational_max) * 100)
@@ -90,7 +96,21 @@ func _process(delta: float) -> void:
 				_preferences_string()
 			]
 		parent.set_description.emit(desc.replace("\t", ""))
+
+func _draw_mood_lines() -> void:
+	if generation > 0:
+		var cam := get_viewport().get_camera_3d()
+		$Line2D.set_point_position(0, cam.unproject_position(global_position))
+		$Line2D.set_point_position(1, cam.unproject_position(last_in_tree.global_position))
 		
+		match tile_happiness:
+			MUSHROOM_MOOD.Likes:
+				$Line2D.default_color = Color.GREEN
+			MUSHROOM_MOOD.Dislikes:
+				$Line2D.default_color = Color.RED
+			MUSHROOM_MOOD.NoComment:
+				$Line2D.default_color = Color.WHITE
+
 func _color_progress_lerp(percent: float) -> Color:
 	return lerp(Color.RED, Color.GREEN, percent / 100.0)
 
@@ -322,6 +342,7 @@ func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
 
 	new_mushroom.generation = generation + 1
 	new_mushroom.parent = parent
+	new_mushroom.last_in_tree = self
 	new_mushroom.branch_dir = try_dir	# predictable future heading
 
 	parent.family.append(new_mushroom)
@@ -345,9 +366,13 @@ func check_family_tiles() -> Array[int]:
 		if parent.mushroom_data.likes_tiles.has(tile.type):
 			like_tiles += 1
 			total += 1
+			mushroom.tile_happiness = MUSHROOM_MOOD.Likes
 		elif parent.mushroom_data.dislikes_tiles.has(tile.type):
 			dislike_tiles += 1
 			total += 1
+			mushroom.tile_happiness = MUSHROOM_MOOD.Dislikes
+		else:
+			mushroom.tile_happiness = MUSHROOM_MOOD.NoComment
 	
 	var rating := like_tiles + -dislike_tiles
 	return [rating, total]
