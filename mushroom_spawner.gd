@@ -185,7 +185,6 @@ func is_spawn_safe(pos: Vector3) -> bool:
 		return false
 	
 	if _collides_with_thing_at(pos):
-		print("not safe!")
 		return false
 	
 	return true
@@ -221,13 +220,9 @@ func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
 		try_dist = max(0.1, dist * (1.0 + change * search_radius_step_pct))
 
 		spawn_point = M.global_position + try_dir * try_dist
-		print("trying position ", spawn_point)
 
 	if !is_spawn_safe(spawn_point):
-		print("position ", spawn_point, " not safe, not spawning")
 		return
-	
-	print("position ", spawn_point, " is safe, spawning")
 
 	var new_mushroom: Mushroom = M.mushroom_baby.instantiate() as Mushroom
 	get_tree().root.add_child(new_mushroom)
