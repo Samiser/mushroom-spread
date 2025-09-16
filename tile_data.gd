@@ -88,7 +88,7 @@ func _bool_rich(label: String, on: bool) -> String:
 	var sym := "true" if on else "false"
 	return "[color=%s][b]%s[/b][/color]: [color=%s]%s[/color]" % ["#888", label, c, sym]
 
-func _type_color(t: String) -> String:
+static func _type_color(t: String) -> String:
 	var lut := {
 		"tree": "#69a34b",
 		"flower": "#c94b7a",
@@ -98,3 +98,6 @@ func _type_color(t: String) -> String:
 		"": "#cccccc"
 	}
 	return String(lut.get(t.to_lower(), "#cccccc"))
+
+static func type_to_bbcode(t: Tile.Type):
+	return "[color=%s]%s[/color]" % [_type_color(type_to_string(t)), type_to_string(t)]

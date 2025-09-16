@@ -60,6 +60,12 @@ func _ready() -> void:
 		generational_max = mushroom_data.max_growth
 		family_name = mushroom_data.family_names.get(randi_range(0, mushroom_data.family_names.size() - 1))
 
+func _preferences_string() -> String:
+	return "Likes: %s\nDislikes: %s" % [
+		", ".join(mushroom_data.likes_tiles.map(Tile.type_to_bbcode)),
+		", ".join(mushroom_data.dislikes_tiles.map(Tile.type_to_bbcode))
+	]
+
 func _process(delta: float) -> void:
 	_grow(delta)
 	
@@ -73,13 +79,15 @@ func _process(delta: float) -> void:
 			Growth: [color=%s]%.f%%[/color]
 			Tile: %s
 			Family Tile Rating: [color=%s]%.f%%[/color]
-			Health: %.f" % [
+			Health: %.f
+			%s" % [
 				mushroom_data.mushroom_name, parent.family_name, generation, 
 				parent.family.size(), mushroom_data.max_family, 
 				_color_progress_lerp(growth_percent).to_html(), growth_percent, 
 				tile_string, 
 				_color_progress_lerp(tile_rating_percent).to_html(), tile_rating_percent,
-				parent.family_health
+				parent.family_health,
+				_preferences_string()
 			]
 		parent.set_description.emit(desc.replace("\t", ""))
 		
