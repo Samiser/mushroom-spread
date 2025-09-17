@@ -7,7 +7,7 @@
 default_font = ExtResource("1_mmd0k")
 default_font_size = 16
 
-[node name="Report" type="Control"]
+[node name="Report" type="Control" node_paths=PackedStringArray("summary_tile_rating", "summary_colony_size", "summary_capacity", "next_day_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +16,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_7ngoa")
 script = ExtResource("2_7ngoa")
+summary_tile_rating = NodePath("Panel/VBoxContainer/Tabs/Summary/TileRating")
+summary_colony_size = NodePath("Panel/VBoxContainer/Tabs/Summary/ColonySize")
+summary_capacity = NodePath("Panel/VBoxContainer/Tabs/Summary/Capacity")
+next_day_button = NodePath("Panel/VBoxContainer/NextDayButton")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1

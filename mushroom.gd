@@ -117,4 +117,5 @@ func _on_area_3d_mouse_exited() -> void:
 	highlighted = false
 
 func take_data_snapshot():
-	mushroom_data.previous_data = mushroom_data.duplicate()
+	mushroom_data.previous_data = mushroom_data.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
+	print("taking snapshot! previous family: ", mushroom_data.previous_data.family)

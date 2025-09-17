@@ -8,7 +8,7 @@
 default_font = ExtResource("1_efote")
 default_font_size = 16
 
-[node name="Hud" type="Control" node_paths=PackedStringArray("mushroom_description_label", "tile_description_label", "end_day_button", "start_day_button", "show_debug_button")]
+[node name="Hud" type="Control" node_paths=PackedStringArray("mushroom_description_label", "tile_description_label", "end_day_button", "show_debug_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +21,6 @@ script = ExtResource("1_k5de2")
 mushroom_description_label = NodePath("HoverDescription")
 tile_description_label = NodePath("TileDescription")
 end_day_button = NodePath("EndDayButton")
-start_day_button = NodePath("NextDayButton")
 show_debug_button = NodePath("ShowDebug")
 
 [node name="HoverDescription" type="RichTextLabel" parent="."]
@@ -54,21 +53,6 @@ offset_top = 294.0
 offset_right = 569.0
 offset_bottom = 317.0
 text = "End Day"
-
-[node name="NextDayButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -37.5
-offset_top = -11.5
-offset_right = 37.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Next Day"
 
 [node name="ShowDebug" type="Button" parent="."]
 layout_mode = 1

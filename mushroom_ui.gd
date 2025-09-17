@@ -40,9 +40,12 @@ func _draw_mood_lines() -> void:
 			M.MUSHROOM_MOOD.NoComment:
 				line.default_color = Color.WHITE
 
+static func get_tile_rating_percent(data: MushroomData) -> float:
+	return roundf((data.tile_rating[0] as float / data.tile_rating[1]) * 100.0)
+
 func build_description() -> String:
 	var growth_percent := roundf((M.growth / M.generational_max) * 100)
-	var tile_rating_percent := roundf((M.mushroom_data.tile_rating[0] as float / M.mushroom_data.tile_rating[1]) * 100.0)
+	var tile_rating_percent := get_tile_rating_percent(M.mushroom_data)
 	var tile_string := M.grid.get_at_world(M.global_position).type_string()
 	var increasing_health_colour := Color.GREEN
 	if !M.mushroom_data.is_health_increasing:
