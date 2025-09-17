@@ -3,23 +3,28 @@ class_name MushroomUI
 
 var M: Mushroom
 @export var line: Line2D 
-@export var world_ui : Sprite3D
+@export var world_ui : Node3D
 @export var growth_progress_bar : TextureProgressBar
+@export var parent_label : RichTextLabel
 
 func setup(mushroom: Mushroom) -> void:
 	M = mushroom
 	world_ui.top_level = true
 	world_ui.global_position = M.global_position
-	world_ui.global_position.y += 0.1
+	world_ui.global_position.y += 0.04
+	update_parent_ui()
 
 func update(_delta: float) -> void:
 	_draw_mood_lines()
 
+func update_parent_ui() -> void:
+	parent_label.text = "[b]" + M.parent.mushroom_data.family_name + "[/b]\n" + str(M.parent.mushroom_data.family.size()) + "/" + str(M.parent.mushroom_data.max_family)
+
 func display_progress_bar() -> void:
 	var progress := M.growth / M.generational_max
 	growth_progress_bar.value = progress
-	var bar_colour : Color = lerp(Color.RED, Color.GREEN, progress)
-	growth_progress_bar.modulate = bar_colour
+	growth_progress_bar.modulate = _color_progress_lerp(progress * 100.0)
+	growth_progress_bar.visible = progress < 1.0
 
 func _draw_mood_lines() -> void:
 	if M.generation > 0:
