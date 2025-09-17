@@ -23,6 +23,8 @@ class_name MushroomData
 @export var dislikes_tiles : Array[Tile.Type]
 
 # family data
+var previous_data: MushroomData
+
 var family_health := 50.0
 var is_health_increasing := true
 var family: Array[Mushroom]

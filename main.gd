@@ -8,12 +8,15 @@ var mushroom_scene: PackedScene = load("res://mushroom.tscn")
 var day := 0
 var family_count := 0
 
+var parents: Array[Mushroom]
 
 func _ready() -> void:
 	$Hud.day_ended.connect(end_day)
 	$Hud.day_started.connect(start_day)
 
 func start_day() -> void:
+	for parent in parents:
+		parent.take_data_snapshot()
 	environment.is_day = true
 	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(environment, "time_of_day", 0.35, 2)
@@ -67,5 +70,6 @@ func _unhandled_input(e: InputEvent) -> void:
 				family_count += 1
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
+				mushroom.take_data_snapshot()
 				tile.occupied = true
-				mushroom.check_family_tiles()
+				

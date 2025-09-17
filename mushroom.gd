@@ -42,6 +42,7 @@ func _ready() -> void:
 		mushroom_data.family.insert(0, self)
 		generational_max = mushroom_data.max_growth
 		mushroom_data.family_name = family_names.get(randi_range(0, family_names.size() - 1))
+		check_family_tiles()
 
 	spawner.setup(self)
 	ui.setup(self)
@@ -112,3 +113,6 @@ func _on_area_3d_mouse_exited() -> void:
 		mushroom.sprite.shaded = true
 	
 	highlighted = false
+
+func take_data_snapshot():
+	mushroom_data.previous_data = mushroom_data.duplicate()
