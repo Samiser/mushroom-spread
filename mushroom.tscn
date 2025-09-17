@@ -1,11 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://dpy2cuhnqod0d"]
+[gd_scene load_steps=14 format=3 uid="uid://dpy2cuhnqod0d"]
 
 [ext_resource type="Script" uid="uid://d1axjhpegdbve" path="res://mushroom.gd" id="1_ke5i0"]
 [ext_resource type="Script" uid="uid://b8pfmuhloq52q" path="res://mushroom_data.gd" id="2_jg55k"]
 [ext_resource type="Texture2D" uid="uid://dr1fnlbwkkrug" path="res://mushroom_sprite.png" id="2_ke5i0"]
-[ext_resource type="PackedScene" uid="uid://bl50hmlq6qjt2" path="res://Meshes/kenney_nature/mushroom_red.glb" id="2_pl5ep"]
 [ext_resource type="Script" uid="uid://dqypjnaeanojx" path="res://mushroom_spawner.gd" id="5_4gvq0"]
 [ext_resource type="Script" uid="uid://dggm2l6ep5rxb" path="res://mushroom_ui.gd" id="6_5rjv2"]
+[ext_resource type="Texture2D" uid="uid://den1h0hajsb0q" path="res://Textures/circle_outline.png" id="6_uxf4e"]
 
 [sub_resource type="Resource" id="Resource_jg55k"]
 script = ExtResource("2_jg55k")
@@ -41,12 +41,12 @@ point_count = 3
 offsets = PackedFloat32Array(0.575972, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_jokqs"]
+viewport_path = NodePath("world_ui/SubViewport")
+
 [node name="Mushroom" type="Node3D"]
 script = ExtResource("1_ke5i0")
 mushroom_data = SubResource("Resource_jg55k")
-
-[node name="mushroom_mesh" parent="." instance=ExtResource("2_pl5ep")]
-visible = false
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
@@ -54,7 +54,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_pl5ep")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="mushroom_sprite" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0407497, 0)
 pixel_size = 0.0004
 billboard = 1
@@ -100,9 +100,44 @@ end_cap_mode = 2
 [node name="Spawner" type="Node" parent="."]
 script = ExtResource("5_4gvq0")
 
-[node name="UI" type="Node" parent="." node_paths=PackedStringArray("line")]
+[node name="UI" type="Node" parent="." node_paths=PackedStringArray("line", "world_ui", "growth_progress_bar")]
 script = ExtResource("6_5rjv2")
 line = NodePath("../Line2D")
+world_ui = NodePath("../progress_ui")
+growth_progress_bar = NodePath("../world_ui/SubViewport/TextureProgressBar")
+
+[node name="progress_ui" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+pixel_size = 0.001
+axis = 1
+texture = SubResource("ViewportTexture_jokqs")
+
+[node name="world_ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="world_ui"]
+transparent_bg = true
+handle_input_locally = false
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="world_ui/SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -156.0
+offset_right = 156.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.02
+fill_mode = 4
+texture_progress = ExtResource("6_uxf4e")
 
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

@@ -23,7 +23,7 @@ var highlighted := false
 # resources
 @onready var mushroom_baby := load("res://mushroom.tscn")
 
-@onready var sprite: Sprite3D = $Sprite3D
+@onready var sprite: Sprite3D = $mushroom_sprite
 @onready var spore_particles: CPUParticles3D = $CPUParticles3D
 
 @onready var spawner: MushroomSpawner = $Spawner
@@ -94,6 +94,8 @@ func _grow(delta: float) -> void:
 	
 	growth = move_toward(growth, generational_max, delta * mushroom_data.grow_speed)
 	scale = Vector3.ONE * growth
+	
+	ui.display_progress_bar()
 
 func grow_to_full() -> void:
 	generational_max = mushroom_data.max_growth

@@ -3,12 +3,23 @@ class_name MushroomUI
 
 var M: Mushroom
 @export var line: Line2D 
+@export var world_ui : Sprite3D
+@export var growth_progress_bar : TextureProgressBar
 
 func setup(mushroom: Mushroom) -> void:
 	M = mushroom
+	world_ui.top_level = true
+	world_ui.global_position = M.global_position
+	world_ui.global_position.y += 0.1
 
 func update(_delta: float) -> void:
 	_draw_mood_lines()
+
+func display_progress_bar() -> void:
+	var progress := M.growth / M.generational_max
+	growth_progress_bar.value = progress
+	var bar_colour : Color = lerp(Color.RED, Color.GREEN, progress)
+	growth_progress_bar.modulate = bar_colour
 
 func _draw_mood_lines() -> void:
 	if M.generation > 0:
