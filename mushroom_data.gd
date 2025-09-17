@@ -32,8 +32,8 @@ var family_name: String
 var occupied_tiles: Array[Tile]
 
 # family statistics
-var tile_rating: Array[int] = [0, 0] # rating, total
-var colony_size: int
+var tile_rating: Array[int] = [1, 1] # rating, total
+var colony_size: int = 0
 
 var liked_tiles_count: int
 var neutral_tiles_count: int

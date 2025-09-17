@@ -11,15 +11,17 @@ var family_count := 0
 var parents: Array[Mushroom]
 
 func _ready() -> void:
-	$Hud.day_ended.connect(end_day)
-	$Hud.day_started.connect(start_day)
+	$Hud.end_day.connect(end_day)
+	$Report.next_day.connect(start_day)
 
 func start_day() -> void:
 	for parent in parents:
 		parent.take_data_snapshot()
+		print(parent.mushroom_data.previous_data)
 	environment.is_day = true
 	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(environment, "time_of_day", 0.35, 2)
+	$Hud.end_day_button.visible = true
 
 func end_day() -> void:
 	environment.is_day = false
@@ -44,6 +46,9 @@ func end_day() -> void:
 			if not seen.has(key):
 				data.max_family += 8
 				seen[key] = true
+			
+			$Report.update_report(m)
+	$Report.visible = true
 	
 func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -71,5 +76,6 @@ func _unhandled_input(e: InputEvent) -> void:
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
 				mushroom.take_data_snapshot()
+				print(mushroom.mushroom_data.previous_data)
 				tile.occupied = true
 				
