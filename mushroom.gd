@@ -2,25 +2,26 @@ extends Node3D
 class_name Mushroom
 
 enum MUSHROOM_MOOD {Likes, Dislikes, NoComment}
+const family_names: Array[String] = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguaz", "Simpsons"]
 
 @export var mushroom_data : MushroomData
+
+# data for this mushroom
+var generation := 0 # current mushroom gen
+var parent: Mushroom
+var last_in_tree: Mushroom
 
 var growth := 0.1
 var generational_max := 1.0
 var grown := false
 
 var grid: ForestGrid
-var tile_happiness : MUSHROOM_MOOD
+var tile_happiness: MUSHROOM_MOOD
 
+var highlighted := false
+
+# resources
 @onready var mushroom_baby := load("res://mushroom.tscn")
-var generation := 0 # current mushroom gen
-var family : Array[Mushroom] # only the parent tracks this
-var parent : Mushroom
-var last_in_tree : Mushroom
-var family_name : String
-var tile_rating : Array[int] = [0, 0] # rating, total
-var family_health := 50.0
-var is_health_increasing := true
 
 @onready var sprite: Sprite3D = $Sprite3D
 @onready var spore_particles: CPUParticles3D = $CPUParticles3D
@@ -28,8 +29,7 @@ var is_health_increasing := true
 @onready var spawner: MushroomSpawner = $Spawner
 @onready var ui: MushroomUI = $UI
 
-var highlighted := false
-
+# signals
 signal set_description(desc)
 
 func _ready() -> void:
@@ -39,9 +39,9 @@ func _ready() -> void:
 	
 	if generation == 0:
 		parent = self
-		family.insert(0, self)
+		mushroom_data.family.insert(0, self)
 		generational_max = mushroom_data.max_growth
-		family_name = mushroom_data.family_names.get(randi_range(0, mushroom_data.family_names.size() - 1))
+		mushroom_data.family_name = family_names.get(randi_range(0, family_names.size() - 1))
 
 	spawner.setup(self)
 	ui.setup(self)
@@ -60,9 +60,10 @@ func _process(delta: float) -> void:
 func check_family_tiles() -> Array[int]:
 	var like_tiles := 0
 	var dislike_tiles := 0
+	var neutral_tiles := 0
 	var total := 0
 	
-	for mushroom in parent.family:
+	for mushroom in parent.mushroom_data.family:
 		var tile := grid.get_at_world(mushroom.global_position)
 		if !tile:
 			continue
@@ -76,7 +77,12 @@ func check_family_tiles() -> Array[int]:
 			total += 1
 			mushroom.tile_happiness = MUSHROOM_MOOD.Dislikes
 		else:
+			neutral_tiles += 1
 			mushroom.tile_happiness = MUSHROOM_MOOD.NoComment
+	
+	parent.mushroom_data.liked_tiles_count = like_tiles
+	parent.mushroom_data.disliked_tiles_count = dislike_tiles
+	parent.mushroom_data.neutral_tiles_count = neutral_tiles
 	
 	var rating := like_tiles + -dislike_tiles
 	return [rating, total]
@@ -96,13 +102,13 @@ func _on_area_input_event(_camera: Node, event: InputEvent, _event_position: Vec
 		spawner.handle_click()
 
 func _on_area_3d_mouse_entered() -> void:
-	for mushroom in parent.family:
+	for mushroom in parent.mushroom_data.family:
 		mushroom.sprite.shaded = false
 	
 	highlighted = true
 
 func _on_area_3d_mouse_exited() -> void:
-	for mushroom in parent.family:
+	for mushroom in parent.mushroom_data.family:
 		mushroom.sprite.shaded = true
 	
 	highlighted = false

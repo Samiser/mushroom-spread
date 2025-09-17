@@ -1,0 +1,151 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsrhpnyku86fw"]
+
+[ext_resource type="FontFile" uid="uid://br5m76r2ao6tp" path="res://Fonts/alagard.ttf" id="1_mmd0k"]
+[ext_resource type="Script" uid="uid://cgnq6ta08ja10" path="res://report.gd" id="2_7ngoa"]
+
+[sub_resource type="Theme" id="Theme_7ngoa"]
+default_font = ExtResource("1_mmd0k")
+default_font_size = 16
+
+[node name="Report" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_7ngoa")
+script = ExtResource("2_7ngoa")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -186.25
+offset_top = -113.75
+offset_right = 186.25
+offset_bottom = 113.75
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="RichTextLabel" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Day 3 Report"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Tabs" type="TabContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+tab_alignment = 1
+current_tab = 0
+
+[node name="Summary" type="VBoxContainer" parent="Panel/VBoxContainer/Tabs"]
+layout_mode = 2
+alignment = 1
+metadata/_tab_index = 0
+
+[node name="TileRating" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Summary"]
+layout_mode = 2
+text = "Tile Rating: 50% -> 68%"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="ColonySize" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Summary"]
+layout_mode = 2
+text = "Colony Size: 0 -> 12"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Capacity" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Summary"]
+layout_mode = 2
+text = "Capacity: 12 -> 20 "
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Tiles" type="VBoxContainer" parent="Panel/VBoxContainer/Tabs"]
+visible = false
+layout_mode = 2
+alignment = 1
+metadata/_tab_index = 1
+
+[node name="Likes" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
+layout_mode = 2
+text = "Likes: grass, plant, flower"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Dislikes" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
+layout_mode = 2
+text = "Dislikes: stump, tree"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Liked" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
+layout_mode = 2
+text = "Liked: 22"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Neutral" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
+layout_mode = 2
+text = "Neutral: 5"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Disliked" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
+layout_mode = 2
+text = "Disliked: 4"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Rating" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
+layout_mode = 2
+text = "Tile Rating: 60%"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Culls" type="VBoxContainer" parent="Panel/VBoxContainer/Tabs"]
+visible = false
+layout_mode = 2
+alignment = 1
+metadata/_tab_index = 2
+
+[node name="Manual" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Culls"]
+layout_mode = 2
+text = "Manual: 3"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Insects" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Culls"]
+layout_mode = 2
+text = "Insects: 2"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Animals" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Culls"]
+layout_mode = 2
+text = "Animals: 1"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Total" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Culls"]
+layout_mode = 2
+text = "Total: 6"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="NextDayButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Next Day"

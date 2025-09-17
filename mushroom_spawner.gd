@@ -54,7 +54,7 @@ func _pick_spawn_count() -> int:
 	return randi_range(3, 4) if M.generation == 0 else randi_range(M.mushroom_data.spawn_min, M.mushroom_data.spawn_max)
 
 func _cap_spawns_to_family(spawns: int) -> int:
-	var remaining := M.mushroom_data.max_family - M.parent.family.size()
+	var remaining := M.mushroom_data.max_family - M.mushroom_data.family.size()
 	return clamp(spawns, 0, max(remaining, 0))
 
 func _resolve_branch_dir() -> Vector3:
@@ -189,9 +189,7 @@ func is_spawn_safe(pos: Vector3) -> bool:
 	
 	return true
 
-func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
-	M.grown = true
-
+func _find_spawn_point_and_branch_direction(dir_xz: Vector3, dist: float) -> Array[Vector3]:
 	# ensure direction is horizontal
 	var dir := dir_xz
 	dir.y = 0.0
@@ -220,12 +218,21 @@ func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
 		try_dist = max(0.1, dist * (1.0 + change * search_radius_step_pct))
 
 		spawn_point = M.global_position + try_dir * try_dist
+	
+	return [spawn_point, try_dir]
+
+func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
+	M.grown = true
+
+	var spawn_point_and_direction := _find_spawn_point_and_branch_direction(dir_xz, dist)
+
+	var spawn_point := spawn_point_and_direction[0]
+	var direction := spawn_point_and_direction[1]
 
 	if !is_spawn_safe(spawn_point):
 		return
 
 	var new_mushroom: Mushroom = M.mushroom_baby.instantiate() as Mushroom
-	get_tree().root.add_child(new_mushroom)
 
 	new_mushroom.grid = M.grid
 
@@ -238,12 +245,15 @@ func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
 	new_mushroom.generation = M.generation + 1
 	new_mushroom.parent = M.parent
 	new_mushroom.last_in_tree = M
-	new_mushroom.spawner._branch_dir = try_dir	# predictable future heading
 
-	M.parent.family.append(new_mushroom)
+	M.mushroom_data.family.append(new_mushroom)
 	new_mushroom.global_position = spawn_point
 	
-	M.parent.tile_rating = M.check_family_tiles()
+	M.mushroom_data.tile_rating = M.check_family_tiles()
+	
+	get_tree().root.add_child(new_mushroom)
+	
+	new_mushroom.spawner._branch_dir = direction # predictable future heading
 	
 	if tile:
 		tile.mushroom_count += 1

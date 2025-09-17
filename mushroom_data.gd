@@ -1,6 +1,7 @@
 extends Resource
 class_name MushroomData
 
+# family attributes
 @export var mushroom_name : String = "unnamed mushroom"
 
 @export var grow_speed := 0.2
@@ -20,4 +21,23 @@ class_name MushroomData
 @export var starting_tile : Tile.Type
 @export var likes_tiles : Array[Tile.Type]
 @export var dislikes_tiles : Array[Tile.Type]
-var family_names : Array[String] = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguaz", "Simpsons"]
+
+# family data
+var family_health := 50.0
+var is_health_increasing := true
+var family: Array[Mushroom]
+var family_name: String
+var occupied_tiles: Array[Tile]
+
+# family statistics
+var tile_rating: Array[int] = [0, 0] # rating, total
+var colony_size: int
+
+var liked_tiles_count: int
+var neutral_tiles_count: int
+var disliked_tiles_count: int
+
+var culls_manual: int
+var culls_insect: int
+var culls_animals: int
+var culls_total: int

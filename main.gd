@@ -32,11 +32,11 @@ func end_day() -> void:
 		if m is Mushroom and m.generation == 0:
 			var data: MushroomData = m.mushroom_data
 			var key := data.get_instance_id()
-			var prev_health: float= m.family_health
-			m.family_health += m.check_family_tiles()[0] * 4
-			m.family_health -= m.family.size()
-			m.family_health = clamp(m.family_health, 0, 100)
-			m.is_health_increasing = m.family_health >= prev_health
+			var prev_health: float = data.family_health
+			data.family_health += m.check_family_tiles()[0] * 4
+			data.family_health -= data.family.size()
+			data.family_health = clamp(data.family_health, 0, 100)
+			data.is_health_increasing = data.family_health >= prev_health
 			
 			if not seen.has(key):
 				data.max_family += 8
