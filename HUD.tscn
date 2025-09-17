@@ -8,7 +8,7 @@
 default_font = ExtResource("1_efote")
 default_font_size = 16
 
-[node name="Hud" type="Control" node_paths=PackedStringArray("mushroom_description_label", "tile_description_label", "end_day_button", "start_day_button")]
+[node name="Hud" type="Control" node_paths=PackedStringArray("mushroom_description_label", "tile_description_label", "end_day_button", "start_day_button", "show_debug_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,8 +22,10 @@ mushroom_description_label = NodePath("HoverDescription")
 tile_description_label = NodePath("TileDescription")
 end_day_button = NodePath("EndDayButton")
 start_day_button = NodePath("NextDayButton")
+show_debug_button = NodePath("ShowDebug")
 
 [node name="HoverDescription" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 6.0
 offset_top = 6.0
@@ -34,6 +36,7 @@ bbcode_enabled = true
 text = "mushroom info"
 
 [node name="TileDescription" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 77.0
 offset_top = 6.0
@@ -66,6 +69,22 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Next Day"
+
+[node name="ShowDebug" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = 132.0
+offset_right = -187.0
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Toggle HUD
+"
 
 [node name="RadialProgressBar" type="TextureProgressBar" parent="."]
 visible = false
