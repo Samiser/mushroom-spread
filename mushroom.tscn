@@ -104,12 +104,13 @@ end_cap_mode = 2
 [node name="Spawner" type="Node" parent="."]
 script = ExtResource("5_4gvq0")
 
-[node name="UI" type="Node" parent="." node_paths=PackedStringArray("line", "world_ui", "growth_progress_bar", "parent_label")]
+[node name="UI" type="Node" parent="." node_paths=PackedStringArray("line", "world_ui", "growth_progress_bar", "parent_label", "parent_info_ui")]
 script = ExtResource("6_5rjv2")
 line = NodePath("../Line2D")
 world_ui = NodePath("../World_UI")
 growth_progress_bar = NodePath("../world_ui/growth_progress_VP/TextureProgressBar")
 parent_label = NodePath("../world_ui/parent_VP/TextureRect/parent_label")
+parent_info_ui = NodePath("../World_UI/parent_ui")
 
 [node name="world_ui" type="Control" parent="."]
 layout_mode = 3
@@ -188,6 +189,7 @@ texture = SubResource("ViewportTexture_jokqs")
 
 [node name="parent_ui" type="Sprite3D" parent="World_UI"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0477414, 0)
+visible = false
 pixel_size = 0.004
 billboard = 1
 texture = SubResource("ViewportTexture_uxf4e")

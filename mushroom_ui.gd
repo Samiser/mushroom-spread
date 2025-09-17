@@ -6,6 +6,7 @@ var M: Mushroom
 @export var world_ui : Node3D
 @export var growth_progress_bar : TextureProgressBar
 @export var parent_label : RichTextLabel
+@export var parent_info_ui : Sprite3D
 
 func setup(mushroom: Mushroom) -> void:
 	M = mushroom
@@ -18,7 +19,8 @@ func update(_delta: float) -> void:
 	_draw_mood_lines()
 
 func update_parent_ui() -> void:
-	parent_label.text = "[b]" + M.parent.mushroom_data.family_name + "[/b]\n" + str(M.parent.mushroom_data.family.size()) + "/" + str(M.parent.mushroom_data.max_family)
+	M.parent.ui.parent_info_ui.visible = true
+	M.parent.ui.parent_label.text = "[b]" + M.parent.mushroom_data.family_name + "[/b]\n" + str(M.parent.mushroom_data.family.size()) + "/" + str(M.parent.mushroom_data.max_family)
 
 func display_progress_bar() -> void:
 	var progress := M.growth / M.generational_max
