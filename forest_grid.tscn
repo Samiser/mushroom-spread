@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0h23m6qtmef6"]
+[gd_scene load_steps=9 format=3 uid="uid://b0h23m6qtmef6"]
 
 [ext_resource type="MeshLibrary" uid="uid://cqmrgdtxkoikq" path="res://Meshes/libraries/ground_meshlib.tres" id="1_33puw"]
 [ext_resource type="Script" uid="uid://biff4oxh2fonk" path="res://forest_grid.gd" id="1_gs8jw"]
@@ -7,6 +7,7 @@
 [ext_resource type="MeshLibrary" uid="uid://bqv6cty446ven" path="res://Meshes/libraries/flower_meshlib.tres" id="5_h8st5"]
 [ext_resource type="MeshLibrary" uid="uid://bsbwnhvesik5o" path="res://Meshes/libraries/stump_meshlib.tres" id="6_a1ok8"]
 [ext_resource type="MeshLibrary" uid="uid://deaqi4i0nde6c" path="res://Meshes/libraries/grass_meshlib.tres" id="7_gs8jw"]
+[ext_resource type="Script" uid="uid://bperlxldq7ufo" path="res://grid_overlay.gd" id="8_a1ok8"]
 
 [node name="ForestGrid" type="Node3D"]
 script = ExtResource("1_gs8jw")
@@ -54,3 +55,7 @@ cell_size = Vector3(1, 1, 1)
 data = {
 "cells": PackedInt32Array(65535, 65534, 1048577, 2, 2, 1048578, 65534, 65531, 655360, 3, 65531, 1048576, 3, 3, 1048576, 2, 65534, 1048578)
 }
+
+[node name="GridOverlay" type="Node3D" parent="."]
+script = ExtResource("8_a1ok8")
+gridmap_path = NodePath("../Ground")
