@@ -6,8 +6,7 @@ class_name MushroomSpawner
 @export var safety_search_steps: int = 6 # try a few rotated alternatives if blocked
 @export var safety_step_deg: float = 12.0
 
-@export var ring_radius_jitter_pct: float = 0.30
-@export var child_dist_jitter_pct: float = 0.40
+@export var dist_jitter_pct: float = 0.40
 @export var search_radius_step_pct: float = 0.20
 
 @export var spawn_burst_interval: float = 0.2
@@ -74,8 +73,14 @@ func _post_spawn_pause() -> void:
 	if spawn_burst_interval > 0.0:
 		await get_tree().create_timer(spawn_burst_interval).timeout
 
-func _spawn_burst(spawns: int, dir_at: Callable, dist_at: Callable) -> void:
+func _spawn_burst(spawns: int, dir_at: Callable) -> void:
 	M.spore_particles.emitting = true
+	var dist_at := func(_i: int, _n: int) -> float:
+		return M.mushroom_data.spawn_range * randf_range(
+			1.3 - dist_jitter_pct,
+			1.3 + dist_jitter_pct
+		)
+	
 	for i in spawns:
 		var dir: Vector3 = dir_at.call(i, spawns)
 		var dist: float = dist_at.call(i, spawns)
@@ -90,13 +95,7 @@ func _spawn_gen0_ring(spawns: int) -> void:
 		var jitter := deg_to_rad(randf_range(-even_ring_jitter_deg, even_ring_jitter_deg))
 		return _xz_dir_from_angle(ang + jitter)
 
-	var dist_at := func(_i: int, _n: int) -> float:
-		return M.mushroom_data.spawn_range * randf_range(
-			2.0 - ring_radius_jitter_pct,
-			2.0 + ring_radius_jitter_pct
-		)
-
-	await _spawn_burst(spawns, dir_at, dist_at)
+	await _spawn_burst(spawns, dir_at)
 
 func _spawn_child_burst(spawns: int, dir: Vector3) -> void:
 	var dir_at := func(i: int, n: int) -> Vector3:
@@ -104,14 +103,7 @@ func _spawn_child_burst(spawns: int, dir: Vector3) -> void:
 		var ang_off := deg_to_rad(lerp(-child_cone_deg, child_cone_deg, t))
 		return (Basis(Vector3.UP, ang_off) * dir).normalized()
 
-	var dist_at := func(_i: int, n: int) -> float:
-		var base := 2.0 if n == 1 else 1.0
-		return M.mushroom_data.spawn_range * randf_range(
-			base - child_dist_jitter_pct,
-			base + child_dist_jitter_pct
-		)
-
-	await _spawn_burst(spawns, dir_at, dist_at)
+	await _spawn_burst(spawns, dir_at)
 
 func _collides_with_thing_at(world_pos: Vector3) -> bool:
 	_spawn_shape.radius = spawn_check_radius
@@ -196,12 +188,6 @@ func _find_spawn_point_and_branch_direction(dir_xz: Vector3, dist: float) -> Arr
 	if dir == Vector3.ZERO:
 		dir = _xz_dir_from_angle(randf() * TAU)
 
-	# default distance if not passed in
-	if dist <= 0.0:
-		dist = M.mushroom_data.spawn_range * randf_range(
-			1.0 - child_dist_jitter_pct, 1.0 + child_dist_jitter_pct
-		)
-
 	var try_dir := dir
 	var try_dist := dist
 	var spawn_point := M.global_position + try_dir * try_dist
@@ -221,7 +207,7 @@ func _find_spawn_point_and_branch_direction(dir_xz: Vector3, dist: float) -> Arr
 	
 	return [spawn_point, try_dir]
 
-func _spawn_baby_with_dir(dir_xz: Vector3, dist: float = -1.0) -> void:
+func _spawn_baby_with_dir(dir_xz: Vector3, dist: float) -> void:
 	M.grown = true
 
 	var spawn_point_and_direction := _find_spawn_point_and_branch_direction(dir_xz, dist)
