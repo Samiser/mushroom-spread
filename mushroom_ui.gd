@@ -42,12 +42,8 @@ func _draw_mood_lines() -> void:
 			M.MUSHROOM_MOOD.NoComment:
 				line.default_color = Color.WHITE
 
-static func get_tile_rating_percent(data: MushroomData) -> float:
-	return roundf((data.tile_rating[0] as float / data.tile_rating[1]) * 100.0)
-
 func build_description() -> String:
 	var growth_percent := roundf((M.growth / M.generational_max) * 100)
-	var tile_rating_percent := get_tile_rating_percent(M.mushroom_data)
 	var tile_string := M.grid.get_at_world(M.global_position).type_string()
 	var increasing_health_colour := Color.GREEN
 	if !M.mushroom_data.is_health_increasing:
@@ -56,7 +52,7 @@ func build_description() -> String:
 	var desc: String = "Family:
 		  %s (%s)
 		  Size: %d/%d
-		  Tile Rating: [color=%s]%.f%%[/color]
+		  Tile Rating: [color=%s]%d%%[/color]
 		  Max Tile Capacity: %d
 		  Health: [color=%s]%.f[/color]
 		  %s
@@ -66,7 +62,7 @@ func build_description() -> String:
 		  Tile: %s" % [
 			M.mushroom_data.mushroom_name, M.mushroom_data.family_name,
 			M.mushroom_data.family.size(), M.mushroom_data.max_family, 
-			_color_progress_lerp(tile_rating_percent).to_html(), tile_rating_percent,
+			_color_progress_lerp(M.mushroom_data.tile_rating_percentage()).to_html(), M.mushroom_data.tile_rating_percentage(),
 			M.mushroom_data.tile_capacity,
 			increasing_health_colour.to_html(), M.mushroom_data.family_health,
 			_preferences_string(),

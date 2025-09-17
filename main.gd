@@ -16,6 +16,7 @@ func _ready() -> void:
 
 func start_day() -> void:
 	for parent in parents:
+		print("here")
 		parent.take_data_snapshot()
 		print(parent.mushroom_data.previous_data)
 	environment.is_day = true
@@ -37,6 +38,7 @@ func end_day() -> void:
 		if m is Mushroom and m.generation == 0:
 			var data: MushroomData = m.mushroom_data
 			var key := data.get_instance_id()
+			
 			var prev_health: float = data.family_health
 			data.family_health += m.check_family_tiles()[0] * 4
 			data.family_health -= data.family.size()
@@ -44,7 +46,7 @@ func end_day() -> void:
 			data.is_health_increasing = data.family_health >= prev_health
 			
 			if not seen.has(key):
-				data.max_family += 8
+				data.max_family = int(roundf(float(data.max_family) * (1.0 + float(data.tile_rating_percentage()) / 100.0)))
 				seen[key] = true
 			
 			$Report.update_report(m)
@@ -76,6 +78,6 @@ func _unhandled_input(e: InputEvent) -> void:
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
 				mushroom.take_data_snapshot()
-				print(mushroom.mushroom_data.previous_data)
+				parents.append(mushroom)
 				tile.occupied = true
 				

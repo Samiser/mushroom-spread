@@ -33,10 +33,10 @@ func _update_summary(M: Mushroom):
 	print(prev_data.family)
 	
 	if prev_data.family.size() <= 1:
-		summary_tile_rating.text = "Tile Rating: %.f" % MushroomUI.get_tile_rating_percent(data)
+		summary_tile_rating.text = "Tile Rating: %.f" % data.tile_rating_percentage()
 		summary_colony_size.text = "Colony Size: %d" % data.family.size()
 	else:
-		summary_tile_rating.text = "Tile Rating: %.f -> %.f" % [MushroomUI.get_tile_rating_percent(prev_data), MushroomUI.get_tile_rating_percent(data)]
+		summary_tile_rating.text = "Tile Rating: %.f -> %.f" % [prev_data.tile_rating_percentage(), data.tile_rating_percentage()]
 		summary_colony_size.text = "Colony Size: %d -> %d" % [prev_data.family.size(), data.family.size()]
 
 func update_report(M: Mushroom):

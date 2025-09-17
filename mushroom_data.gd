@@ -43,3 +43,6 @@ var culls_manual: int
 var culls_insect: int
 var culls_animals: int
 var culls_total: int
+
+func tile_rating_percentage() -> int:
+	return int(roundf((tile_rating[0] as float / tile_rating[1]) * 100.0))
