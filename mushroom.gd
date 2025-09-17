@@ -107,12 +107,18 @@ func _on_area_input_event(_camera: Node, event: InputEvent, _event_position: Vec
 func _on_area_3d_mouse_entered() -> void:
 	for mushroom in parent.mushroom_data.family:
 		mushroom.sprite.shaded = false
+		mushroom.ui.line.visible = true
+	
+	parent.ui.update_parent_ui(true)
 	
 	highlighted = true
 
 func _on_area_3d_mouse_exited() -> void:
 	for mushroom in parent.mushroom_data.family:
 		mushroom.sprite.shaded = true
+		mushroom.ui.line.visible = false
+	
+	parent.ui.update_parent_ui(false)
 	
 	highlighted = false
 

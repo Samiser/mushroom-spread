@@ -8,19 +8,39 @@ var M: Mushroom
 @export var parent_label : RichTextLabel
 @export var parent_info_ui : Sprite3D
 
+var tween : Tween
+
 func setup(mushroom: Mushroom) -> void:
 	M = mushroom
 	world_ui.top_level = true
 	world_ui.global_position = M.global_position
-	world_ui.global_position.y += 0.04
-	update_parent_ui()
+	world_ui.global_position.y += 0.02
 
 func update(_delta: float) -> void:
 	_draw_mood_lines()
 
-func update_parent_ui() -> void:
-	M.parent.ui.parent_info_ui.visible = true
-	M.parent.ui.parent_label.text = "[b]" + M.parent.mushroom_data.family_name + "[/b]\n" + str(M.parent.mushroom_data.family.size()) + "/" + str(M.parent.mushroom_data.max_family)
+func update_parent_ui(display: bool) -> void:
+	if tween != null:
+		if tween.is_running():
+			tween.stop()
+	
+	tween = get_tree().create_tween()
+	if !display:
+		tween.tween_property(parent_info_ui, "modulate", Color.TRANSPARENT, 0.6)
+		await tween.finished
+		return
+	tween.tween_property(parent_info_ui, "modulate", Color.WHITE, 0.2)
+	
+	var parent_text : String = "[b]%s[/b]
+		%d/%d
+		%d Life" % [
+		M.mushroom_data.family_name, 
+		M.mushroom_data.family.size(), 
+		M.mushroom_data.max_family, 
+		M.mushroom_data.family_health
+		]
+	parent_text = parent_text.replace("\t", "")
+	parent_label.text = parent_text
 
 func display_progress_bar() -> void:
 	var progress := M.growth / M.generational_max
