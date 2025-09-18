@@ -1,5 +1,7 @@
 extends Control
 
+@export var title: RichTextLabel
+
 @export var summary_tile_rating: RichTextLabel
 @export var summary_colony_size: RichTextLabel
 @export var summary_capacity: RichTextLabel
@@ -48,6 +50,44 @@ func _update_summary(M: Mushroom):
 
 	summary_capacity.text = "Capacity: %d → %d [color=%s]%+d[/color] (changed by [color=%s]%.0f%%[/color])" % [cap_before, cap_after, col, delta, col, rating_pct]
 
+func _update_tiles(M: Mushroom) -> void:
+	var data := M.mushroom_data
+	if data == null:
+		return
 
-func update_report(M: Mushroom):
+	# --- family likes/dislikes (BBCode so Tile.type_to_bbcode works) ---
+	if tiles_likes:
+		tiles_likes.bbcode_enabled = true
+		var likes_bb := ", ".join(data.likes_tiles.map(Tile.type_to_bbcode)) if data.likes_tiles.size() > 0 else "[i]None[/i]"
+		tiles_likes.text = "[b]Likes:[/b] " + likes_bb
+
+	if tiles_dislikes:
+		tiles_dislikes.bbcode_enabled = true
+		var dislikes_bb := ", ".join(data.dislikes_tiles.map(Tile.type_to_bbcode)) if data.dislikes_tiles.size() > 0 else "[i]None[/i]"
+		tiles_dislikes.text = "[b]Dislikes:[/b] " + dislikes_bb
+
+	# --- counts ---
+	var liked := data.liked_tiles_count
+	var neutral := data.neutral_tiles_count
+	var disliked := data.disliked_tiles_count
+	var total: int = max(1, liked + neutral + disliked)	# guard div-by-zero
+
+	if tiles_liked: tiles_liked.text = "Liked: [color=%s]%d[/color]" % [Color.GREEN.to_html(), liked]
+	if tiles_neutral: tiles_neutral.text = "Neutral: [color=%s]%d[/color]" % [Color.BEIGE.to_html(), neutral]
+	if tiles_disliked: tiles_disliked.text = "Disliked: [color=%s]%d[/color]" % [Color.RED.to_html(), disliked]
+
+	# --- rating ( (liked - disliked) / total ) ---
+	var rating_pct := float(data.tile_rating_percentage())
+	var col := Color.RED.lerp(Color.GREEN, clamp(rating_pct / 100.0, 0.0, 1.0)).to_html()
+
+	if tiles_rating:
+		tiles_rating.bbcode_enabled = true
+		tiles_rating.text = "[b]Rating:[/b] ([color=#%s]%d[/color] − [color=#%s]%d[/color]) / [color=#%s]%d[/color] = [color=#%s]%.0f%%[/color]" \
+			% [Color.GREEN.to_html(), liked, Color.RED.to_html(), disliked, Color.BEIGE.to_html(), total, col, rating_pct]
+	
+	
+
+func update_report(M: Mushroom, day: int):
+	title.text = "Day %d Report" % day
 	_update_summary(M)
+	_update_tiles(M)

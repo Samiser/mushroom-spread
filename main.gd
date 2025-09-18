@@ -49,8 +49,9 @@ func end_day() -> void:
 				data.max_family = int(roundf(float(data.max_family) * (1.0 + float(data.tile_rating_percentage()) / 100.0)))
 				seen[key] = true
 			
-			$Report.update_report(m)
+			$Report.update_report(m, day)
 	$Report.visible = true
+	day += 1
 	
 func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:

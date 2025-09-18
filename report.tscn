@@ -7,7 +7,7 @@
 default_font = ExtResource("1_mmd0k")
 default_font_size = 16
 
-[node name="Report" type="Control" node_paths=PackedStringArray("summary_tile_rating", "summary_colony_size", "summary_capacity", "next_day_button")]
+[node name="Report" type="Control" node_paths=PackedStringArray("title", "summary_tile_rating", "summary_colony_size", "summary_capacity", "tiles_likes", "tiles_dislikes", "tiles_liked", "tiles_neutral", "tiles_disliked", "tiles_rating", "next_day_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,9 +16,16 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_7ngoa")
 script = ExtResource("2_7ngoa")
+title = NodePath("Panel/VBoxContainer/Title")
 summary_tile_rating = NodePath("Panel/VBoxContainer/Tabs/Summary/TileRating")
 summary_colony_size = NodePath("Panel/VBoxContainer/Tabs/Summary/ColonySize")
 summary_capacity = NodePath("Panel/VBoxContainer/Tabs/Summary/Capacity")
+tiles_likes = NodePath("Panel/VBoxContainer/Tabs/Tiles/Likes")
+tiles_dislikes = NodePath("Panel/VBoxContainer/Tabs/Tiles/Dislikes")
+tiles_liked = NodePath("Panel/VBoxContainer/Tabs/Tiles/Liked")
+tiles_neutral = NodePath("Panel/VBoxContainer/Tabs/Tiles/Neutral")
+tiles_disliked = NodePath("Panel/VBoxContainer/Tabs/Tiles/Disliked")
+tiles_rating = NodePath("Panel/VBoxContainer/Tabs/Tiles/Rating")
 next_day_button = NodePath("Panel/VBoxContainer/NextDayButton")
 
 [node name="Panel" type="Panel" parent="."]
@@ -53,9 +60,10 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 
 [node name="Summary" type="VBoxContainer" parent="Panel/VBoxContainer/Tabs"]
+visible = false
 layout_mode = 2
 alignment = 1
 metadata/_tab_index = 0
@@ -80,37 +88,41 @@ fit_content = true
 horizontal_alignment = 1
 
 [node name="Tiles" type="VBoxContainer" parent="Panel/VBoxContainer/Tabs"]
-visible = false
 layout_mode = 2
 alignment = 1
 metadata/_tab_index = 1
 
 [node name="Likes" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
 layout_mode = 2
+bbcode_enabled = true
 text = "Likes: grass, plant, flower"
 fit_content = true
 horizontal_alignment = 1
 
 [node name="Dislikes" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
 layout_mode = 2
+bbcode_enabled = true
 text = "Dislikes: stump, tree"
 fit_content = true
 horizontal_alignment = 1
 
 [node name="Liked" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
 layout_mode = 2
+bbcode_enabled = true
 text = "Liked: 22"
 fit_content = true
 horizontal_alignment = 1
 
 [node name="Neutral" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
 layout_mode = 2
+bbcode_enabled = true
 text = "Neutral: 5"
 fit_content = true
 horizontal_alignment = 1
 
 [node name="Disliked" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Tiles"]
 layout_mode = 2
+bbcode_enabled = true
 text = "Disliked: 4"
 fit_content = true
 horizontal_alignment = 1
