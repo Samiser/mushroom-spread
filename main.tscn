@@ -11,6 +11,7 @@
 script = ExtResource("1_0xm2m")
 
 [node name="Report" parent="." instance=ExtResource("2_7mycd")]
+visible = false
 
 [node name="Hud" parent="." instance=ExtResource("2_lquwl")]
 

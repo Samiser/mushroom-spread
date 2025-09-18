@@ -13,6 +13,7 @@ var parents: Array[Mushroom]
 func _ready() -> void:
 	$Hud.end_day.connect(end_day)
 	$Report.next_day.connect(start_day)
+	start_day()
 
 func start_day() -> void:
 	get_tree().call_group("mushrooms", "tween_glow", false, 2)
