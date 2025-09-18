@@ -233,7 +233,7 @@ func _spawn_baby_with_dir(dir_xz: Vector3, dist: float) -> void:
 	new_mushroom.parent = M.parent
 	new_mushroom.last_in_tree = M
 
-	M.mushroom_data.family.append(new_mushroom)
+	M.mushroom_data.add_member(new_mushroom)
 	M.mushroom_data.tile_rating = M.check_family_tiles()
 	
 	new_mushroom.global_position = spawn_point

@@ -32,7 +32,6 @@ func end_day() -> void:
 func _update_summary(M: Mushroom):
 	var data: MushroomData = M.mushroom_data
 	var prev_data: MushroomData = data.previous_data
-	print(prev_data.family)
 	
 	var cap_before := prev_data.max_family
 	var rating_pct := float(data.tile_rating_percentage())

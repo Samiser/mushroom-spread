@@ -17,6 +17,9 @@ func _end_day() -> void:
 	end_day_button.visible = false
 	end_day.emit()
 
+func on_cap_reached() -> void:
+	end_day_button.visible = true
+
 func _toggle_debug() -> void:
 	mushroom_description_label.visible = !mushroom_description_label.visible
 	tile_description_label.visible = !tile_description_label.visible

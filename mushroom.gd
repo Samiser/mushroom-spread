@@ -42,7 +42,7 @@ func _ready() -> void:
 	
 	if generation == 0:
 		parent = self
-		mushroom_data.family.insert(0, self)
+		mushroom_data.add_member(self)
 		generational_max = mushroom_data.max_growth
 		mushroom_data.family_name = family_names.get(randi_range(0, family_names.size() - 1))
 		check_family_tiles()
@@ -111,7 +111,6 @@ func _on_area_input_event(_camera: Node, event: InputEvent, _event_position: Vec
 		spawner.handle_click()
 
 func tween_glow(on: bool, duration: float):
-	print(on, duration)
 	var tween_light_energy = func(energy: float) -> void:
 		var tween := create_tween()
 		tween.tween_property(glow_light, "light_energy", energy, duration)

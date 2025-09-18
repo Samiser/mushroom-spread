@@ -44,5 +44,13 @@ var culls_insect: int
 var culls_animals: int
 var culls_total: int
 
+signal cap_reached
+
 func tile_rating_percentage() -> int:
 	return int(roundf((tile_rating[0] as float / tile_rating[1]) * 100.0))
+
+func add_member(m: Mushroom) -> void:
+	if not family.has(m):
+		family.append(m)
+		if family.size() == max_family:
+			cap_reached.emit()

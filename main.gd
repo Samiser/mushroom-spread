@@ -22,7 +22,6 @@ func start_day() -> void:
 	environment.is_day = true
 	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(environment, "time_of_day", 0.35, 2)
-	$Hud.end_day_button.visible = true
 
 func end_day() -> void:
 	get_tree().call_group("mushrooms", "grow_to_full")
@@ -80,6 +79,6 @@ func _unhandled_input(e: InputEvent) -> void:
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
 				mushroom.take_data_snapshot()
+				mushroom.mushroom_data.cap_reached.connect($Hud.on_cap_reached)
 				parents.append(mushroom)
 				tile.occupied = true
-				

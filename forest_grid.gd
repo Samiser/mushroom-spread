@@ -2,7 +2,10 @@
 extends Node3D
 class_name ForestGrid
 
-@export var grid_visible: bool = false
+@export var grid_visible: bool = false:
+	set(value):
+		grid_visible = value
+		$GridOverlay.visible = grid_visible
 @export var ground_map_path: NodePath
 @export var thing_map_paths: Array[NodePath] = []
 
@@ -21,10 +24,6 @@ func _ready() -> void:
 			if m:
 				_things.append(m)
 		_build_index()
-
-func _process(_delta: float) -> void:
-	if Engine.is_editor_hint():
-		$GridOverlay.visible = grid_visible
 
 func _build_index() -> void:
 	_ground = get_node_or_null(ground_map_path) as GridMap
