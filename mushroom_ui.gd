@@ -7,6 +7,7 @@ var M: Mushroom
 @export var growth_progress_bar : TextureProgressBar
 @export var parent_label : RichTextLabel
 @export var parent_info_ui : Sprite3D
+@export var label : Label3D
 
 @export var line_colors: Dictionary[Mushroom.MUSHROOM_MOOD, Color] = {
 	Mushroom.MUSHROOM_MOOD.Likes: Color(0.45, 1.0, 0.45, 0.502),
@@ -98,6 +99,16 @@ func _preferences_string() -> String:
 		", ".join(M.mushroom_data.likes_tiles.map(Tile.type_to_bbcode)),
 		", ".join(M.mushroom_data.dislikes_tiles.map(Tile.type_to_bbcode))
 	]
+
+func display_label_popup(text: String, time: float, start_colour: Color) -> void:
+	label.scale = Vector3.ZERO
+	label.text = text
+	label.modulate = start_colour
+
+	var tween := get_tree().create_tween()
+	tween.tween_property(label, "scale", Vector3.ONE, time)
+	tween.tween_property(label, "modulate", Color.TRANSPARENT, 3.0)
+	tween.parallel().tween_property(label, "outline_modulate", Color.TRANSPARENT, 3.0)
 
 func _color_progress_lerp(percent: float) -> Color:
 	return lerp(Color.RED, Color.GREEN, percent / 100.0)

@@ -5,7 +5,7 @@ extends Control
 @export var end_day_button: Button
 @export var show_debug_button: Button
 
-signal end_day
+signal end_day 
 
 func set_hover_desc(desc: String) -> void:
 	mushroom_description_label.text = desc
