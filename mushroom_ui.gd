@@ -8,6 +8,12 @@ var M: Mushroom
 @export var parent_label : RichTextLabel
 @export var parent_info_ui : Sprite3D
 
+@export var line_colors: Dictionary[Mushroom.MUSHROOM_MOOD, Color] = {
+	Mushroom.MUSHROOM_MOOD.Likes: Color(0.45, 1.0, 0.45, 0.502),
+	Mushroom.MUSHROOM_MOOD.Dislikes: Color(1.0, 0.46, 0.46, 0.502),
+	Mushroom.MUSHROOM_MOOD.NoComment: Color(1.0, 1.0, 1.0, 0.5)
+}
+
 var tween : Tween
 
 func setup(mushroom: Mushroom) -> void:
@@ -54,13 +60,7 @@ func _draw_mood_lines() -> void:
 		line.set_point_position(0, cam.unproject_position(M.global_position))
 		line.set_point_position(1, cam.unproject_position(M.last_in_tree.global_position))
 		
-		match M.tile_happiness:
-			M.MUSHROOM_MOOD.Likes:
-				line.default_color = Color.GREEN
-			M.MUSHROOM_MOOD.Dislikes:
-				line.default_color = Color.RED
-			M.MUSHROOM_MOOD.NoComment:
-				line.default_color = Color.WHITE
+		line.default_color = line_colors[M.tile_happiness]
 
 func build_description() -> String:
 	var growth_percent := roundf((M.growth / M.generational_max) * 100)
