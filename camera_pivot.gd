@@ -20,7 +20,7 @@ func _unhandled_input(e: InputEvent) -> void:
 	if _cam == null:
 		return
 
-	if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_MIDDLE:
+	if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
 		_panning = e.pressed
 		return
 
@@ -36,7 +36,7 @@ func _unhandled_input(e: InputEvent) -> void:
 	if _panning:
 		if e is InputEventScreenDrag:
 			_pan_by_screen_delta(e.position, e.relative)
-		elif e is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
+		elif e is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			_pan_by_screen_delta(e.position, e.relative)
 
 # --- helpers ---

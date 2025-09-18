@@ -1,0 +1,87 @@
+[gd_scene load_steps=7 format=3 uid="uid://dklxyvo21ct0"]
+
+[ext_resource type="PackedScene" uid="uid://b0h23m6qtmef6" path="res://forest_grid.tscn" id="1_7vrkn"]
+[ext_resource type="Script" uid="uid://bxef8xwosrk7v" path="res://main_menu.gd" id="1_glbon"]
+[ext_resource type="PackedScene" uid="uid://ceu7c77rpa85w" path="res://environment.tscn" id="2_fu7sn"]
+[ext_resource type="FontFile" uid="uid://br5m76r2ao6tp" path="res://Fonts/alagard.ttf" id="4_jix8l"]
+[ext_resource type="Texture2D" uid="uid://dr1fnlbwkkrug" path="res://mushroom_sprite.png" id="5_glbon"]
+
+[sub_resource type="Theme" id="Theme_glbon"]
+default_font = ExtResource("4_jix8l")
+
+[node name="MainMenu" type="Node3D"]
+script = ExtResource("1_glbon")
+
+[node name="ForestGrid" parent="." instance=ExtResource("1_7vrkn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.41467166, 0, 1.2681935)
+
+[node name="Environment" parent="." instance=ExtResource("2_fu7sn")]
+time_of_day = 0.757
+is_menu = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.66913074, 0.04018839, -0.7420573, 0, 0.99853665, 0.054078814, 0.74314487, 0.036185794, -0.6681515, -3.615, 0.674, -3.105)
+fov = 45.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_glbon")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 31.865
+offset_top = -39.5
+offset_right = 161.865
+offset_bottom = 39.5
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Ambergrove"
+fit_content = true
+
+[node name="Button" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="Button2" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="mushroom_sprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.144391, 0.5475024, -2.5084045)
+pixel_size = 0.0004
+billboard = 1
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("5_glbon")
+
+[node name="mushroom_sprite2" type="Sprite3D" parent="."]
+transform = Transform3D(0.765, 0, 0, 0, 0.765, 0, 0, 0, 0.765, -3.301782, 0.5475024, -2.5084045)
+pixel_size = 0.0004
+billboard = 1
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("5_glbon")
+
+[node name="mushroom_sprite3" type="Sprite3D" parent="."]
+transform = Transform3D(0.555, 0, 0, 0, 0.555, 0, 0, 0, 0.555, -3.2815337, 0.5369408, -2.6154382)
+pixel_size = 0.0004
+billboard = 1
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("5_glbon")

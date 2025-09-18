@@ -24,6 +24,7 @@ ambient_light_source = 3
 tonemap_mode = 2
 tonemap_exposure = 0.48
 tonemap_white = 0.84
+glow_enabled = true
 fog_enabled = true
 fog_light_color = Color(0.113838, 0.16973, 0.263496, 1)
 fog_density = 0.0758

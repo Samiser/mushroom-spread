@@ -17,6 +17,7 @@ var _env: Environment
 @export var sun_color_gradient: Gradient		# maps t -> Color
 
 var is_day = false
+@export var is_menu = false
 
 func _ready() -> void:
 	_env = world_environment.environment
@@ -31,7 +32,7 @@ func _process(delta: float) -> void:
 	if day_length_seconds <= 0.0:
 		return
 	
-	if (is_day and time_of_day <= 0.8) or (!is_day and time_of_day <= 0.15):
+	if (is_day and time_of_day <= 0.8) or (!is_day and time_of_day <= 0.15) or is_menu:
 		var step := (delta / day_length_seconds) * time_scale
 		time_of_day = fposmod(time_of_day + step, 1.0)
 		_apply_time()

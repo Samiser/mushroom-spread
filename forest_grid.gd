@@ -1,6 +1,8 @@
+@tool
 extends Node3D
 class_name ForestGrid
 
+@export var grid_visible: bool = false
 @export var ground_map_path: NodePath
 @export var thing_map_paths: Array[NodePath] = []
 
@@ -10,13 +12,19 @@ var _things: Array[GridMap] = []
 var _tiles: Dictionary[Vector3i, Tile] = {}
 
 func _ready() -> void:
-	_ground = get_node_or_null(ground_map_path) as GridMap
-	_things.clear()
-	for p in thing_map_paths:
-		var m := get_node_or_null(p) as GridMap
-		if m:
-			_things.append(m)
-	_build_index()
+	if not Engine.is_editor_hint():
+		$GridOverlay.visible = grid_visible
+		_ground = get_node_or_null(ground_map_path) as GridMap
+		_things.clear()
+		for p in thing_map_paths:
+			var m := get_node_or_null(p) as GridMap
+			if m:
+				_things.append(m)
+		_build_index()
+
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		$GridOverlay.visible = grid_visible
 
 func _build_index() -> void:
 	_ground = get_node_or_null(ground_map_path) as GridMap

@@ -26,6 +26,7 @@ var highlighted := false
 @onready var sprite: Sprite3D = $mushroom_sprite
 @onready var spore_particles: CPUParticles3D = $Explosion
 @onready var trickle_particles: CPUParticles3D = $Trickle
+@onready var glow_light: OmniLight3D = $GlowLight
 
 @onready var spawner: MushroomSpawner = $Spawner
 @onready var ui: MushroomUI = $UI
@@ -37,6 +38,7 @@ func _ready() -> void:
 	add_to_group("mushrooms")
 	
 	$Area3D.input_event.connect(_on_area_input_event)
+	$AudioStreamPlayer3D.play()
 	
 	if generation == 0:
 		parent = self
@@ -66,6 +68,9 @@ func check_family_tiles() -> Array[int]:
 	var total := 0
 	
 	for mushroom in parent.mushroom_data.family:
+		if not grid:
+			return []
+		
 		var tile := grid.get_at_world(mushroom.global_position)
 		if !tile:
 			continue
@@ -104,6 +109,20 @@ func grow_to_full() -> void:
 func _on_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
 		spawner.handle_click()
+
+func tween_glow(on: bool, duration: float):
+	print(on, duration)
+	var tween_light_energy = func(energy: float) -> void:
+		var tween := create_tween()
+		tween.tween_property(glow_light, "light_energy", energy, duration)
+		await tween.finished
+	
+	if on:
+		glow_light.visible = true
+		await tween_light_energy.call(1.0)
+	else:
+		await tween_light_energy.call(0.0)
+		glow_light.visible = false
 
 func _on_area_3d_mouse_entered() -> void:
 	for mushroom in parent.mushroom_data.family:

@@ -15,23 +15,23 @@ func _ready() -> void:
 	$Report.next_day.connect(start_day)
 
 func start_day() -> void:
+	get_tree().call_group("mushrooms", "tween_glow", false, 2)
 	for parent in parents:
-		print("here")
 		parent.take_data_snapshot()
-		print(parent.mushroom_data.previous_data)
 	environment.is_day = true
 	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(environment, "time_of_day", 0.35, 2)
 	$Hud.end_day_button.visible = true
 
 func end_day() -> void:
+	get_tree().call_group("mushrooms", "grow_to_full")
+	get_tree().call_group("mushrooms", "tween_glow", true, 2)
+	
 	environment.is_day = false
 	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(environment, "time_of_day", 1.0, 2)
 	await tween.finished
 	environment.time_of_day = 0.0
-	
-	get_tree().call_group("mushrooms", "grow_to_full")
 	
 	var seen := {}
 	for m: Mushroom in get_tree().get_nodes_in_group("mushrooms"):
