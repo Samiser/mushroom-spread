@@ -39,7 +39,7 @@ _data = [Vector2(0, 0), 0.0, 2.11184, 0, 1, Vector2(0.47352, 1), 0.736308, 0.736
 point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_4gvq0"]
-offsets = PackedFloat32Array(0.575972, 1)
+offsets = PackedFloat32Array(0.28, 0.6)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_jokqs"]
@@ -68,7 +68,7 @@ alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("2_ke5i0")
 
-[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+[node name="Explosion" type="CPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_jg55k")
 emitting = false
 amount = 12
@@ -89,6 +89,30 @@ damping_min = 0.1
 damping_max = 0.1
 scale_amount_min = 0.8
 scale_amount_max = 1.2
+scale_amount_curve = SubResource("Curve_jg55k")
+color = Color(0.839216, 0.517647, 0.435294, 1)
+color_ramp = SubResource("Gradient_4gvq0")
+
+[node name="Trickle" type="CPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_jg55k")
+amount = 3
+lifetime = 4.0
+explosiveness = 0.04
+randomness = 0.12
+mesh = SubResource("SphereMesh_jg55k")
+emission_shape = 1
+emission_sphere_radius = 0.1
+direction = Vector3(0, 1, 0)
+spread = 51.52
+gravity = Vector3(0, 0.2, 0)
+initial_velocity_min = 0.2
+initial_velocity_max = 0.2
+linear_accel_min = -0.2
+linear_accel_max = -0.2
+damping_min = 0.05
+damping_max = 0.05
+scale_amount_min = 0.4
+scale_amount_max = 0.8
 scale_amount_curve = SubResource("Curve_jg55k")
 color = Color(0.839216, 0.517647, 0.435294, 1)
 color_ramp = SubResource("Gradient_4gvq0")

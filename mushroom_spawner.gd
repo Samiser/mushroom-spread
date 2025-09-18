@@ -74,6 +74,7 @@ func _post_spawn_pause() -> void:
 		await get_tree().create_timer(spawn_burst_interval).timeout
 
 func _spawn_burst(spawns: int, dir_at: Callable) -> void:
+	M.trickle_particles.emitting = false
 	M.spore_particles.emitting = true
 	var dist_at := func(_i: int, _n: int) -> float:
 		return M.mushroom_data.spawn_range * randf_range(

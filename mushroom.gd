@@ -24,7 +24,8 @@ var highlighted := false
 @onready var mushroom_baby := load("res://mushroom.tscn")
 
 @onready var sprite: Sprite3D = $mushroom_sprite
-@onready var spore_particles: CPUParticles3D = $CPUParticles3D
+@onready var spore_particles: CPUParticles3D = $Explosion
+@onready var trickle_particles: CPUParticles3D = $Trickle
 
 @onready var spawner: MushroomSpawner = $Spawner
 @onready var ui: MushroomUI = $UI
