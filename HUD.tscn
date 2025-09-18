@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ju4jx8sao8wh"]
+[gd_scene load_steps=6 format=3 uid="uid://ju4jx8sao8wh"]
 
 [ext_resource type="FontFile" uid="uid://br5m76r2ao6tp" path="res://Fonts/alagard.ttf" id="1_efote"]
 [ext_resource type="Script" uid="uid://dk20lageb3via" path="res://hud.gd" id="1_k5de2"]
 [ext_resource type="Texture2D" uid="uid://den1h0hajsb0q" path="res://Textures/circle_outline.png" id="3_vow1y"]
+[ext_resource type="Texture2D" uid="uid://l0dci404iugg" path="res://Textures/hover_bubble.png" id="4_ne771"]
 
 [sub_resource type="Theme" id="Theme_k5de2"]
 default_font = ExtResource("1_efote")
@@ -89,3 +90,37 @@ mouse_filter = 2
 value = 100.0
 fill_mode = 4
 texture_progress = ExtResource("3_vow1y")
+
+[node name="HoverInfo" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.76862746)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_bottom = 64.59655
+grow_horizontal = 0
+texture = ExtResource("4_ne771")
+expand_mode = 5
+
+[node name="parent_label" type="RichTextLabel" parent="HoverInfo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.5
+offset_top = 9.798275
+offset_right = -16.5
+offset_bottom = -9.798275
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.06469653, 0.06469653, 0.06469653, 1)
+theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/bold_font_size = 14
+bbcode_enabled = true
+text = "[b]FAMILY NAME[/b]
+0/0		100 LIFE"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1

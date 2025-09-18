@@ -33,6 +33,7 @@ var highlighted := false
 
 # signals
 signal set_description(desc)
+signal set_parent_description(desc)
 
 func _ready() -> void:
 	add_to_group("mushrooms")
@@ -49,6 +50,12 @@ func _ready() -> void:
 
 	spawner.setup(self)
 	ui.setup(self)
+	
+	var tile: Tile = grid.get_at_world(global_position)
+	if mushroom_data.likes_tiles.has(tile.type):
+		ui.display_label_popup('+', 0.4, Color.GREEN)
+	elif mushroom_data.dislikes_tiles.has(tile.type):
+		ui.display_label_popup('-', 0.4, Color.RED)
 
 func is_on_starting_tile(pos: Vector3):
 	var tile: Tile = grid.get_at_world(pos)
@@ -60,6 +67,7 @@ func _process(delta: float) -> void:
 	
 	if highlighted:
 		parent.set_description.emit(ui.build_description())
+		parent.set_parent_description.emit(ui.parent_description())
 
 func check_family_tiles() -> Array[int]:
 	var like_tiles := 0
@@ -127,18 +135,12 @@ func _on_area_3d_mouse_entered() -> void:
 	for mushroom in parent.mushroom_data.family:
 		mushroom.sprite.shaded = false
 		mushroom.ui.line.visible = true
-	
-	parent.ui.update_parent_ui(true)
-	
 	highlighted = true
 
 func _on_area_3d_mouse_exited() -> void:
 	for mushroom in parent.mushroom_data.family:
 		mushroom.sprite.shaded = true
 		mushroom.ui.line.visible = false
-	
-	parent.ui.update_parent_ui(false)
-	
 	highlighted = false
 
 func take_data_snapshot():
