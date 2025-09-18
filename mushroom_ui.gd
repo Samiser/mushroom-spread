@@ -26,18 +26,7 @@ func setup(mushroom: Mushroom) -> void:
 func update(_delta: float) -> void:
 	_draw_mood_lines()
 
-func update_parent_ui(display: bool) -> void:
-	if tween != null:
-		if tween.is_running():
-			tween.stop()
-	
-	tween = get_tree().create_tween()
-	if !display:
-		tween.tween_property(parent_info_ui, "modulate", Color.TRANSPARENT, 0.6)
-		await tween.finished
-		return
-	tween.tween_property(parent_info_ui, "modulate", Color.WHITE, 0.2)
-	
+func parent_description() -> String:
 	var parent_text : String = "[b]%s[/b]
 		%d/%d
 		%d Life" % [
@@ -47,7 +36,7 @@ func update_parent_ui(display: bool) -> void:
 		M.mushroom_data.family_health
 		]
 	parent_text = parent_text.replace("\t", "")
-	parent_label.text = parent_text
+	return parent_text
 
 func display_progress_bar() -> void:
 	var progress := M.growth / M.generational_max

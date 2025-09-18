@@ -79,6 +79,7 @@ func _unhandled_input(e: InputEvent) -> void:
 				family_count += 1
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
+				mushroom.set_parent_description.connect($Hud.display_parent_info)
 				mushroom.take_data_snapshot()
 				parents.append(mushroom)
 				tile.occupied = true
