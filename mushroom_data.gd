@@ -44,6 +44,7 @@ var culls_insect: int
 var culls_animals: int
 var culls_total: int
 
+signal member_added(mushroom: Mushroom)
 signal cap_reached
 
 func tile_rating_percentage() -> int:
@@ -52,5 +53,6 @@ func tile_rating_percentage() -> int:
 func add_member(m: Mushroom) -> void:
 	if not family.has(m):
 		family.append(m)
+		member_added.emit(m)
 		if family.size() == max_family:
 			cap_reached.emit()

@@ -27,6 +27,8 @@ func start_day() -> void:
 	tween.tween_property(environment, "time_of_day", 0.3, 2)
 
 func end_day() -> void:
+	if tutorial.get_current_title() == "Night falls":
+		tutorial.next()
 	get_tree().call_group("mushrooms", "grow_to_full")
 	get_tree().call_group("mushrooms", "tween_glow", true, 2)
 	
@@ -55,7 +57,13 @@ func end_day() -> void:
 			$Report.update_report(m, day)
 	$Report.visible = true
 	day += 1
-	
+
+func _on_member_added(m: Mushroom):
+	if m.mushroom_data.family.size() == 7 and tutorial.get_current_title() == "Spreading Spores":
+		tutorial.next()
+	elif m.mushroom_data.family.size() == m.mushroom_data.max_family and tutorial.get_current_title() == "Reading the Forest":
+		tutorial.next()
+
 func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 		var cam := get_viewport().get_camera_3d()
@@ -93,5 +101,6 @@ func _unhandled_input(e: InputEvent) -> void:
 				mushroom.set_parent_description.connect($Hud.display_parent_info)
 				mushroom.take_data_snapshot()
 				mushroom.mushroom_data.cap_reached.connect($Hud.on_cap_reached)
+				mushroom.mushroom_data.member_added.connect(_on_member_added)
 				parents.append(mushroom)
 				tile.occupied = true

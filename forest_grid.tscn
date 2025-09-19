@@ -61,6 +61,7 @@ data = {
 }
 
 [node name="GridOverlay" type="Node3D" parent="."]
+visible = false
 script = ExtResource("8_a1ok8")
 gridmap_path = NodePath("../Ground")
 

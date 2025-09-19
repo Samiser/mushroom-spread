@@ -50,7 +50,7 @@ func handle_click() -> void:
 		await _spawn_child_burst(spawns, dir)
 
 func _pick_spawn_count() -> int:
-	return randi_range(3, 4) if M.generation == 0 else randi_range(M.mushroom_data.spawn_min, M.mushroom_data.spawn_max)
+	return 4 if M.generation == 0 else randi_range(M.mushroom_data.spawn_min, M.mushroom_data.spawn_max)
 
 func _cap_spawns_to_family(spawns: int) -> int:
 	var remaining := M.mushroom_data.max_family - M.mushroom_data.family.size()

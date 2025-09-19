@@ -15,7 +15,6 @@ mushroom_name = "Bark Mushroom"
 grow_speed = 0.3
 max_growth = 1.2
 spawn_range = 0.4
-max_family = 8
 tile_capacity = 8
 spawn_min = 2
 generational_loss = 0.1
