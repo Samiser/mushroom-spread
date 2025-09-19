@@ -45,22 +45,9 @@ func end_day() -> void:
 	await tween.finished
 	environment.time_of_day = 0.0
 	
-	var seen := {}
-	for m: Mushroom in get_tree().get_nodes_in_group("mushrooms"):
-		if m is Mushroom and m.generation == 0:
-			var data: MushroomData = m.mushroom_data
-			var key := data.get_instance_id()
-			
-			var prev_health: float = data.family_health
-			data.family_health += m.check_family_tiles()[0] * 4
-			data.family_health -= data.family.size()
-			data.family_health = clamp(data.family_health, 0, 100)
-			data.is_health_increasing = data.family_health >= prev_health
-			
-			if not seen.has(key):
-				data.max_family = int(roundf(float(data.max_family) * (1.0 + float(data.tile_rating_percentage()) / 100.0)))
-				seen[key] = true
-			
+	for m: Mushroom in get_tree().get_nodes_in_group("roots"):
+		if m is Mushroom and m.is_root():
+			m.end_day()
 			$Report.update_report(m, day)
 	$Report.visible = true
 	day += 1
@@ -102,6 +89,7 @@ func _unhandled_input(e: InputEvent) -> void:
 				forest_grid.clear_highlights()
 				family_count += 1
 				add_child(mushroom)
+				mushroom.add_to_group("roots")
 				mushroom.set_description.connect($Hud.set_hover_desc)
 				mushroom.set_parent_description.connect($Hud.display_parent_info)
 				mushroom.take_data_snapshot()

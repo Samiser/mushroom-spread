@@ -54,7 +54,7 @@ func add_member(m: Mushroom) -> void:
 	if not family.has(m):
 		family.append(m)
 		member_added.emit(m)
-		if family.size() == max_family:
+		if family.size() >= max_family:
 			cap_reached.emit()
 
 func preferences_string() -> String:

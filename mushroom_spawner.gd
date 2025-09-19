@@ -25,7 +25,7 @@ var _spawn_shape := CylinderShape3D.new()
 var _spawn_q := PhysicsShapeQueryParameters3D.new()
 
 func setup(mushroom: Mushroom) -> void:
-	M = mushroom	
+	M = mushroom
 	_spawn_shape.radius = spawn_check_radius
 	_spawn_shape.height = spawn_check_height
 	_spawn_q.shape = _spawn_shape
