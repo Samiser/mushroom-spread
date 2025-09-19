@@ -33,20 +33,30 @@ var tutorial_script: Array[TutorialItem] = [
 	),
 	TutorialItem.new(
 		"First Fungus",
-		"Place your starter mushroom on any of the highlighted grass tiles",
+		"Place your starter mushroom on any of the highlighted tiles",
 		false,
 		Vector2(10, 115.5)
 	),
 	TutorialItem.new(
 		"Spreading Spores",
-		"Great! Once a mushroom is fully grown, it can be clicked to spread spores! They will settle nearby, creating new mushrooms.",
+		"Great! Once a mushroom is fully grown, it can be clicked to spread spores. They will settle nearby, creating new mushrooms.",
 		true
 	),
 	TutorialItem.new(
 		"Spreading Spores",
 		"The mushroom you choose to spread from is how you can affect where your colony expands.\nGive it a try!",
-		false,
+		true,
 		Vector2(10, 115.5)
+	),
+	TutorialItem.new(
+		"Reading the Forest",
+		"Your shrooms prefers certain tiles\n• [color=#63C74D]Liked[/color] tiles improve growth.\n• [color=#DC4C46]Disliked[/color] tiles weaken the colony.",
+		true
+	),
+	TutorialItem.new(
+		"Reading the Forest",
+		"You can check what your colony likes and dislikes by ???. Spread carefully to ensure your colony thrives!",
+		true,
 	)
 ]
 
@@ -70,3 +80,5 @@ func next() -> void:
 	current_step += 1
 	if tutorial_script.size() > current_step:
 		_show_tutorial(current_step)
+	else:
+		tutorial_panel.visible = false

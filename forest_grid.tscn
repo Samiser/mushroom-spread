@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0h23m6qtmef6"]
+[gd_scene load_steps=10 format=3 uid="uid://b0h23m6qtmef6"]
 
 [ext_resource type="MeshLibrary" uid="uid://cqmrgdtxkoikq" path="res://Meshes/libraries/ground_meshlib.tres" id="1_33puw"]
 [ext_resource type="Script" uid="uid://biff4oxh2fonk" path="res://forest_grid.gd" id="1_gs8jw"]
@@ -8,6 +8,10 @@
 [ext_resource type="MeshLibrary" uid="uid://bsbwnhvesik5o" path="res://Meshes/libraries/stump_meshlib.tres" id="6_a1ok8"]
 [ext_resource type="MeshLibrary" uid="uid://deaqi4i0nde6c" path="res://Meshes/libraries/grass_meshlib.tres" id="7_gs8jw"]
 [ext_resource type="Script" uid="uid://bperlxldq7ufo" path="res://grid_overlay.gd" id="8_a1ok8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a1ok8"]
+radius = 0.8
+height = 3.525
 
 [node name="ForestGrid" type="Node3D"]
 script = ExtResource("1_gs8jw")
@@ -59,3 +63,9 @@ data = {
 [node name="GridOverlay" type="Node3D" parent="."]
 script = ExtResource("8_a1ok8")
 gridmap_path = NodePath("../Ground")
+
+[node name="WaterBody" type="StaticBody3D" parent="."]
+
+[node name="Water" type="CollisionShape3D" parent="WaterBody"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -3, 0.4, -2.0125)
+shape = SubResource("CapsuleShape3D_a1ok8")

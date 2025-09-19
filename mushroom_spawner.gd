@@ -2,7 +2,7 @@ extends Node
 class_name MushroomSpawner
 
 @export var even_ring_jitter_deg: float = 12.0 # small random wobble on gen-0 ring
-@export var child_cone_deg: float = 60.0 # half-angle for spreading siblings from a child
+@export var child_cone_deg: float = 45.0 # half-angle for spreading siblings from a child
 @export var safety_search_steps: int = 6 # try a few rotated alternatives if blocked
 @export var safety_step_deg: float = 12.0
 
@@ -121,7 +121,7 @@ func _collides_with_thing_at(world_pos: Vector3) -> bool:
 	var blocked := false
 	
 	for hit in hits:
-		if hit.collider.name in ["Trees", "Stumps"]:
+		if hit.collider.name in ["Trees", "Stumps", "WaterBody"]:
 			blocked = true
 			break
 
