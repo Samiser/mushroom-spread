@@ -57,7 +57,7 @@ func build_description() -> String:
 	if !M.mushroom_data.is_health_increasing:
 		increasing_health_colour = Color.RED
 
-	var desc: String = "Family:
+	var _desc: String = "Family:
 		  %s (%s)
 		  Size: %d/%d
 		  Tile Rating: [color=%s]%d%%[/color]
@@ -73,19 +73,13 @@ func build_description() -> String:
 			_color_progress_lerp(M.mushroom_data.tile_rating_percentage()).to_html(), M.mushroom_data.tile_rating_percentage(),
 			M.mushroom_data.tile_capacity,
 			increasing_health_colour.to_html(), M.mushroom_data.family_health,
-			_preferences_string(),
+			M.mushroom_data.preferences_string(),
 			M.generation,
 			_color_progress_lerp(growth_percent).to_html(), growth_percent, 
 			tile_string,
 		]
 
-	return desc.replace("\t", "")
-
-func _preferences_string() -> String:
-	return "Likes: %s\n  Dislikes: %s" % [
-		", ".join(M.mushroom_data.likes_tiles.map(Tile.type_to_bbcode)),
-		", ".join(M.mushroom_data.dislikes_tiles.map(Tile.type_to_bbcode))
-	]
+	return _desc
 
 func display_label_popup(text: String, time: float, start_colour: Color) -> void:
 	label.scale = Vector3.ZERO

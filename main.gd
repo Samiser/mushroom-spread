@@ -18,7 +18,7 @@ func _ready() -> void:
 	tutorial.next()
 
 func start_day() -> void:
-	$Hud.day_ended = false
+	$Hud.start_day(day)
 	get_tree().call_group("mushrooms", "tween_glow", false, 2)
 	for parent in parents:
 		parent.take_data_snapshot()
@@ -104,3 +104,4 @@ func _unhandled_input(e: InputEvent) -> void:
 				mushroom.mushroom_data.member_added.connect(_on_member_added)
 				parents.append(mushroom)
 				tile.occupied = true
+				$Hud.set_preferences(mushroom.mushroom_data.preferences_string())

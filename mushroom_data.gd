@@ -56,3 +56,9 @@ func add_member(m: Mushroom) -> void:
 		member_added.emit(m)
 		if family.size() == max_family:
 			cap_reached.emit()
+
+func preferences_string() -> String:
+	return "Likes: %s\nDislikes: %s" % [
+		", ".join(likes_tiles.map(Tile.type_to_bbcode)),
+		", ".join(dislikes_tiles.map(Tile.type_to_bbcode))
+	]

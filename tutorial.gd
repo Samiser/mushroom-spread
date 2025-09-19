@@ -60,7 +60,7 @@ var tutorial_script: Array[TutorialItem] = [
 	),
 	TutorialItem.new(
 		"Reading the Forest",
-		"You can check what your colony likes and dislikes by ???. Spread carefully to ensure your colony thrives!",
+		"You can check what your colony likes and dislikes in the top left. Spread carefully to ensure your colony thrives!",
 		false,
 		true
 	),

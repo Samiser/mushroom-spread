@@ -1,5 +1,7 @@
 extends Control
 
+@export var day_text: RichTextLabel
+@export var preferences_label: RichTextLabel
 @export var mushroom_description_label: RichTextLabel
 @export var tile_description_label: RichTextLabel
 @export var end_day_button: Button
@@ -23,7 +25,20 @@ func display_parent_info(text: String) -> void:
 func set_tile_info(info: String) -> void:
 	tile_description_label.text = info
 
+func set_preferences(prefs: String) -> void:
+	preferences_label.text = prefs
+	preferences_label.visible = true
+
+func start_day(day: int):
+	day_ended = false
+	var tween := create_tween()
+	day_text.text = "Day %d" % day
+	tween.tween_property(self, "modulate:a", 1, 1)
+
 func _end_day() -> void:
+	var tween := create_tween()
+	tween.tween_property(self, "modulate:a", 0, 1)
+	
 	$HoverInfo.visible = false
 	day_ended = true
 	end_day_button.visible = false
