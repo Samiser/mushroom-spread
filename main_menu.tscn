@@ -11,8 +11,10 @@
 default_font = ExtResource("4_jix8l")
 RichTextLabel/colors/default_color = Color(1, 0.902, 0.79, 1)
 
-[node name="MainMenu" type="Node3D"]
+[node name="MainMenu" type="Node3D" node_paths=PackedStringArray("tutorial_button", "play_button")]
 script = ExtResource("1_glbon")
+tutorial_button = NodePath("Control/VBoxContainer/TutorialButton")
+play_button = NodePath("Control/VBoxContainer/PlayButton")
 
 [node name="ForestGrid" parent="." instance=ExtResource("1_7vrkn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.41467166, 0, 1.2681935)
@@ -51,9 +53,13 @@ theme_override_font_sizes/normal_font_size = 32
 text = "Ambergrove"
 fit_content = true
 
-[node name="Button" type="Button" parent="Control/VBoxContainer"]
+[node name="TutorialButton" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
-text = "Start"
+text = "Start Tutorial"
+
+[node name="PlayButton" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Play"
 
 [node name="Button2" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2

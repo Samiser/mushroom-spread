@@ -1,4 +1,5 @@
 extends Node3D
+class_name MainClass
 
 @export var mushroom_scene: Array[PackedScene]
 var selected_mushroom := 0
@@ -9,6 +10,7 @@ var selected_mushroom := 0
 
 var day := 0
 var family_count := 0
+var tutorials_enabled := true
 
 var parents: Array[Mushroom]
 
@@ -16,13 +18,18 @@ func _ready() -> void:
 	$Hud.end_day.connect(end_day)
 	$Report.next_day.connect(start_day)
 	start_day()
+	tutorial.visible = tutorials_enabled
+	tutorial.tutorial_enabled = tutorials_enabled
 	tutorial.next()
 	
 	selected_mushroom = randi_range(0, mushroom_scene.size() - 1)
+	if tutorials_enabled:
+		selected_mushroom = 0
+	
 	var mushroom: Mushroom = mushroom_scene[selected_mushroom].instantiate()
 	
 	forest_grid.highlight_starting_tiles(mushroom)
-	$Hud.set_preferences(mushroom.mushroom_data.preferences_string())
+	$Hud.set_preferences(mushroom.mushroom_data.mushroom_name + "\n" + mushroom.mushroom_data.preferences_string())
 
 func start_day() -> void:
 	$Hud.start_day(day)
