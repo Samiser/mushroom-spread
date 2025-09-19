@@ -53,7 +53,7 @@ viewport_path = NodePath("world_ui/parent_VP")
 [node name="Mushroom" type="Node3D"]
 script = ExtResource("1_u1fbd")
 mushroom_data = SubResource("Resource_jg55k")
-mushroom_baby = null
+mushroom_baby_path = "res://Mushrooms/grass_mushroom.tscn"
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)

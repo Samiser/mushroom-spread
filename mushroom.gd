@@ -21,7 +21,8 @@ var tile_happiness: MUSHROOM_MOOD
 var highlighted := false
 
 # resources
-@export var mushroom_baby : PackedScene
+@export_file_path("*.tscn") var mushroom_baby_path 
+var mushroom_baby: PackedScene
 
 @onready var sprite: Sprite3D = $mushroom_sprite
 @onready var spore_particles: CPUParticles3D = $Explosion
@@ -36,6 +37,7 @@ signal set_description(desc)
 signal set_parent_description(desc)
 
 func _ready() -> void:
+	mushroom_baby = load(mushroom_baby_path)
 	add_to_group("mushrooms")
 	
 	$Area3D.input_event.connect(_on_area_input_event)
