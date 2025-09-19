@@ -1,0 +1,249 @@
+[gd_scene load_steps=17 format=3 uid="uid://dpy2cuhnqod0d"]
+
+[ext_resource type="Script" uid="uid://d1axjhpegdbve" path="res://mushroom.gd" id="1_u1fbd"]
+[ext_resource type="Script" uid="uid://b8pfmuhloq52q" path="res://mushroom_data.gd" id="2_te4ub"]
+[ext_resource type="Texture2D" uid="uid://dr1fnlbwkkrug" path="res://mushroom_sprite.png" id="3_73ds0"]
+[ext_resource type="Script" uid="uid://dqypjnaeanojx" path="res://mushroom_spawner.gd" id="4_177sy"]
+[ext_resource type="Script" uid="uid://dggm2l6ep5rxb" path="res://mushroom_ui.gd" id="5_8fdy5"]
+[ext_resource type="Texture2D" uid="uid://den1h0hajsb0q" path="res://Textures/circle_outline.png" id="6_thdhg"]
+[ext_resource type="Texture2D" uid="uid://l0dci404iugg" path="res://Textures/hover_bubble.png" id="7_3cp28"]
+[ext_resource type="AudioStream" uid="uid://c7k0hgc0gbyl5" path="res://Audio/pop.ogg" id="8_1n2wl"]
+
+[sub_resource type="Resource" id="Resource_jg55k"]
+script = ExtResource("2_te4ub")
+mushroom_name = "Grass Mushroom"
+max_family = 10
+generational_loss = 0.12
+insect_resistance = 0.8
+animal_resistance = 0.2
+starting_tile = 2
+likes_tiles = Array[int]([2, 1, 4])
+dislikes_tiles = Array[int]([3, 0])
+metadata/_custom_type_script = "uid://b8pfmuhloq52q"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pl5ep"]
+radius = 0.0550554
+height = 0.222382
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jg55k"]
+transparency = 1
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(0.84, 0.51744, 0.4368, 1)
+emission_energy_multiplier = 1.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_jg55k"]
+radius = 0.05
+height = 0.1
+
+[sub_resource type="Curve" id="Curve_jg55k"]
+_data = [Vector2(0, 0), 0.0, 2.11184, 0, 1, Vector2(0.47352, 1), 0.736308, 0.736308, 0, 0, Vector2(1, 0.855744), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_4gvq0"]
+offsets = PackedFloat32Array(0.28, 0.6)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_jokqs"]
+viewport_path = NodePath("world_ui/growth_progress_VP")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_uxf4e"]
+viewport_path = NodePath("world_ui/parent_VP")
+
+[node name="Mushroom" type="Node3D"]
+script = ExtResource("1_u1fbd")
+mushroom_data = SubResource("Resource_jg55k")
+mushroom_baby = null
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_pl5ep")
+
+[node name="mushroom_sprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0407497, 0)
+pixel_size = 0.0004
+billboard = 1
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("3_73ds0")
+
+[node name="Explosion" type="CPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_jg55k")
+emitting = false
+amount = 12
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("SphereMesh_jg55k")
+emission_shape = 1
+emission_sphere_radius = 0.1
+direction = Vector3(0, 1, 0)
+spread = 51.52
+gravity = Vector3(0, -0.3, 0)
+initial_velocity_min = 0.8
+initial_velocity_max = 1.3
+linear_accel_min = -0.2
+linear_accel_max = -0.2
+damping_min = 0.1
+damping_max = 0.1
+scale_amount_min = 0.8
+scale_amount_max = 1.2
+scale_amount_curve = SubResource("Curve_jg55k")
+color = Color(0.839216, 0.517647, 0.435294, 1)
+color_ramp = SubResource("Gradient_4gvq0")
+
+[node name="Trickle" type="CPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_jg55k")
+amount = 3
+lifetime = 4.0
+explosiveness = 0.04
+randomness = 0.12
+mesh = SubResource("SphereMesh_jg55k")
+emission_shape = 1
+emission_sphere_radius = 0.1
+direction = Vector3(0, 1, 0)
+spread = 51.52
+gravity = Vector3(0, 0.2, 0)
+initial_velocity_min = 0.2
+initial_velocity_max = 0.2
+linear_accel_min = -0.2
+linear_accel_max = -0.2
+damping_min = 0.05
+damping_max = 0.05
+scale_amount_min = 0.4
+scale_amount_max = 0.8
+scale_amount_curve = SubResource("Curve_jg55k")
+color = Color(0.839216, 0.517647, 0.435294, 1)
+color_ramp = SubResource("Gradient_4gvq0")
+
+[node name="Line2D" type="Line2D" parent="."]
+modulate = Color(1, 1, 1, 0.7137255)
+z_index = -100
+y_sort_enabled = true
+points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
+default_color = Color(0, 0.7490196, 0, 1)
+joint_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Spawner" type="Node" parent="."]
+script = ExtResource("4_177sy")
+
+[node name="UI" type="Node" parent="." node_paths=PackedStringArray("line", "world_ui", "growth_progress_bar", "parent_label", "parent_info_ui", "label")]
+script = ExtResource("5_8fdy5")
+line = NodePath("../Line2D")
+world_ui = NodePath("../World_UI")
+growth_progress_bar = NodePath("../world_ui/growth_progress_VP/TextureProgressBar")
+parent_label = NodePath("../world_ui/parent_VP/TextureRect/parent_label")
+parent_info_ui = NodePath("../World_UI/parent_ui")
+label = NodePath("../World_UI/Label3D")
+
+[node name="world_ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="growth_progress_VP" type="SubViewport" parent="world_ui"]
+transparent_bg = true
+handle_input_locally = false
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="world_ui/growth_progress_VP"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -156.0
+offset_right = 156.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.02
+fill_mode = 4
+texture_progress = ExtResource("6_thdhg")
+
+[node name="parent_VP" type="SubViewport" parent="world_ui"]
+transparent_bg = true
+handle_input_locally = false
+
+[node name="TextureRect" type="TextureRect" parent="world_ui/parent_VP"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -156.0
+offset_right = 156.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_3cp28")
+expand_mode = 4
+stretch_mode = 3
+
+[node name="parent_label" type="RichTextLabel" parent="world_ui/parent_VP/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 54.0
+offset_top = 117.0
+offset_right = -54.0
+offset_bottom = -117.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.06469653, 0.06469653, 0.06469653, 1)
+bbcode_enabled = true
+text = "[b]FAMILY NAME[/b]
+0/0		100 LIFE"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="World_UI" type="Node3D" parent="."]
+
+[node name="progress_ui" type="Sprite3D" parent="World_UI"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+pixel_size = 0.001
+axis = 1
+texture = SubResource("ViewportTexture_jokqs")
+
+[node name="parent_ui" type="Sprite3D" parent="World_UI"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85767365, 0)
+modulate = Color(1, 1, 1, 0)
+pixel_size = 0.003
+billboard = 1
+double_sided = false
+no_depth_test = true
+render_priority = 1
+texture = SubResource("ViewportTexture_uxf4e")
+
+[node name="Label3D" type="Label3D" parent="World_UI"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2664899, 0)
+billboard = 1
+no_depth_test = true
+outline_modulate = Color(0.2592937, 0.2592937, 0.2592937, 1)
+outline_size = 6
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("8_1n2wl")
+
+[node name="GlowLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12973681, 0)
+visible = false
+light_energy = 0.0
+omni_range = 0.13
+omni_attenuation = 0.048
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

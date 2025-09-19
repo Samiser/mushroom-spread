@@ -1,6 +1,6 @@
 extends Node3D
 
-var mushroom_scene: PackedScene = load("res://mushroom.tscn")
+@export var mushroom_scene: PackedScene
 
 @onready var forest_grid := $ForestGrid
 @onready var environment := $Environment
@@ -16,6 +16,7 @@ func _ready() -> void:
 	start_day()
 
 func start_day() -> void:
+	$Hud.day_ended = false
 	get_tree().call_group("mushrooms", "tween_glow", false, 2)
 	for parent in parents:
 		parent.take_data_snapshot()
@@ -70,10 +71,15 @@ func _unhandled_input(e: InputEvent) -> void:
 			if not tile.occupied and not tile.is_fully_occupied(4) and not family_count >= 1: # TODO: what happens when starting on a spot with mushrooms already on it? can that happen?
 				var mushroom : Mushroom = mushroom_scene.instantiate()
 				mushroom.position = tile.center
+				
+				if tile.type == Tile.Type.STUMP or tile.type == Tile.Type.TREE:
+					mushroom.position += (Vector3.FORWARD * 0.22)
+				
 				mushroom.grid = forest_grid
 
 				if !mushroom.is_on_starting_tile(mushroom.position):
 					return
+				
 				
 				family_count += 1
 				add_child(mushroom)

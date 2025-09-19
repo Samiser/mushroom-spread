@@ -21,7 +21,7 @@ var tile_happiness: MUSHROOM_MOOD
 var highlighted := false
 
 # resources
-@onready var mushroom_baby := load("res://mushroom.tscn")
+@export var mushroom_baby : PackedScene
 
 @onready var sprite: Sprite3D = $mushroom_sprite
 @onready var spore_particles: CPUParticles3D = $Explosion
@@ -52,10 +52,11 @@ func _ready() -> void:
 	ui.setup(self)
 	
 	var tile: Tile = grid.get_at_world(global_position)
-	if mushroom_data.likes_tiles.has(tile.type):
-		ui.display_label_popup('+', 0.4, Color.GREEN)
-	elif mushroom_data.dislikes_tiles.has(tile.type):
-		ui.display_label_popup('-', 0.4, Color.RED)
+	if tile:
+		if mushroom_data.likes_tiles.has(tile.type):
+			ui.display_label_popup('+', 0.4, Color.GREEN)
+		elif mushroom_data.dislikes_tiles.has(tile.type):
+			ui.display_label_popup('-', 0.4, Color.RED)
 
 func is_on_starting_tile(pos: Vector3):
 	var tile: Tile = grid.get_at_world(pos)
