@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dc3emty8i4q1s"]
+[gd_scene load_steps=8 format=3 uid="uid://dc3emty8i4q1s"]
 
 [ext_resource type="Script" uid="uid://cmrknqlmkcbqr" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ceu7c77rpa85w" path="res://environment.tscn" id="2_1bvp3"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b0h23m6qtmef6" path="res://forest_grid.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://ju4jx8sao8wh" path="res://HUD.tscn" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://s5gqmgqsa6l8" path="res://camera_pivot.gd" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://b71o8dwljmvso" path="res://tutorial.tscn" id="4_272bh"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_0xm2m")
@@ -14,6 +15,8 @@ script = ExtResource("1_0xm2m")
 visible = false
 
 [node name="Hud" parent="." instance=ExtResource("2_lquwl")]
+
+[node name="Tutorial" parent="." instance=ExtResource("4_272bh")]
 
 [node name="Environment" parent="." instance=ExtResource("2_1bvp3")]
 time_of_day = 0.0
