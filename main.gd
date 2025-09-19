@@ -29,7 +29,7 @@ func _ready() -> void:
 	var mushroom: Mushroom = mushroom_scene[selected_mushroom].instantiate()
 	
 	forest_grid.highlight_starting_tiles(mushroom)
-	$Hud.set_preferences(mushroom.mushroom_data.preferences_string())
+	$Hud.set_preferences(mushroom.mushroom_data.mushroom_name + "\n" + mushroom.mushroom_data.preferences_string())
 
 func start_day() -> void:
 	$Hud.start_day(day)

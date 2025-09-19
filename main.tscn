@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dc3emty8i4q1s"]
+[gd_scene load_steps=12 format=3 uid="uid://dc3emty8i4q1s"]
 
 [ext_resource type="Script" uid="uid://cmrknqlmkcbqr" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ceu7c77rpa85w" path="res://environment.tscn" id="2_1bvp3"]
@@ -9,11 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://ju4jx8sao8wh" path="res://HUD.tscn" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://s5gqmgqsa6l8" path="res://camera_pivot.gd" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://b71o8dwljmvso" path="res://tutorial.tscn" id="4_272bh"]
+[ext_resource type="PackedScene" uid="uid://b3uwkdbb1fqwb" path="res://Mushrooms/flower_mushroom.tscn" id="4_efxa6"]
 [ext_resource type="AudioStream" uid="uid://cwwty5ie6ns0y" path="res://Audio/music.mp3" id="9_kek77"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_0xm2m")
-mushroom_scene = Array[PackedScene]([ExtResource("2_4c57u"), ExtResource("2_272bh")])
+mushroom_scene = Array[PackedScene]([ExtResource("2_4c57u"), ExtResource("2_272bh"), ExtResource("4_efxa6")])
 
 [node name="Report" parent="." instance=ExtResource("2_7mycd")]
 visible = false
