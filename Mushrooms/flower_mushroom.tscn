@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d1axjhpegdbve" path="res://mushroom.gd" id="1_iiqqs"]
 [ext_resource type="Script" uid="uid://b8pfmuhloq52q" path="res://mushroom_data.gd" id="2_w44wl"]
-[ext_resource type="Texture2D" uid="uid://dr1fnlbwkkrug" path="res://mushroom_sprite.png" id="3_ad3u7"]
+[ext_resource type="Texture2D" uid="uid://dnqu00plxjuie" path="res://flower_mushroom_sprite.png" id="3_iiqqs"]
 [ext_resource type="Script" uid="uid://dqypjnaeanojx" path="res://mushroom_spawner.gd" id="4_v6hco"]
 [ext_resource type="Script" uid="uid://dggm2l6ep5rxb" path="res://mushroom_ui.gd" id="5_5bm08"]
 [ext_resource type="Texture2D" uid="uid://den1h0hajsb0q" path="res://Textures/circle_outline.png" id="6_sun3m"]
@@ -12,8 +12,15 @@
 [sub_resource type="Resource" id="Resource_urvsm"]
 script = ExtResource("2_w44wl")
 mushroom_name = "Flower Mushroom"
-generational_loss = 0.12
-insect_resistance = 0.8
+grow_speed = 0.1
+max_growth = 0.8
+spawn_range = 0.2
+max_family = 14
+tile_capacity = 14
+spawn_max = 6
+spawn_min = 2
+generational_loss = 0.1
+insect_resistance = 0.2
 animal_resistance = 0.2
 starting_tile = 4
 likes_tiles = Array[int]([4])
@@ -68,7 +75,7 @@ shaded = true
 double_sided = false
 alpha_cut = 1
 texture_filter = 0
-texture = ExtResource("3_ad3u7")
+texture = ExtResource("3_iiqqs")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_jg55k")
