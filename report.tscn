@@ -133,36 +133,6 @@ text = "Tile Rating: 60%"
 fit_content = true
 horizontal_alignment = 1
 
-[node name="Culls" type="VBoxContainer" parent="Panel/VBoxContainer/Tabs"]
-visible = false
-layout_mode = 2
-alignment = 1
-metadata/_tab_index = 2
-
-[node name="Manual" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Culls"]
-layout_mode = 2
-text = "Manual: 3"
-fit_content = true
-horizontal_alignment = 1
-
-[node name="Insects" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Culls"]
-layout_mode = 2
-text = "Insects: 2"
-fit_content = true
-horizontal_alignment = 1
-
-[node name="Animals" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Culls"]
-layout_mode = 2
-text = "Animals: 1"
-fit_content = true
-horizontal_alignment = 1
-
-[node name="Total" type="RichTextLabel" parent="Panel/VBoxContainer/Tabs/Culls"]
-layout_mode = 2
-text = "Total: 6"
-fit_content = true
-horizontal_alignment = 1
-
 [node name="NextDayButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 text = "Next Day"

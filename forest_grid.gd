@@ -25,6 +25,34 @@ func _ready() -> void:
 				_things.append(m)
 		_build_index()
 
+func highlight_starting_tiles(m: Mushroom):
+	var starting_tile_gridmap: GridMap
+	
+	match m.mushroom_data.starting_tile:
+		Tile.Type.TREE: starting_tile_gridmap = $Trees
+		Tile.Type.PLANT: starting_tile_gridmap = $Plants
+		Tile.Type.GRASS: starting_tile_gridmap = $Grass
+		Tile.Type.STUMP: starting_tile_gridmap = $Stumps
+		Tile.Type.FLOWER: starting_tile_gridmap = $Flowers
+	
+	for cell in starting_tile_gridmap.get_used_cells():
+		var light: SpotLight3D = $SpotLight3D.duplicate()
+		var pos: Vector3 = cell_to_world(cell)
+		light.add_to_group("highlights")
+		light.position.x = pos.x
+		light.position.z = pos.z
+		light.visible = true
+		add_child(light)
+		print(light)
+
+func clear_highlights():
+	var tween := create_tween()
+	for light in get_tree().get_nodes_in_group("highlights"):
+		tween.parallel().tween_property(light, "light_energy", 0, 1)
+	await tween.finished
+	for light in get_tree().get_nodes_in_group("highlights"):
+		light.queue_free()
+
 func _build_index() -> void:
 	_ground = get_node_or_null(ground_map_path) as GridMap
 	_tiles.clear()

@@ -16,6 +16,10 @@ func _ready() -> void:
 	$Report.next_day.connect(start_day)
 	start_day()
 	tutorial.next()
+	
+	var mushroom: Mushroom = mushroom_scene.instantiate()
+	forest_grid.highlight_starting_tiles(mushroom)
+	$Hud.set_preferences(mushroom.mushroom_data.preferences_string())
 
 func start_day() -> void:
 	$Hud.start_day(day)
@@ -76,8 +80,6 @@ func _unhandled_input(e: InputEvent) -> void:
 			hit.position.y = 0.5
 			var tile: Tile = $ForestGrid.get_at_world(hit.position)
 			$Hud.set_tile_info(tile.to_bbcode())
-			$SpotLight3D.position = $ForestGrid.cell_to_world($ForestGrid.world_to_cell(hit.position))
-			$SpotLight3D.position.y = 5
 			if not tile.occupied and not tile.is_fully_occupied(4) and not family_count >= 1: # TODO: what happens when starting on a spot with mushrooms already on it? can that happen?
 				var mushroom : Mushroom = mushroom_scene.instantiate()
 				mushroom.position = tile.center
@@ -94,7 +96,7 @@ func _unhandled_input(e: InputEvent) -> void:
 					return
 				
 				tutorial.next()
-
+				forest_grid.clear_highlights()
 				family_count += 1
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
@@ -104,4 +106,3 @@ func _unhandled_input(e: InputEvent) -> void:
 				mushroom.mushroom_data.member_added.connect(_on_member_added)
 				parents.append(mushroom)
 				tile.occupied = true
-				$Hud.set_preferences(mushroom.mushroom_data.preferences_string())
