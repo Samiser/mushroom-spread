@@ -1,6 +1,7 @@
 extends Node3D
 
-@export var mushroom_scene: PackedScene
+@export var mushroom_scene: Array[PackedScene]
+var selected_mushroom := 0
 
 @onready var forest_grid := $ForestGrid
 @onready var environment := $Environment
@@ -17,7 +18,9 @@ func _ready() -> void:
 	start_day()
 	tutorial.next()
 	
-	var mushroom: Mushroom = mushroom_scene.instantiate()
+	selected_mushroom = randi_range(0, mushroom_scene.size() - 1)
+	var mushroom: Mushroom = mushroom_scene[selected_mushroom].instantiate()
+	
 	forest_grid.highlight_starting_tiles(mushroom)
 	$Hud.set_preferences(mushroom.mushroom_data.preferences_string())
 
@@ -81,7 +84,7 @@ func _unhandled_input(e: InputEvent) -> void:
 			var tile: Tile = $ForestGrid.get_at_world(hit.position)
 			$Hud.set_tile_info(tile.to_bbcode())
 			if not tile.occupied and not tile.is_fully_occupied(4) and not family_count >= 1: # TODO: what happens when starting on a spot with mushrooms already on it? can that happen?
-				var mushroom : Mushroom = mushroom_scene.instantiate()
+				var mushroom : Mushroom = mushroom_scene[selected_mushroom].instantiate()
 				mushroom.position = tile.center
 				
 				if tile.type == Tile.Type.STUMP or tile.type == Tile.Type.TREE:
@@ -92,7 +95,7 @@ func _unhandled_input(e: InputEvent) -> void:
 				if !mushroom.is_on_starting_tile(mushroom.position):
 					return
 				
-				if !tutorial.get_current_title() == "First Fungus":
+				if tutorial.tutorial_enabled and !tutorial.get_current_title() == "First Fungus":
 					return
 				
 				tutorial.next()

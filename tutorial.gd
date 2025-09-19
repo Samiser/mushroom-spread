@@ -9,6 +9,8 @@ class_name Tutorial
 
 var current_step = -1
 
+var tutorial_enabled := true
+
 class TutorialItem:
 	var title: String
 	var text: String
@@ -83,6 +85,9 @@ func get_current_title() -> String:
 		return ""
 
 func _show_tutorial(step: int) -> void:
+	if !tutorial_enabled:
+		return
+	
 	var item: TutorialItem = tutorial_script[step]
 
 	title_label.text = item.title
