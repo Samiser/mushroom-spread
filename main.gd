@@ -4,6 +4,7 @@ extends Node3D
 
 @onready var forest_grid := $ForestGrid
 @onready var environment := $Environment
+@onready var tutorial: Tutorial = $Tutorial
 
 var day := 0
 var family_count := 0
@@ -14,6 +15,7 @@ func _ready() -> void:
 	$Hud.end_day.connect(end_day)
 	$Report.next_day.connect(start_day)
 	start_day()
+	tutorial.next()
 
 func start_day() -> void:
 	$Hud.day_ended = false
@@ -80,7 +82,11 @@ func _unhandled_input(e: InputEvent) -> void:
 				if !mushroom.is_on_starting_tile(mushroom.position):
 					return
 				
+				if !tutorial.get_current_title() == "First Fungus":
+					return
 				
+				tutorial.next()
+
 				family_count += 1
 				add_child(mushroom)
 				mushroom.set_description.connect($Hud.set_hover_desc)
