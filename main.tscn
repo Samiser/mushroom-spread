@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dc3emty8i4q1s"]
+[gd_scene load_steps=10 format=3 uid="uid://dc3emty8i4q1s"]
 
 [ext_resource type="Script" uid="uid://cmrknqlmkcbqr" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ceu7c77rpa85w" path="res://environment.tscn" id="2_1bvp3"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ju4jx8sao8wh" path="res://HUD.tscn" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://s5gqmgqsa6l8" path="res://camera_pivot.gd" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://b71o8dwljmvso" path="res://tutorial.tscn" id="4_272bh"]
+[ext_resource type="AudioStream" uid="uid://cwwty5ie6ns0y" path="res://Audio/music.mp3" id="9_kek77"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_0xm2m")
@@ -41,3 +42,8 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.5, 5
 light_color = Color(0.777423, 0.559073, 0.164422, 1)
 spot_attenuation = -1.2
 spot_angle = 6.65943
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_kek77")
+volume_db = 6.0
+autoplay = true
