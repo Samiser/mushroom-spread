@@ -15,8 +15,6 @@ var M: Mushroom
 	Mushroom.MUSHROOM_MOOD.NoComment: Color(1.0, 1.0, 1.0, 0.5)
 }
 
-var tween : Tween
-
 func setup(mushroom: Mushroom) -> void:
 	M = mushroom
 	world_ui.top_level = true

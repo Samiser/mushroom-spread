@@ -89,12 +89,14 @@ func _bool_rich(label: String, on: bool) -> String:
 	return "[color=%s][b]%s[/b][/color]: [color=%s]%s[/color]" % ["#888", label, c, sym]
 
 static func _type_to_color(t: String) -> String:
+	
 	var lut := {
-		"tree": "#69a34b",
-		"flower": "#c94b7a",
-		"plant": "#7fbf6b",
-		"stump": "#9c6b3a",
-		"log": "#8b6f4a",
+		"tree": Color("c47923ff").to_html(),
+		"grass": Color("50ba5cff").to_html(),
+		"flower": Color("c94b7a").to_html(),
+		"plant": Color("7fbf6b").to_html(),
+		"stump": Color("9c6b3a").to_html(),
+		"log": Color("8b6f4a").to_html(),
 		"": "#cccccc"
 	}
 	return String(lut.get(t.to_lower(), "#cccccc"))
