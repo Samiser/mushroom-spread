@@ -60,6 +60,28 @@ func _ready() -> void:
 		elif mushroom_data.dislikes_tiles.has(tile.type):
 			ui.display_label_popup('-', 0.4, Color.RED)
 
+func is_root() -> bool:
+	return generation == 0
+
+func _apply_capacity_growth() -> void:
+	var rating_pct := float(mushroom_data.tile_rating_percentage())
+	var t: float = clamp(rating_pct / 100.0, 0.0, 1.0)
+	var eased := pow(t, 1.3) # >1 favors high ratings
+	var delta := int(round(2.0 + (16.0 - 2.0) * eased))
+	mushroom_data.max_family += delta
+
+func end_day() -> void:
+	if not is_root():
+		return
+
+	var prev_health: float = mushroom_data.family_health
+	mushroom_data.family_health += check_family_tiles()[0] * 4
+	mushroom_data.family_health -= mushroom_data.family.size()
+	mushroom_data.family_health = clamp(mushroom_data.family_health, 0, 100)
+	mushroom_data.is_health_increasing = mushroom_data.family_health >= prev_health
+	
+	_apply_capacity_growth()
+
 func is_on_starting_tile(pos: Vector3):
 	var tile: Tile = grid.get_at_world(pos)
 	return tile and tile.type == mushroom_data.starting_tile

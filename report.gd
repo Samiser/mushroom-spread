@@ -35,11 +35,11 @@ func _update_summary(M: Mushroom):
 	
 	var cap_before := prev_data.max_family
 	var rating_pct := float(data.tile_rating_percentage())
-	var factor := 1.0 + rating_pct / 100.0
-	var cap_after := int(roundf(float(cap_before) * factor))
-	var delta := cap_after - cap_before
+	var t: float = clamp(rating_pct / 100.0, 0.0, 1.0)
+	var delta := int(round(2.0 + (16.0 - 2.0) * pow(t, 1.3)))  # +2..+16, eased
+	var cap_after := cap_before + delta
 	var col := "#63C74D" if delta >= 0 else "#DC4C46"
-	
+
 	if prev_data.family.size() <= 1:
 		summary_tile_rating.text = "Tile Rating: %.f%%" % data.tile_rating_percentage()
 		summary_colony_size.text = "Colony Size: %d" % data.family.size()
@@ -47,7 +47,7 @@ func _update_summary(M: Mushroom):
 		summary_tile_rating.text = "Tile Rating: %.f%% -> %.f%%" % [prev_data.tile_rating_percentage(), data.tile_rating_percentage()]
 		summary_colony_size.text = "Colony Size: %d -> %d" % [prev_data.family.size(), data.family.size()]
 
-	summary_capacity.text = "Capacity: %d → %d [color=%s]%+d[/color] (changed by [color=%s]%.0f%%[/color])" % [cap_before, cap_after, col, delta, col, rating_pct]
+	summary_capacity.text = "Capacity: %d → %d [color=%s]%+d[/color] (rating [color=%s]%.0f%%[/color] → +%d)" % [cap_before, cap_after, col, delta, col, rating_pct, delta]
 
 func _update_tiles(M: Mushroom) -> void:
 	var data := M.mushroom_data
