@@ -12,6 +12,7 @@
 [sub_resource type="Resource" id="Resource_jg55k"]
 script = ExtResource("2_te4ub")
 mushroom_name = "Grass Mushroom"
+mushroom_sprite = ExtResource("3_73ds0")
 generational_loss = 0.12
 insect_resistance = 0.8
 animal_resistance = 0.2

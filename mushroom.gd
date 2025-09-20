@@ -40,6 +40,8 @@ func _ready() -> void:
 	mushroom_baby = load(mushroom_baby_path)
 	add_to_group("mushrooms")
 	
+	$mushroom_sprite.texture = mushroom_data.mushroom_sprite
+	
 	$Area3D.input_event.connect(_on_area_input_event)
 	$AudioStreamPlayer3D.play()
 	
@@ -92,7 +94,7 @@ func _process(delta: float) -> void:
 	
 	if highlighted:
 		parent.set_description.emit(ui.build_description())
-		parent.set_parent_description.emit(ui.parent_description())
+		parent.set_parent_description.emit(ui.parent_description(), mushroom_data.mushroom_sprite)
 
 func check_family_tiles() -> Array[int]:
 	var like_tiles := 0

@@ -3,6 +3,7 @@ class_name MushroomData
 
 # family attributes
 @export var mushroom_name : String = "unnamed mushroom"
+@export var mushroom_sprite : Texture2D
 
 @export var grow_speed := 0.2
 @export var max_growth := 1.0

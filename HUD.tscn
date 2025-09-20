@@ -2,8 +2,8 @@
 
 [ext_resource type="FontFile" uid="uid://br5m76r2ao6tp" path="res://Fonts/alagard.ttf" id="1_efote"]
 [ext_resource type="Script" uid="uid://dk20lageb3via" path="res://hud.gd" id="1_k5de2"]
-[ext_resource type="Texture2D" uid="uid://den1h0hajsb0q" path="res://Textures/circle_outline.png" id="3_vow1y"]
 [ext_resource type="Texture2D" uid="uid://l0dci404iugg" path="res://Textures/hover_bubble.png" id="4_ne771"]
+[ext_resource type="Texture2D" uid="uid://dr1fnlbwkkrug" path="res://mushroom_sprite.png" id="5_xxqia"]
 
 [sub_resource type="Theme" id="Theme_k5de2"]
 default_font = ExtResource("1_efote")
@@ -19,7 +19,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme = SubResource("Theme_k5de2")
 script = ExtResource("1_k5de2")
-day_text = NodePath("DayText")
+day_text = NodePath("DayContainer/DayText")
 preferences_label = NodePath("Preferences")
 mushroom_description_label = NodePath("HoverDescription")
 tile_description_label = NodePath("TileDescription")
@@ -34,23 +34,10 @@ offset_top = 6.0
 offset_right = 500.0
 offset_bottom = 250.0
 mouse_filter = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.6431373)
 bbcode_enabled = true
 text = "Likes: bla, bla
 Dislikes: bla, bla"
-
-[node name="DayText" type="RichTextLabel" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -29.5
-offset_top = 4.76
-offset_right = 32.0
-offset_bottom = 28.76
-grow_horizontal = 2
-text = "Day 0"
-fit_content = true
-horizontal_alignment = 1
 
 [node name="HoverDescription" type="RichTextLabel" parent="."]
 visible = false
@@ -100,26 +87,6 @@ grow_vertical = 2
 text = "Toggle HUD
 "
 
-[node name="RadialProgressBar" type="TextureProgressBar" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -129.0
-offset_top = 13.999985
-offset_right = 183.0
-offset_bottom = 326.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.1, 0.1)
-mouse_filter = 2
-value = 100.0
-fill_mode = 4
-texture_progress = ExtResource("3_vow1y")
-
 [node name="HoverInfo" type="TextureRect" parent="."]
 visible = false
 self_modulate = Color(1, 1, 1, 0.76862746)
@@ -138,10 +105,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.5
-offset_top = 9.798275
-offset_right = -16.5
-offset_bottom = -9.798275
+offset_left = 52.0
+offset_top = 6.298275
+offset_right = -19.0
+offset_bottom = -6.298275
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/default_color = Color(0.06469653, 0.06469653, 0.06469653, 1)
@@ -152,5 +119,95 @@ text = "[b]FAMILY NAME[/b]
 0/0		100 LIFE"
 fit_content = true
 scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="hover_icon" type="TextureRect" parent="HoverInfo"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -20.000002
+offset_right = 57.931034
+offset_bottom = 20.000004
+grow_vertical = 2
+texture = ExtResource("5_xxqia")
+expand_mode = 3
+
+[node name="DayContainer" type="TextureRect" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0.76862746)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -46.737503
+offset_right = 46.737503
+offset_bottom = 42.22492
+grow_horizontal = 2
+texture = ExtResource("4_ne771")
+expand_mode = 5
+stretch_mode = 4
+
+[node name="DayText" type="RichTextLabel" parent="DayContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Day 0"
+fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="SelectionMenu" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.4)
+
+[node name="mushroomDesc" type="RichTextLabel" parent="SelectionMenu"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 219.0
+offset_top = 9.0
+offset_right = 525.0
+offset_bottom = 99.0
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+fit_content = true
+vertical_alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SelectionMenu"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 31.865
+offset_top = -99.0
+offset_right = 210.0
+offset_bottom = 99.0
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SelectionMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "Select Your Mushroom."
+fit_content = true
+
+[node name="TemplateButton" type="Button" parent="SelectionMenu/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Grass Mushroom"
+icon = ExtResource("5_xxqia")
+expand_icon = true

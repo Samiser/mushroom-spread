@@ -1,31 +1,29 @@
-[gd_scene load_steps=17 format=3 uid="uid://b3uwkdbb1fqwb"]
+[gd_scene load_steps=18 format=3 uid="uid://b0pvjkn3nc7ut"]
 
-[ext_resource type="Script" uid="uid://d1axjhpegdbve" path="res://mushroom.gd" id="1_iiqqs"]
-[ext_resource type="Script" uid="uid://b8pfmuhloq52q" path="res://mushroom_data.gd" id="2_w44wl"]
-[ext_resource type="Texture2D" uid="uid://dnqu00plxjuie" path="res://flower_mushroom_sprite.png" id="3_iiqqs"]
-[ext_resource type="Script" uid="uid://dqypjnaeanojx" path="res://mushroom_spawner.gd" id="4_v6hco"]
-[ext_resource type="Script" uid="uid://dggm2l6ep5rxb" path="res://mushroom_ui.gd" id="5_5bm08"]
-[ext_resource type="Texture2D" uid="uid://den1h0hajsb0q" path="res://Textures/circle_outline.png" id="6_sun3m"]
-[ext_resource type="Texture2D" uid="uid://l0dci404iugg" path="res://Textures/hover_bubble.png" id="7_a7ls6"]
-[ext_resource type="AudioStream" uid="uid://c7k0hgc0gbyl5" path="res://Audio/pop.ogg" id="8_wk7cn"]
+[ext_resource type="Script" uid="uid://d1axjhpegdbve" path="res://mushroom.gd" id="1_6c114"]
+[ext_resource type="Texture2D" uid="uid://lhif7433uhyt" path="res://picky_mushroom_sprite.png" id="2_1f4vi"]
+[ext_resource type="Script" uid="uid://b8pfmuhloq52q" path="res://mushroom_data.gd" id="3_5glqv"]
+[ext_resource type="Texture2D" uid="uid://dr1fnlbwkkrug" path="res://mushroom_sprite.png" id="4_5q2tf"]
+[ext_resource type="Script" uid="uid://dqypjnaeanojx" path="res://mushroom_spawner.gd" id="5_aldgf"]
+[ext_resource type="Script" uid="uid://dggm2l6ep5rxb" path="res://mushroom_ui.gd" id="6_i25ou"]
+[ext_resource type="Texture2D" uid="uid://den1h0hajsb0q" path="res://Textures/circle_outline.png" id="7_oy7un"]
+[ext_resource type="Texture2D" uid="uid://l0dci404iugg" path="res://Textures/hover_bubble.png" id="8_7iome"]
+[ext_resource type="AudioStream" uid="uid://c7k0hgc0gbyl5" path="res://Audio/pop.ogg" id="9_6mbo4"]
 
 [sub_resource type="Resource" id="Resource_urvsm"]
-script = ExtResource("2_w44wl")
-mushroom_name = "Flower Mushroom"
-mushroom_sprite = ExtResource("3_iiqqs")
-grow_speed = 0.1
-max_growth = 0.8
-spawn_range = 0.2
-max_family = 14
-tile_capacity = 14
-spawn_max = 6
+script = ExtResource("3_5glqv")
+mushroom_name = "Picky Mushroom"
+mushroom_sprite = ExtResource("2_1f4vi")
+grow_speed = 0.4
+max_family = 18
+tile_capacity = 12
 spawn_min = 2
-generational_loss = 0.1
-insect_resistance = 0.2
-animal_resistance = 0.2
-starting_tile = 4
-likes_tiles = Array[int]([4])
-dislikes_tiles = Array[int]([0, 1, 2, 3])
+generational_loss = 0.14
+insect_resistance = 0.4
+animal_resistance = 0.8
+starting_tile = 2
+likes_tiles = Array[int]([2])
+dislikes_tiles = Array[int]([3, 4, 0])
 metadata/_custom_type_script = "uid://b8pfmuhloq52q"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pl5ep"]
@@ -58,9 +56,9 @@ viewport_path = NodePath("world_ui/growth_progress_VP")
 viewport_path = NodePath("world_ui/parent_VP")
 
 [node name="Mushroom" type="Node3D"]
-script = ExtResource("1_iiqqs")
+script = ExtResource("1_6c114")
 mushroom_data = SubResource("Resource_urvsm")
-mushroom_baby_path = "res://Mushrooms/flower_mushroom.tscn"
+mushroom_baby_path = "res://Mushrooms/picky_mushroom.tscn"
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
@@ -76,7 +74,7 @@ shaded = true
 double_sided = false
 alpha_cut = 1
 texture_filter = 0
-texture = ExtResource("3_iiqqs")
+texture = ExtResource("4_5q2tf")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_jg55k")
@@ -139,10 +137,10 @@ begin_cap_mode = 2
 end_cap_mode = 2
 
 [node name="Spawner" type="Node" parent="."]
-script = ExtResource("4_v6hco")
+script = ExtResource("5_aldgf")
 
 [node name="UI" type="Node" parent="." node_paths=PackedStringArray("line", "world_ui", "growth_progress_bar", "parent_label", "parent_info_ui", "label")]
-script = ExtResource("5_5bm08")
+script = ExtResource("6_i25ou")
 line = NodePath("../Line2D")
 world_ui = NodePath("../World_UI")
 growth_progress_bar = NodePath("../world_ui/growth_progress_VP/TextureProgressBar")
@@ -175,7 +173,7 @@ grow_vertical = 2
 max_value = 1.0
 step = 0.02
 fill_mode = 4
-texture_progress = ExtResource("6_sun3m")
+texture_progress = ExtResource("7_oy7un")
 
 [node name="parent_VP" type="SubViewport" parent="world_ui"]
 transparent_bg = true
@@ -193,7 +191,7 @@ offset_right = 156.0
 offset_bottom = 156.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("7_a7ls6")
+texture = ExtResource("8_7iome")
 expand_mode = 4
 stretch_mode = 3
 
@@ -243,7 +241,7 @@ outline_modulate = Color(0.2592937, 0.2592937, 0.2592937, 1)
 outline_size = 6
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("8_wk7cn")
+stream = ExtResource("9_6mbo4")
 
 [node name="GlowLight" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12973681, 0)

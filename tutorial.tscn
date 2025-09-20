@@ -25,6 +25,7 @@ next_button = NodePath("Panel/VBoxContainer/Next")
 ok_button = NodePath("Panel/VBoxContainer/Ok")
 
 [node name="Panel" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

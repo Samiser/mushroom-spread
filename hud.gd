@@ -9,23 +9,44 @@ extends Control
 
 var day_ended := false
 
-signal end_day 
+signal end_day
+signal select_mushroom(mushroom)
 
 func set_hover_desc(desc: String) -> void:
 	mushroom_description_label.text = desc
+
+func display_selection(main: MainClass) -> void:
+	$SelectionMenu.visible = true
 	
-func display_parent_info(text: String) -> void:
+	var index := 0
+	for shroom in main.mushroom_scene:
+		var m_inst : Mushroom = shroom.instantiate()
+		var m_button : Button = $SelectionMenu/VBoxContainer/TemplateButton.duplicate()
+		$SelectionMenu/VBoxContainer.add_child(m_button)
+		
+		m_button.visible = true
+		m_button.text = m_inst.mushroom_data.mushroom_name
+		m_button.icon = m_inst.mushroom_data.mushroom_sprite
+		m_button.pressed.connect(func() -> void: select_mushroom.emit(index))
+		m_button.mouse_entered.connect(func() -> void: $SelectionMenu/mushroomDesc.text = m_inst.mushroom_data.preferences_string())
+
+		index += 1
+	
+func display_parent_info(text: String, icon: Texture2D) -> void:
 	if day_ended:
 		$HoverInfo.visible = false
 		return
 	
 	$HoverInfo.visible = true
 	$HoverInfo/parent_label.text = text
+	$HoverInfo/hover_icon.texture = icon
 
 func set_tile_info(info: String) -> void:
 	tile_description_label.text = info
 
 func set_preferences(prefs: String) -> void:
+	$SelectionMenu.visible = false
+	$DayContainer.visible = true
 	preferences_label.text = prefs
 	preferences_label.visible = true
 

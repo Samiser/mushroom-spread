@@ -11,25 +11,33 @@ var selected_mushroom := 0
 var day := 0
 var family_count := 0
 var tutorials_enabled := true
+var mushroom_selected := false
 
 var parents: Array[Mushroom]
 
 func _ready() -> void:
 	$Hud.end_day.connect(end_day)
+	$Hud.select_mushroom.connect(select_mushroom)
 	$Report.next_day.connect(start_day)
+	
+	if tutorials_enabled:
+		select_mushroom(0)
+	else:
+		$Hud.display_selection(self)
+	
+	
+func select_mushroom(selection: int) -> void:
+	selected_mushroom = selection
+	var mushroom: Mushroom = mushroom_scene[selection].instantiate()
+	
 	start_day()
 	tutorial.visible = tutorials_enabled
 	tutorial.tutorial_enabled = tutorials_enabled
 	tutorial.next()
 	
-	selected_mushroom = randi_range(0, mushroom_scene.size() - 1)
-	if tutorials_enabled:
-		selected_mushroom = 0
-	
-	var mushroom: Mushroom = mushroom_scene[selected_mushroom].instantiate()
-	
 	forest_grid.highlight_starting_tiles(mushroom)
 	$Hud.set_preferences(mushroom.mushroom_data.mushroom_name + "\n" + mushroom.mushroom_data.preferences_string())
+	mushroom_selected = true
 
 func start_day() -> void:
 	$Hud.start_day(day)
@@ -66,6 +74,9 @@ func _on_member_added(m: Mushroom):
 		tutorial.next()
 
 func _unhandled_input(e: InputEvent) -> void:
+	if !mushroom_selected:
+		return
+	
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 		var cam := get_viewport().get_camera_3d()
 		var from := cam.project_ray_origin(e.position)
