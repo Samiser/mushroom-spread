@@ -33,6 +33,23 @@ func _unhandled_input(e: InputEvent) -> void:
 		elif e.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_cam.size = clamp(_cam.size / zoom_step, min_ortho_size, max_ortho_size)
 
+	if e is InputEventPanGesture:
+		var g := e as InputEventPanGesture
+		var delta = g.delta
+	
+		# invert direction
+		delta *= -1
+		# increase sensitivity
+		delta *= 2
+		
+		_pan_by_screen_delta(g.position, delta)
+		return
+
+	if e is InputEventMagnifyGesture:
+		var f: float = max(0.001, e.factor)
+		var target: float = clamp(_cam.size / f, min_ortho_size, max_ortho_size)
+		_cam.size = lerp(_cam.size, target, 0.25)  # 0.25 = smoothing factor
+
 	if _panning:
 		if e is InputEventScreenDrag:
 			_pan_by_screen_delta(e.position, e.relative)
