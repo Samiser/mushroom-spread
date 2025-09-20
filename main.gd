@@ -21,14 +21,19 @@ func _ready() -> void:
 	$Report.next_day.connect(start_day)
 	
 	if tutorials_enabled:
-		select_mushroom(0)
+		select_mushroom(0, "")
 	else:
 		$Hud.display_selection(self)
 	
 	
-func select_mushroom(selection: int) -> void:
+func select_mushroom(selection: int, family_name: String) -> void:
 	selected_mushroom = selection
 	var mushroom: Mushroom = mushroom_scene[selection].instantiate()
+	
+	if family_name.length() <= 3:
+		family_name = "Shrooms"
+	
+	mushroom.mushroom_data.family_name = family_name
 	
 	start_day()
 	tutorial.visible = tutorials_enabled

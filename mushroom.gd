@@ -2,7 +2,6 @@ extends Node3D
 class_name Mushroom
 
 enum MUSHROOM_MOOD {Likes, Dislikes, NoComment}
-const family_names: Array[String] = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguaz", "Simpsons"]
 
 @export var mushroom_data : MushroomData
 
@@ -49,7 +48,6 @@ func _ready() -> void:
 		parent = self
 		mushroom_data.add_member(self)
 		generational_max = mushroom_data.max_growth
-		mushroom_data.family_name = family_names.get(randi_range(0, family_names.size() - 1))
 		check_family_tiles()
 
 	spawner.setup(self)

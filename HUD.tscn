@@ -211,3 +211,20 @@ layout_mode = 2
 text = "Grass Mushroom"
 icon = ExtResource("5_xxqia")
 expand_icon = true
+
+[node name="NameEdit" type="LineEdit" parent="SelectionMenu"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -173.0
+offset_top = -36.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 0
+placeholder_text = "Enter family name..."
+max_length = 8
+emoji_menu_enabled = false

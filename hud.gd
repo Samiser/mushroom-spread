@@ -10,13 +10,14 @@ extends Control
 var day_ended := false
 
 signal end_day
-signal select_mushroom(mushroom)
+signal select_mushroom(mushroom, fam_name)
 
 func set_hover_desc(desc: String) -> void:
 	mushroom_description_label.text = desc
 
 func display_selection(main: MainClass) -> void:
 	$SelectionMenu.visible = true
+	$SelectionMenu/NameEdit.grab_focus()
 	
 	var index := 0
 	for shroom in main.mushroom_scene:
@@ -27,7 +28,7 @@ func display_selection(main: MainClass) -> void:
 		m_button.visible = true
 		m_button.text = m_inst.mushroom_data.mushroom_name
 		m_button.icon = m_inst.mushroom_data.mushroom_sprite
-		m_button.pressed.connect(func() -> void: select_mushroom.emit(index))
+		m_button.pressed.connect(func() -> void: select_mushroom.emit(index, $SelectionMenu/NameEdit.text))
 		m_button.mouse_entered.connect(func() -> void: $SelectionMenu/mushroomDesc.text = m_inst.mushroom_data.preferences_string())
 
 		index += 1
