@@ -10,7 +10,7 @@ var selected_mushroom := 0
 
 var day := 0
 var family_count := 0
-var tutorials_enabled := true
+var tutorials_enabled := false
 var mushroom_selected := false
 
 var parents: Array[Mushroom]

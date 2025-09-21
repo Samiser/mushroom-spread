@@ -12,5 +12,6 @@ func _ready() -> void:
 func _load_main(tutorials: bool) -> void:
 	main_scene.tutorials_enabled = tutorials
 	get_tree().root.add_child(main_scene)
+	get_tree().current_scene = main_scene
 	get_node("/root/MainMenu").queue_free()
 	
