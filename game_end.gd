@@ -14,7 +14,6 @@ extends Control
 @export var endless_button: Button
 
 @export var _report: Report
-var menu_scene = preload("res://main_menu.tscn").instantiate()
 
 signal endless
 
