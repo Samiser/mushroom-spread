@@ -1,4 +1,5 @@
 extends Control
+class_name Report
 
 @export var title: RichTextLabel
 
@@ -85,7 +86,6 @@ func _update_tiles(M: Mushroom) -> void:
 			% [Color.GREEN.to_html(), liked, Color.RED.to_html(), disliked, Color.BEIGE.to_html(), total, col, rating_pct]
 	
 	
-
 func update_report(M: Mushroom, day: int):
 	title.text = "Day %d Report" % day
 	_update_summary(M)

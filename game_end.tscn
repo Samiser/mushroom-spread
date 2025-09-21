@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://cifcmwonyxug8"]
+[gd_scene load_steps=5 format=3 uid="uid://cifcmwonyxug8"]
 
 [ext_resource type="FontFile" uid="uid://br5m76r2ao6tp" path="res://Fonts/alagard.ttf" id="1_npjxs"]
+[ext_resource type="Script" uid="uid://wy6gorapvapt" path="res://game_end.gd" id="2_c8kn0"]
+[ext_resource type="FontFile" uid="uid://culscvnw2mkyr" path="res://Fonts/nokiafc22.ttf" id="2_tqwxg"]
 
 [sub_resource type="Theme" id="Theme_tqwxg"]
 default_font = ExtResource("1_npjxs")
 default_font_size = 16
 
-[node name="GameEnd" type="Control"]
+[node name="GameEnd" type="Control" node_paths=PackedStringArray("title_label", "description_label", "rank_label", "colony_size_label", "tile_rating_label", "tiles_liked", "tiles_neutral", "tiles_disliked", "new_run_button", "endless_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +16,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_tqwxg")
+script = ExtResource("2_c8kn0")
+title_label = NodePath("Panel/VBoxContainer/Title")
+description_label = NodePath("Panel/VBoxContainer/Description")
+rank_label = NodePath("Panel/VBoxContainer/Summary/Rank")
+colony_size_label = NodePath("Panel/VBoxContainer/Summary/ColonySize")
+tile_rating_label = NodePath("Panel/VBoxContainer/Summary/TileRating")
+tiles_liked = NodePath("Panel/VBoxContainer/Summary/Liked")
+tiles_neutral = NodePath("Panel/VBoxContainer/Summary/Neutral")
+tiles_disliked = NodePath("Panel/VBoxContainer/Summary/Disliked")
+new_run_button = NodePath("Panel/VBoxContainer/HBoxContainer/NewRunButton")
+endless_button = NodePath("Panel/VBoxContainer/HBoxContainer/EndlessButton")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -46,10 +59,24 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="Description" type="RichTextLabel" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_tqwxg")
+theme_override_font_sizes/normal_font_size = 8
+text = "You made it to day 7! Here's your final stats:"
+fit_content = true
+horizontal_alignment = 1
+
 [node name="Summary" type="VBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
+
+[node name="Rank" type="RichTextLabel" parent="Panel/VBoxContainer/Summary"]
+layout_mode = 2
+text = "Rank: A"
+fit_content = true
+horizontal_alignment = 1
 
 [node name="ColonySize" type="RichTextLabel" parent="Panel/VBoxContainer/Summary"]
 layout_mode = 2
@@ -59,7 +86,7 @@ horizontal_alignment = 1
 
 [node name="TileRating" type="RichTextLabel" parent="Panel/VBoxContainer/Summary"]
 layout_mode = 2
-text = "Average Tile Rating: 70%"
+text = "Final Tile Rating: 70%"
 fit_content = true
 horizontal_alignment = 1
 
@@ -81,12 +108,6 @@ horizontal_alignment = 1
 layout_mode = 2
 bbcode_enabled = true
 text = "Disliked: 4"
-fit_content = true
-horizontal_alignment = 1
-
-[node name="Rating" type="RichTextLabel" parent="Panel/VBoxContainer/Summary"]
-layout_mode = 2
-text = "Tile Rating: 60%"
 fit_content = true
 horizontal_alignment = 1
 

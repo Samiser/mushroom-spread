@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dc3emty8i4q1s"]
+[gd_scene load_steps=14 format=3 uid="uid://dc3emty8i4q1s"]
 
 [ext_resource type="Script" uid="uid://cmrknqlmkcbqr" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ceu7c77rpa85w" path="res://environment.tscn" id="2_1bvp3"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b3uwkdbb1fqwb" path="res://Mushrooms/flower_mushroom.tscn" id="4_efxa6"]
 [ext_resource type="PackedScene" uid="uid://b0pvjkn3nc7ut" path="res://Mushrooms/picky_mushroom.tscn" id="5_dg77c"]
 [ext_resource type="AudioStream" uid="uid://cwwty5ie6ns0y" path="res://Audio/music.mp3" id="9_kek77"]
+[ext_resource type="PackedScene" uid="uid://cifcmwonyxug8" path="res://game_end.tscn" id="9_ycdy4"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_0xm2m")
@@ -23,6 +24,10 @@ visible = false
 [node name="Hud" parent="." instance=ExtResource("2_lquwl")]
 
 [node name="Tutorial" parent="." instance=ExtResource("4_272bh")]
+
+[node name="GameEnd" parent="." node_paths=PackedStringArray("_report") instance=ExtResource("9_ycdy4")]
+visible = false
+_report = NodePath("../Report")
 
 [node name="Environment" parent="." instance=ExtResource("2_1bvp3")]
 time_of_day = 0.0

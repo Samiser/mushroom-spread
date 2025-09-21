@@ -19,6 +19,7 @@ func _ready() -> void:
 	$Hud.end_day.connect(end_day)
 	$Hud.select_mushroom.connect(select_mushroom)
 	$Report.next_day.connect(start_day)
+	$GameEnd.endless.connect(start_day)
 	
 	if tutorials_enabled:
 		select_mushroom(0, "")
@@ -69,7 +70,10 @@ func end_day() -> void:
 		if m is Mushroom and m.is_root():
 			m.end_day()
 			$Report.update_report(m, day)
-	$Report.visible = true
+			if day == 7:
+				$GameEnd.show_end_screen(m, day)
+			else:
+				$Report.visible = true
 	day += 1
 
 func _on_member_added(m: Mushroom):
