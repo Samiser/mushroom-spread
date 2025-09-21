@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dklxyvo21ct0"]
+[gd_scene load_steps=9 format=3 uid="uid://dklxyvo21ct0"]
 
 [ext_resource type="PackedScene" uid="uid://b0h23m6qtmef6" path="res://forest_grid.tscn" id="1_7vrkn"]
 [ext_resource type="Script" uid="uid://bxef8xwosrk7v" path="res://main_menu.gd" id="1_glbon"]
 [ext_resource type="PackedScene" uid="uid://ceu7c77rpa85w" path="res://environment.tscn" id="2_fu7sn"]
 [ext_resource type="FontFile" uid="uid://br5m76r2ao6tp" path="res://Fonts/alagard.ttf" id="4_jix8l"]
 [ext_resource type="Texture2D" uid="uid://dr1fnlbwkkrug" path="res://mushroom_sprite.png" id="5_glbon"]
+[ext_resource type="Texture2D" uid="uid://2wy3pjct4dyu" path="res://Textures/logo.png" id="5_qe12f"]
 [ext_resource type="AudioStream" uid="uid://bu857osw6drv6" path="res://Audio/ambience.mp3" id="6_nlkkf"]
 
 [sub_resource type="Theme" id="Theme_glbon"]
@@ -47,11 +48,10 @@ offset_right = 210.0
 offset_bottom = 42.0
 grow_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 32
-text = "Ambergrove"
-fit_content = true
+texture = ExtResource("5_qe12f")
+expand_mode = 5
 
 [node name="TutorialButton" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
