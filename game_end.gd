@@ -21,8 +21,42 @@ func _ready() -> void:
 	new_run_button.pressed.connect(func() -> void: visible = false; get_tree().change_scene_to_file("res://main_menu.tscn"); get_node("/root/Main").queue_free())
 	endless_button.pressed.connect(func() -> void: visible = false; endless.emit())
 
-func calculate_rank(_m: Mushroom) -> String:
-	return "A"
+func calculate_rank(m: Mushroom) -> String:
+	var THEORETICAL_BEST := 120
+	var _size: int = m.mushroom_data.family.size()
+	var health := m.mushroom_data.family_health
+
+	var pct: float = clamp((float(_size) / float(THEORETICAL_BEST)) * 100.0, 0.0, 200.0)
+
+	var ranks := [
+		"[color=%s]D[/color]" % Color("DC4C46").to_html(),  # red
+		"[color=%s]C[/color]" % Color("E59B2A").to_html(),  # amber
+		"[color=%s]B[/color]" % Color("E9C46A").to_html(),  # yellow
+		"[color=%s]A[/color]" % Color("63C74D").to_html(),  # green
+		"[color=%s]S[/color]" % Color("FFD166").to_html()   # gold
+	]
+	var cuts := [0.0, 50.0, 70.0, 85.0, 95.0]
+
+	var idx := 0
+	if pct >= cuts[4]:
+		idx = 4
+	elif pct >= cuts[3]:
+		idx = 3
+	elif pct >= cuts[2]:
+		idx = 2
+	elif pct >= cuts[1]:
+		idx = 1
+	else:
+		idx = 0
+
+	# - Very low health (<35%) demotes one tier (if possible).
+	# - Very good health (>=90%) can promote one tier if within 3% of the next cutoff.
+	if health < 35.0 and idx > 0:
+		idx -= 1
+	elif health >= 90.0 and idx < ranks.size() - 1 and pct >= cuts[idx + 1] - 3.0:
+		idx += 1
+
+	return ranks[idx]
 
 func show_end_screen(m: Mushroom, day: int, win: bool = true):
 	title_label.text = "Victory!" if win else "Game Over!"

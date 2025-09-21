@@ -74,7 +74,8 @@ alignment = 1
 
 [node name="Rank" type="RichTextLabel" parent="Panel/VBoxContainer/Summary"]
 layout_mode = 2
-text = "Rank: A"
+bbcode_enabled = true
+text = "Rank: [color=#ff0000]D[/color]"
 fit_content = true
 horizontal_alignment = 1
 
