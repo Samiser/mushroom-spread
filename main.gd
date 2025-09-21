@@ -70,8 +70,8 @@ func end_day() -> void:
 		if m is Mushroom and m.is_root():
 			m.end_day()
 			$Report.update_report(m, day)
-			if day == 7:
-				$GameEnd.show_end_screen(m, day)
+			if day == 7 or m.mushroom_data.family_health <= 0:
+				$GameEnd.show_end_screen(m, day, m.mushroom_data.family_health > 0)
 			else:
 				$Report.visible = true
 	day += 1
@@ -115,7 +115,8 @@ func _unhandled_input(e: InputEvent) -> void:
 				tutorial.next()
 				forest_grid.clear_highlights()
 				family_count += 1
-				add_child(mushroom)
+				$Mushrooms.add_child(mushroom)
+				print("mushroom is at: ", mushroom.get_path())
 				mushroom.add_to_group("roots")
 				mushroom.set_description.connect($Hud.set_hover_desc)
 				mushroom.set_parent_description.connect($Hud.display_parent_info)

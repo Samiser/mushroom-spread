@@ -237,7 +237,7 @@ func _spawn_baby_with_dir(dir_xz: Vector3, dist: float) -> void:
 	M.mushroom_data.tile_rating = M.check_family_tiles()
 	
 	new_mushroom.global_position = spawn_point
-	get_tree().root.add_child(new_mushroom)
+	get_tree().root.get_node("Main/Mushrooms").add_child(new_mushroom)
 	
 	new_mushroom.spawner._branch_dir = direction # predictable future heading
 	

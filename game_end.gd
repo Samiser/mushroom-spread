@@ -14,11 +14,12 @@ extends Control
 @export var endless_button: Button
 
 @export var _report: Report
+var menu_scene = preload("res://main_menu.tscn").instantiate()
 
 signal endless
 
 func _ready() -> void:
-	new_run_button.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://main_menu.tscn"))
+	new_run_button.pressed.connect(func() -> void: visible = false; get_tree().change_scene_to_file("res://main_menu.tscn"); get_node("/root/Main").queue_free())
 	endless_button.pressed.connect(func() -> void: visible = false; endless.emit())
 
 func calculate_rank(_m: Mushroom) -> String:
