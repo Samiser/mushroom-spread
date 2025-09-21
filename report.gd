@@ -14,11 +14,6 @@ class_name Report
 @export var tiles_disliked: RichTextLabel
 @export var tiles_rating: RichTextLabel
 
-@export var culls_manual: RichTextLabel
-@export var culls_insect: RichTextLabel
-@export var culls_animals: RichTextLabel
-@export var culls_total: RichTextLabel
-
 @export var next_day_button: Button
 
 signal next_day
