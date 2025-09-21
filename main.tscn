@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dc3emty8i4q1s"]
+[gd_scene load_steps=15 format=3 uid="uid://dc3emty8i4q1s"]
 
 [ext_resource type="Script" uid="uid://cmrknqlmkcbqr" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ceu7c77rpa85w" path="res://environment.tscn" id="2_1bvp3"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://b0pvjkn3nc7ut" path="res://Mushrooms/picky_mushroom.tscn" id="5_dg77c"]
 [ext_resource type="AudioStream" uid="uid://cwwty5ie6ns0y" path="res://Audio/music.mp3" id="9_kek77"]
 [ext_resource type="PackedScene" uid="uid://cifcmwonyxug8" path="res://game_end.tscn" id="9_ycdy4"]
+[ext_resource type="AudioStream" uid="uid://b2kh7tityvjdn" path="res://Audio/menu_chime.mp3" id="14_w48qg"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_0xm2m")
@@ -51,3 +52,6 @@ volume_db = 6.0
 autoplay = true
 
 [node name="Mushrooms" type="Node3D" parent="."]
+
+[node name="ButtonSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_w48qg")

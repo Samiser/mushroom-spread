@@ -16,10 +16,14 @@ var mushroom_selected := false
 var parents: Array[Mushroom]
 
 func _ready() -> void:
+	$ButtonSound.play()
 	$Hud.end_day.connect(end_day)
 	$Hud.select_mushroom.connect(select_mushroom)
 	$Report.next_day.connect(start_day)
 	$GameEnd.endless.connect(start_day)
+	
+	for button in find_children("*", "Button", true, false):
+		button.pressed.connect(func() -> void: $ButtonSound.play())
 	
 	if tutorials_enabled:
 		select_mushroom(0, "")
