@@ -57,7 +57,7 @@ var tutorial_script: Array[TutorialItem] = [
 	),
 	TutorialItem.new(
 		"Reading the Forest",
-		"Your shrooms prefers certain tiles\n• [color=#63C74D]Liked[/color] tiles improve health and growth.\n• [color=#DC4C46]Disliked[/color] tiles do the opposite.",
+		"Your shrooms prefers certain tiles\n- [color=#63C74D]Liked[/color] tiles improve health and growth.\n- [color=#DC4C46]Disliked[/color] tiles do the opposite.",
 		true
 	),
 	TutorialItem.new(

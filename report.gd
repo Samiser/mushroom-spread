@@ -43,7 +43,7 @@ func _update_summary(M: Mushroom):
 		summary_tile_rating.text = "Health: %.f -> %.f" % [prev_data.family_health, data.family_health]
 		summary_colony_size.text = "Colony Size: %d -> %d" % [prev_data.family.size(), data.family.size()]
 
-	summary_capacity.text = "Capacity: %d → %d [color=%s]%+d[/color] (health [color=%s]%.0f[/color] → +%d)" % [cap_before, cap_after, col, delta, col, health, delta]
+	summary_capacity.text = "Capacity: %d -> %d [color=%s]%+d[/color] (health [color=%s]%.0f[/color] -> +%d)" % [cap_before, cap_after, col, delta, col, health, delta]
 
 func _update_tiles(M: Mushroom) -> void:
 	var data := M.mushroom_data
@@ -82,7 +82,7 @@ func _update_tiles(M: Mushroom) -> void:
 
 	if tiles_rating:
 		tiles_rating.bbcode_enabled = true
-		tiles_rating.text = "[b]Health Change:[/b] (([color=#%s]%d[/color] − [color=#%s]%d[/color]) * 4) - %d = %d\n%s" \
+		tiles_rating.text = "[b]Health Change:[/b] (([color=#%s]%d[/color] - [color=#%s]%d[/color]) * 4) - %d = %d\n%s" \
 			% [Color.GREEN.to_html(), liked, Color.RED.to_html(), disliked, data.family.size(), health_change, new_health_string]
 	
 	
