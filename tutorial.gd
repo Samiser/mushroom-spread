@@ -38,7 +38,7 @@ var tutorial_script: Array[TutorialItem] = [
 	),
 	TutorialItem.new(
 		"First Fungus",
-		"Place your starter mushroom on any of the highlighted tiles",
+		"Place your starter mushroom on any of the highlighted tiles\n\n[color=%s]Tip[/color]: Start in an area with more liked tiles (top left)" % Color(0.85, 0.684, 0.264, 1.0).to_html(),
 		false,
 		false,
 		Vector2(10, 115.5)
@@ -57,12 +57,12 @@ var tutorial_script: Array[TutorialItem] = [
 	),
 	TutorialItem.new(
 		"Reading the Forest",
-		"Your shrooms prefers certain tiles\n• [color=#63C74D]Liked[/color] tiles improve growth.\n• [color=#DC4C46]Disliked[/color] tiles weaken the colony.",
+		"Your shrooms prefers certain tiles\n• [color=#63C74D]Liked[/color] tiles improve health and growth.\n• [color=#DC4C46]Disliked[/color] tiles do the opposite.",
 		true
 	),
 	TutorialItem.new(
 		"Reading the Forest",
-		"You can check what your colony likes and dislikes in the top left. Spread carefully to ensure your colony thrives!",
+		"You can check what your colony likes and dislikes in the top left. Spread to liked tiles to ensure your colony stays healthy!",
 		false,
 		true
 	),

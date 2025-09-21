@@ -30,20 +30,20 @@ func _update_summary(M: Mushroom):
 	var prev_data: MushroomData = data.previous_data
 	
 	var cap_before := prev_data.max_family
-	var rating_pct := float(data.tile_rating_percentage())
-	var t: float = clamp(rating_pct / 100.0, 0.0, 1.0)
+	var health := float(data.family_health)
+	var t: float = clamp(health / 100.0, 0.0, 1.0)
 	var delta := int(round(2.0 + (16.0 - 2.0) * pow(t, 1.3)))  # +2..+16, eased
 	var cap_after := cap_before + delta
 	var col := "#63C74D" if delta >= 0 else "#DC4C46"
 
 	if prev_data.family.size() <= 1:
-		summary_tile_rating.text = "Tile Rating: %.f%%" % data.tile_rating_percentage()
+		summary_tile_rating.text = "Health: %.f" % data.family_health
 		summary_colony_size.text = "Colony Size: %d" % data.family.size()
 	else:
-		summary_tile_rating.text = "Tile Rating: %.f%% -> %.f%%" % [prev_data.tile_rating_percentage(), data.tile_rating_percentage()]
+		summary_tile_rating.text = "Health: %.f -> %.f" % [prev_data.family_health, data.family_health]
 		summary_colony_size.text = "Colony Size: %d -> %d" % [prev_data.family.size(), data.family.size()]
 
-	summary_capacity.text = "Capacity: %d → %d [color=%s]%+d[/color] (rating [color=%s]%.0f%%[/color] → +%d)" % [cap_before, cap_after, col, delta, col, rating_pct, delta]
+	summary_capacity.text = "Capacity: %d → %d [color=%s]%+d[/color] (health [color=%s]%.0f[/color] → +%d)" % [cap_before, cap_after, col, delta, col, health, delta]
 
 func _update_tiles(M: Mushroom) -> void:
 	var data := M.mushroom_data
@@ -65,20 +65,25 @@ func _update_tiles(M: Mushroom) -> void:
 	var liked := data.liked_tiles_count
 	var neutral := data.neutral_tiles_count
 	var disliked := data.disliked_tiles_count
-	var total: int = max(1, liked + neutral + disliked)	# guard div-by-zero
+	# var total: int = max(1, liked + neutral + disliked)	# guard div-by-zero
 
 	if tiles_liked: tiles_liked.text = "Liked: [color=%s]%d[/color]" % [Color.GREEN.to_html(), liked]
 	if tiles_neutral: tiles_neutral.text = "Neutral: [color=%s]%d[/color]" % [Color.BEIGE.to_html(), neutral]
 	if tiles_disliked: tiles_disliked.text = "Disliked: [color=%s]%d[/color]" % [Color.RED.to_html(), disliked]
 
+	var health_change: int = (M.check_family_tiles()[0] * 4) - data.family.size()
+
 	# --- rating ( (liked - disliked) / total ) ---
-	var rating_pct := float(data.tile_rating_percentage())
-	var col := Color.RED.lerp(Color.GREEN, clamp(rating_pct / 100.0, 0.0, 1.0)).to_html()
+	var health := float(data.family_health)
+	var col := Color.RED.lerp(Color.GREEN, clamp(health / 100.0, 0.0, 1.0)).to_html()
+
+	var _sign := "+" if health_change >= 0 else "-"
+	var new_health_string := "New Health: %d %s %d = [color=#%s]%.0f[/color]" % [data.previous_data.family_health, _sign, abs(health_change), col, health]
 
 	if tiles_rating:
 		tiles_rating.bbcode_enabled = true
-		tiles_rating.text = "[b]Rating:[/b] ([color=#%s]%d[/color] − [color=#%s]%d[/color]) / [color=#%s]%d[/color] = [color=#%s]%.0f%%[/color]" \
-			% [Color.GREEN.to_html(), liked, Color.RED.to_html(), disliked, Color.BEIGE.to_html(), total, col, rating_pct]
+		tiles_rating.text = "[b]Health Change:[/b] (([color=#%s]%d[/color] − [color=#%s]%d[/color]) * 4) - %d = %d\n%s" \
+			% [Color.GREEN.to_html(), liked, Color.RED.to_html(), disliked, data.family.size(), health_change, new_health_string]
 	
 	
 func update_report(M: Mushroom, day: int):

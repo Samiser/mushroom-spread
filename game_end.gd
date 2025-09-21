@@ -32,7 +32,7 @@ func show_end_screen(m: Mushroom, day: int, win: bool = true):
 	rank_label.visible = win
 
 	colony_size_label.text = "Final Colony Size: %d" % m.mushroom_data.family.size()
-	tile_rating_label.text = "Final Tile Rating: %d" % m.mushroom_data.tile_rating_percentage()
+	tile_rating_label.text = "Final Health: %.f" % m.mushroom_data.family_health
 
 	tiles_liked.text = _report.tiles_liked.text
 	tiles_neutral.text = _report.tiles_neutral.text

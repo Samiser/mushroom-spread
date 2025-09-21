@@ -64,8 +64,8 @@ func is_root() -> bool:
 	return generation == 0
 
 func _apply_capacity_growth() -> void:
-	var rating_pct := float(mushroom_data.tile_rating_percentage())
-	var t: float = clamp(rating_pct / 100.0, 0.0, 1.0)
+	var health := float(mushroom_data.family_health)
+	var t: float = clamp(health / 100.0, 0.0, 1.0)
 	var eased := pow(t, 1.3) # >1 favors high ratings
 	var delta := int(round(2.0 + (16.0 - 2.0) * eased))
 	mushroom_data.max_family += delta
@@ -172,3 +172,4 @@ func take_data_snapshot():
 	mushroom_data.previous_data = mushroom_data.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
 	mushroom_data.previous_data.family = mushroom_data.family.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
 	mushroom_data.previous_data.tile_rating = mushroom_data.tile_rating.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
+	mushroom_data.previous_data.family_health = mushroom_data.family_health
